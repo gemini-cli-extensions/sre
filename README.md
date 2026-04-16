@@ -69,7 +69,6 @@ For detailed instructions on setup and usage, please refer to the [User Manual](
 
 Check `CONTRIBUTING.md`.
 
-**Googlers**: See more in `go/SRE-Extension` <!-- pre-publish-checker: ignore -->
 
 
 ## Feedback 

@@ -55,4 +55,3 @@ Located at `skills/gcp-playbooks/references/googleapis.com/cloudbuild.md`.
 ## References
 
 - [GCP Documentation](https://cloud.google.com/docs)
-- [SRE Google Extension Migration Plan](../../docs/migration_plan/README.md)

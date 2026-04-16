@@ -26,7 +26,6 @@ Ensure you're able to fetch relevant data about the incident.  This is not part 
 * Feel free to abort if user is unable to provide tools or content for you to build the PM.
 * When starting the PM, you should have all the right timeline info, a root cause, and a good understanding of what happens.
 * Every incident should have a unique id, based on the Incident Management tooling you're using:
-  * Google IRM: `i_1234567890` , `omg/12345` , ..
   * ServiceNow: `INC123456`
   * JIRA: `PROD-1234`
   * PagerDuty: `P123456` or incident URL
