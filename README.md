@@ -80,8 +80,9 @@ Any other intelligible feedback should be sent to this form: [SRE Extension Surv
 # Thanks
 
 Program Lead: [Riccardo Carlesso](https://github.com/palladius)
+
 Co-authors and helpers:
-- [Ramon](https://github.com/rmedranollamas)
+- [Ramón](https://github.com/rmedranollamas)
 - [Madhavi](https://github.com/madkarra)
 - [Szymon](https://github.com/szymonst)
 <!-- add your name here -->
