@@ -16,7 +16,7 @@
 * Then type:
 
 ```bash
-$ gemini extensions install https://github.com/gemini-cli-extensions/sre
+gemini extensions install https://github.com/gemini-cli-extensions/sre
 ```
 
 
@@ -39,7 +39,7 @@ $ gemini extensions install https://github.com/gemini-cli-extensions/sre
 
 ### 📊 Detection, Graphs & Mitigations
 - **`generic-mitigations`**: Generic Mitigations high-level classification logic and actuation plan.
-- **`monitoring-graphs`**: Generates high-quality, annotated incident graphs for post-mortems using Python to visualize outages and error rates.
+- **`monitoring-graphs`**: Generates high-quality, annotated incident graphs for post-mortems using Python to visualize outages and error rates (nice graphs visible [here](https://github.com/palladius/about-sre-extension/)).
 - **`anomaly-detection`**: Detects anomalies in time-series data from various sources (Isolation Forest, KNN, Z-score).
 - **`data-ingestion`**: Fetches and parses time-series data from various sources for downstream analysis.
 
@@ -79,10 +79,10 @@ Any other intelligible feedback should be sent to this form: [SRE Extension Surv
 
 # Thanks
 
-Program Lead: [Riccardo Carlesso](https://github.com/palladius)
+Program Lead: [Riccardo](https://github.com/palladius)
 
-Co-authors and helpers:
-- [Ramón](https://github.com/rmedranollamas)
+Co-authors and contributors:
 - [Madhavi](https://github.com/madkarra)
+- [Ramón](https://github.com/rmedranollamas)
 - [Szymon](https://github.com/szymonst)
 <!-- add your name here -->
