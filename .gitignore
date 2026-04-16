@@ -6,3 +6,4 @@ skills/gcp-mcp-setup/TODO.md
 **/EVAL.md
 agents/
 .gemini/skills/
+.gemini/hooks.log
