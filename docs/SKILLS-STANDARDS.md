@@ -39,5 +39,4 @@ Aligned to version number in `SKILL.md`
 
 ## EVAL.md
 
-
 The idea is to have an array of couple INPUT_PROMPT, EXPECTED_OUTPUT with LLM-as-judge.
