@@ -39,5 +39,5 @@ Aligned to version number in `SKILL.md`
 
 ## EVAL.md
 
-Still in phase of meta-evaluation. See internal bug 498524264.
+
 The idea is to have an array of couple INPUT_PROMPT, EXPECTED_OUTPUT with LLM-as-judge.
