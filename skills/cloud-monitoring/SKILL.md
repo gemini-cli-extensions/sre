@@ -1,7 +1,7 @@
 ---
 name: cloud-monitoring
-description: 🐉 Skill for interacting with Google Cloud Monitoring (CM) via APIs to avoid large context bloat.
-version: 0.2.15
+description: 🐉 Skill for interacting with Google Cloud Monitoring (CM) via APIs to avoid large context bloat. Produces nice short synoptic "gists" of graphs
+version: 0.2.16
 tools:
   - mcp_google-monitoring_get_alert
   - mcp_google-monitoring_get_alert_policy
@@ -35,5 +35,6 @@ This skill provides utilities for analyzing and extracting data from Google Clou
 
 ## Available Tools
 
-* `scripts/export_timeseries_to_csv.py`: Fetches time-series data for specified metric(s) and time range, outputting a CSV file with metadata headers. Supports extracting two or more variables for direct correlation and comparison.
+* `scripts/export_timeseries_to_csv.py`: Fetches time-series data for specified metric(s) and time range, outputting a CSV file with metadata headers. Supports extracting two or more variables for direct correlation and comparison. This is an amazing synoptic you can surface to the user
+    * It's very effective particularly to share the "**gist**" / **Shape** part showing use in TEXT the graphical shape of the curve, eg "█▇▆▇ ▂▃ ▂ ▂ ▂ ▂" or "█▆▃▂▄▅▅_▄▄▄▂▄▄█▆". This is very useful to humans for visual feedback!
 * `scripts/setup-frontend-slo.sh`: A bash script to automatically set up a 99.9% availability SLO using Log-based Metrics for a 'frontend' service. (See `scripts/README.md` for full manual).
