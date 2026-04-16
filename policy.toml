@@ -1,0 +1,36 @@
+[policy]
+default_action = "ask"
+
+[[policy.rules]]
+command = "kubectl"
+args = ["get", "*"]
+action = "allow"
+
+[[policy.rules]]
+command = "kubectl"
+args = ["describe", "*"]
+action = "allow"
+
+[[policy.rules]]
+command = "kubectl"
+args = ["logs", "*"]
+action = "allow"
+
+[[policy.rules]]
+command = "gcloud"
+action = "allow"
+
+[[policy.rules]]
+# Mutations require explicit approval
+command = "kubectl"
+args = ["apply", "*"]
+action = "ask"
+
+[[policy.rules]]
+command = "kubectl"
+args = ["delete", "*"]
+action = "ask"
+
+[[policy.rules]]
+command = "skaffold"
+action = "ask"

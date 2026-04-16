@@ -1,0 +1,61 @@
+{
+  "mcpServers": {
+    "google-logging": {
+      "httpUrl": "https://logging.googleapis.com/mcp",
+      "authProviderType": "google_credentials",
+      "oauth": {
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ]
+      },
+      "headers": {
+        "X-goog-user-project": "YOUR_PROJECTID_HERE"
+      }
+    },
+    "google-monitoring": {
+      "httpUrl": "https://monitoring.googleapis.com/mcp",
+      "authProviderType": "google_credentials",
+      "oauth": {
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ]
+      },
+      "headers": {
+        "X-goog-user-project": "YOUR_PROJECTID_HERE"
+      }
+    },
+    "google-container": {
+      "httpUrl": "https://container.googleapis.com/mcp",
+      "authProviderType": "google_credentials",
+      "oauth": {
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ]
+      },
+      "headers": {
+        "X-goog-user-project": "YOUR_PROJECTID_HERE"
+      }
+    },
+    "google-run": {
+      "httpUrl": "https://run.googleapis.com/mcp",
+      "authProviderType": "google_credentials",
+      "oauth": {
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ]
+      },
+      "headers": {
+        "X-goog-user-project": "YOUR_PROJECTID_HERE"
+      }
+    },
+
+    "google-developer-knowledge": {
+      "httpUrl": "https://developerknowledge.googleapis.com/mcp",
+      "headers": {
+        // Use GCP Setup skill to set this up!
+        "X-Goog-Api-Key": "YOUR_KEY_HERE"
+      }
+    }
+  }
+}
+

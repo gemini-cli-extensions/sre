@@ -1,0 +1,10 @@
+roles/viewer
+roles/iam.securityReviewer
+roles/logging.viewer
+roles/monitoring.viewer
+roles/browser
+roles/container.viewer
+roles/compute.viewer
+roles/storage.objectViewer
+roles/run.viewer
+roles/monitoring.dashboardEditor

@@ -1,0 +1,24 @@
+# metadata_filename: temp_dual.csv
+# metadata_metric_names: kubernetes.io/container/cpu/core_usage_time, kubernetes.io/container/memory/used_bytes
+# metadata_from_timestamp: 2026-04-08T07:55:46.498237+00:00
+# metadata_to_timestamp: 2026-04-08T08:55:46.498227+00:00
+# stats_kubernetes.io/container/cpu/core_usage_time_shape: █▇▆▇ ▂▃ ▂ ▂ ▂ ▂
+# stats_kubernetes.io/container/cpu/core_usage_time_avg: 1304.1295597685807
+# stats_kubernetes.io/container/cpu/core_usage_time_min: 0.015121 at 2026-04-03T11:10:17.000000Z (MIDDLE)
+# stats_kubernetes.io/container/cpu/core_usage_time_max: 26835.091146 at 2026-04-02T17:45:20.000000Z (MIDDLE)
+# stats_kubernetes.io/container/memory/used_bytes_shape: ▄▃█▅  ▂ ▂▂▃▂▂ ▂
+# stats_kubernetes.io/container/memory/used_bytes_avg: 26623152.734772075
+# stats_kubernetes.io/container/memory/used_bytes_min: 0 at 2026-04-08T07:55:52.233492Z (START)
+# stats_kubernetes.io/container/memory/used_bytes_max: 571813888 at 2026-04-08T08:08:52.234128Z (MIDDLE)
+# metadata_point_count: 53241
+timestamp,metric_name,value,metric_memory_type,resource_cluster_name,resource_container_name,resource_location,resource_namespace_name,resource_pod_name,resource_project_id
+2026-03-30T17:30:45.000000Z,kubernetes.io/container/cpu/core_usage_time,224.101943,,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,kubernetes.io/container/cpu/core_usage_time,224.123448,,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,kubernetes.io/container/cpu/core_usage_time,224.13387,,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,kubernetes.io/container/cpu/core_usage_time,224.155022,,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,kubernetes.io/container/cpu/core_usage_time,224.165686,,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-04-08T07:55:52.233492Z,kubernetes.io/container/memory/used_bytes,102400,evictable,online-boutique,config-reloader,us-central1,gke-gmp-system,collector-9j4mc,sre-next
+2026-04-08T07:55:52.233492Z,kubernetes.io/container/memory/used_bytes,102404096,non-evictable,online-boutique,otel-gateway,us-central1,default,opentelemetrycollector-77fbd97d54-btxg4,sre-next
+2026-04-08T07:55:52.233492Z,kubernetes.io/container/memory/used_bytes,128651264,evictable,online-boutique,otel-gateway,us-central1,default,opentelemetrycollector-77fbd97d54-btxg4,sre-next
+2026-04-08T07:55:52.233492Z,kubernetes.io/container/memory/used_bytes,22106112,evictable,online-boutique,istio-proxy,us-central1,default,opentelemetrycollector-77fbd97d54-btxg4,sre-next
+2026-04-08T07:55:52.233492Z,kubernetes.io/container/memory/used_bytes,69320704,non-evictable,online-boutique,istio-proxy,us-central1,default,opentelemetrycollector-77fbd97d54-btxg4,sre-next

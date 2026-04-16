@@ -1,0 +1,62 @@
+[
+  {
+    "httpRequest": {
+      "latency": "0.001698096s",
+      "protocol": "grpc",
+      "remoteIp": "10.197.128.163:34530",
+      "requestMethod": "POST",
+      "requestSize": "644",
+      "requestUrl": "http://adservice:9555/hipstershop.AdService/GetAds",
+      "responseSize": "1533",
+      "serverIp": "10.197.128.49:9555",
+      "status": 200,
+      "userAgent": "grpc-go/1.78.0"
+    },
+    "insertId": "xwic66f5o3uv0",
+    "logName": "projects/sre-next/logs/server-accesslog-stackdriver",
+    "receiveTimestamp": "2026-04-08T11:15:03.010932621Z",
+    "resource": {
+      "labels": {
+        "cluster_name": "online-boutique",
+        "container_name": "server",
+        "location": "us-central1",
+        "namespace_name": "default",
+        "pod_name": "adservice-689dc9d444-dtwsk",
+        "project_id": "sre-next"
+      },
+      "type": "k8s_container"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-04-08T11:14:59.920485Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.000608040s",
+      "protocol": "grpc",
+      "remoteIp": "10.197.128.163:38150",
+      "requestMethod": "POST",
+      "requestSize": "671",
+      "requestUrl": "http://productcatalogservice:3550/hipstershop.ProductCatalogService/GetAnswer",
+      "responseSize": "1638",
+      "serverIp": "10.197.128.178:3550",
+      "status": 242,
+      "userAgent": "ford-prefect/1.2.3"
+    },
+    "insertId": "1kms9ozf5ylecc",
+    "logName": "projects/sre-next/logs/server-accesslog-stackdriver",
+    "receiveTimestamp": "2026-04-08T11:15:03.010932621Z",
+    "resource": {
+      "labels": {
+        "cluster_name": "online-boutique",
+        "container_name": "server",
+        "location": "us-central1",
+        "namespace_name": "default",
+        "pod_name": "productcatalogservice-6cfdcfb874-v6xvt",
+        "project_id": "sre-next"
+      },
+      "type": "k8s_container"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-04-08T11:14:59.920485Z"
+  }
+]

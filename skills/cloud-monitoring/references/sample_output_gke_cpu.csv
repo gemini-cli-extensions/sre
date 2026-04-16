@@ -1,0 +1,50 @@
+# metadata_filename: test_gke_cpu.csv
+# metadata_metric_name: kubernetes.io/container/cpu/core_usage_time
+# metadata_from_timestamp: 2026-04-08T05:31:58.997167+00:00
+# metadata_to_timestamp: 2026-04-08T08:31:58.997155+00:00
+# metadata_point_count: 53098
+timestamp,value,resource_cluster_name,resource_container_name,resource_location,resource_namespace_name,resource_pod_name,resource_project_id
+2026-03-30T17:30:45.000000Z,223.774711,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.764179,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.743604,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.731909,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.722159,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.700238,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.674195,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.665941,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.643184,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.634449,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.610879,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.600918,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.592549,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.572267,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.562312,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.540428,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.434441,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.414527,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.404299,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.381619,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.373111,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.351167,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.341087,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.316268,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.308819,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.286337,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.274699,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.253443,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.242732,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.220023,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.209662,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.188082,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.178457,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.15732,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.146254,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.126077,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.115697,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.092635,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.082801,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.060128,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.050012,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.02872,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.019104,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next
+2026-03-30T17:30:45.000000Z,223.009946,online-boutique,install-cni,us-central1,kube-system,istio-cni-node-9pfmz,sre-next

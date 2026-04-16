@@ -1,0 +1,43 @@
+## Sample one Metric
+
+    1 ========================================
+    2 DESCRIPTIVE STATISTICS
+    3 ========================================
+    4
+    5 Metric: kubernetes.io/container/memory/used_bytes
+    6   Shape:    ▂█▇▇▄▂▃▃▂▃▂▃ ▂▃
+    7   Count:    35494
+    8   Average:  26621612.1476
+    9   Variance: 3046552471568297.0000
+   10   Minimum:  [07:59:06] 0.0000 (MIDDLE)
+   11   Maximum:  [08:23:52] 571707392.0000 (MIDDLE)
+
+
+## Sample two metrics  
+
+========================================
+DESCRIPTIVE STATISTICS
+========================================
+
+Metric: kubernetes.io/container/cpu/core_usage_time
+  Shape:    ▃██▂▂▂_▃_▃▃▂▃▂__
+  Count:    17775
+  Average:  1304.9388
+  Variance: 9664208.3853
+  Minimum:  [08:14:50] 0.0159 (MIDDLE, 98.5%)
+  Maximum:  [17:44:47] 26893.2329 (MIDDLE, 16.9%)
+
+Metric: kubernetes.io/container/memory/used_bytes
+  Shape:    █▆▃▂▄▅▅_▄▄▄▂▄▄█▆
+  Count:    35550
+  Average:  26593539.8166
+  Variance: 3040055202697438.5000
+  Minimum:  [08:12:42] 0.0000 (START)
+  Maximum:  [08:23:52] 571707392.0000 (MIDDLE, 18.6%)
+
+========================================
+SYNOPTIC COMPARISON
+========================================
+▃██▂▂▂_▃_▃▃▂▃▂__  kubernetes.io/container/cpu/core_usage_time
+█▆▃▂▄▅▅_▄▄▄▂▄▄█▆  kubernetes.io/container/memory/used_bytes
+========================================

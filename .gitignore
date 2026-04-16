@@ -1,0 +1,7 @@
+*.skill
+.gemini/settings.json
+skills/pre-publish-checker/
+PUBLICATION_CHECKLIST.md
+skills/gcp-mcp-setup/TODO.md
+**/EVAL.md
+agents/
