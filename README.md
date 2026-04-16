@@ -4,11 +4,7 @@
 
 # About
 
-**The SRE Gemini CLI Extension** is a dedicated toolkit comprising specialized **Skills** and **Agents** designed to augment Site Reliability Engineers (SREs). By integrating deeply with the Gemini CLI, this extension empowers SREs to investigate outages, configure MCP servers, formulate mitigations, and detect anomalies more rapidly.
-
-> [!NOTE]
-> 🧪 **Experimental Status:** The included Agents (such as `outage-gke-investigator`) are currently experimental. They are designed to accelerate your workflow, but their outputs should always be independently verified during live incidents.
-
+**The SRE Gemini CLI Extension** is a dedicated toolkit comprising specialized **Skills** designed to augment Site Reliability Engineers (SREs). By integrating deeply with the Gemini CLI, this extension empowers SREs to investigate outages, configure MCP servers, formulate mitigations, and detect anomalies more rapidly.
 
 ## INSTALL
 
@@ -20,10 +16,7 @@ gemini extensions install https://github.com/gemini-cli-extensions/sre
 ```
 
 
-## Available Skills and Agents
-
-### 🤖 Agents
-- **`outage-gke-investigator`**: An agent tuned specifically for GKE outage and incident investigations (experimental).
+## Available Skills
 
 ### 🛠️ Core SRE Skills
 - **`investigation-entrypoint`**: Primary entrypoint for investigating production outages, orchestrating SRE response, and mitigating incidents. Start here when an incident occurs!
