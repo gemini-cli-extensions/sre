@@ -4,3 +4,5 @@
 # GitHub App credentials
 gha-creds-*.json
 
+agents/
+.git-privatize
