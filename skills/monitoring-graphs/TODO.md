@@ -1,2 +1,0 @@
-
-TODO(ricc): before publishing, ensure the `bin/` scripts in pomo investigations are piggybacked, ported and somewhat generalized in here. It's ok to have a peculiar example if it teaches us somethigng interesting/peculiar. OTOH let's ensure we're not loading this with just overfitting/peculiar k8s examples.
