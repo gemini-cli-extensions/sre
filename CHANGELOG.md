@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.4] - 2026-04-17
+
+### Added
+
+- **New Skill**: `postmortem-aggregator` (v0.0.1) moved from `gemini-cli-custom-commands`.
+
+### Changed
+
+- **Merged Skills**: Consolidated `postmortem-generator-copy` and the external `postmortem-generator` into a single `postmortem-generator` skill (v0.0.5).
+  - Improved the merged `SKILL.md` with combined IRM examples (Google IRM, ServiceNow, JIRA, etc.) and better execution instructions.
+  - Standardized directory structure for postmortem output.
+
 ## [0.1.3] - 2026-04-16
 
 ### Added

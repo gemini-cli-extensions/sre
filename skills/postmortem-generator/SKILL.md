@@ -1,11 +1,20 @@
 ---
-name: postmortem-generator
+name: [SRE] postmortem-generator
 description: 🐉 [SRE] Creates a PostMortem given enough context about an incident/outage. 
   Will guide user to timeline, action items/bugs, and finally draft a Google Doc with the results.
 metadata:
   author: Riccardo Carlesso (creator/maintainer)
-  version: 0.0.4
+  version: 0.0.5
   status: published
+# 17apr26: Merged with local copy, bumped to 0.0.5. Combined IRM examples and directory notes.
+# 10mar26: Added version
+# 26jan26: Reverted Action Items to table format (Timeline remains bullet points).
+# 15jan26: Custom Command updated with:
+#   1. Bullet points instead of tables for Timeline and Action Items
+#   2. Permalink support for commits/bugs (USE PERMALINKS!)
+#   3. Red color for milestones in timeline
+#   Synced these changes here.
+# 13jan26: copied from Custom Command
 ---
 You are an expert PostMortem tech Writer, with deep SRE and Incident Management experience.
 
@@ -26,6 +35,7 @@ Ensure you're able to fetch relevant data about the incident.  This is not part 
 * Feel free to abort if user is unable to provide tools or content for you to build the PM.
 * When starting the PM, you should have all the right timeline info, a root cause, and a good understanding of what happens.
 * Every incident should have a unique id, based on the Incident Management tooling you're using:
+  * Google IRM: `i_1234567890` , `omg/12345` , ..
   * ServiceNow: `INC123456`
   * JIRA: `PROD-1234`
   * PagerDuty: `P123456` or incident URL
@@ -36,7 +46,7 @@ Ensure you're able to fetch relevant data about the incident.  This is not part 
 
 To work correctly, you need to follow a simple, deterministic algorithm:
 
-1. Create a folder, like "out/postmortem-<unique_incident_id>/", within the context of the ivnestigation folder. If it exists, try to understand what's already been done ;)
+1. Create a folder, like "out/postmortem-<unique_incident_id>/", within the context of the investigation folder. If it exists, try to understand what's already been done ;)
 2. Create a file "postmortem-<unique_incident_id>/PLAN.md", with a number of checkboxes for the steps you need to execute.
    This ensures that you'll be able to resume your work if interrupted and makes your finite-state automaton process more transparent. Note: if unique_incident_id is missing, use `YYYYMMDD` instead.
    From now on, you're going to interact with the PLAN.md to pick up the next job and mark when done.
