@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.4] - 2026-04-17
+
+### Fixed
+
+- **git-privatize Tooling**:
+  - Fixed space-handling bug for filenames with spaces.
+  - Added support for running `git-privatize` from subdirectories.
+  - Improved error handling with actionable "Did you mean..." suggestions when a filename is provided instead of an action.
+  - Added azure coloring to suggested commands for better visibility.
+  - Improved `sync` functionality to correctly restore files from subdirectories.
+
+### Changed
+
+- Renamed `skills/postmortem-generator-copy` to `skills/postmortem-generator` and restored its `TODO copy.md` symlink.
+
 ## [0.1.3] - 2026-04-16
 
 ### Added
