@@ -2,9 +2,13 @@
 
 All notable changes to this skill will be documented in this file.
 
+## [0.0.3] - 2026-04-16
+### Changed
+- Renamed `wietse_cloud_run_error_reporter.py` to `report_errors_by_revision.py` for a more generic and descriptive name.
+
 ## [0.0.2] - 2026-04-08
 ### Added
-- Added `wietse_cloud_run_error_reporter.py` script (moved from `cloud_logging` skill).
+- Added `report_errors_by_revision.py` script (originally added as `wietse_cloud_run_error_reporter.py`).
 - Created `scripts/` directory for skill-specific utilities.
 
 ## [0.0.1] - 2026-04-02

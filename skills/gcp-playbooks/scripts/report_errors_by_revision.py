@@ -24,14 +24,12 @@
 # ///
 
 """
-Pending approval from its author), the one and only Wietse Venema.
-
 USER MANUAL:
 This script correlates Google Cloud Run Revisions with Google Cloud Error Reporting data.
 It helps you determine exactly which revision of a Cloud Run service contains or introduced specific errors.
 
 Usage:
-  ./tmp_weitse_pending_approval.py --project <PROJECT_ID> --region <REGION> --service <SERVICE_NAME> --days <DAYS>
+  FOLDER/scripts/report_errors_by_revision.py --project <PROJECT_ID> --region <REGION> --service <SERVICE_NAME> --days <DAYS>
 
 Arguments:
   --project, -p   The Google Cloud Project ID.
@@ -40,7 +38,7 @@ Arguments:
   --days, -d      Number of days to look back for errors (e.g., 1, 7, 30).
 
 Example:
-  ./tmp_weitse_pending_approval.py -p my-gcp-project -r us-central1 -s my-backend-service -d 7
+  FOLDER/scripts/report_errors_by_revision.py -p my-gcp-project -r us-central1 -s my-backend-service -d 7
 
 What it does:
 1. Connects to the GCP Cloud Run API to fetch revision history for the given service.
