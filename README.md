@@ -41,19 +41,19 @@ gemini extensions install https://github.com/gemini-cli-extensions/sre
 
 ## Quickstart
 
-1. Install this extension via the Gemini CLI's install command:
+1. 📦 **Install this extension**:
    `gemini extensions install https://github.com/gemini-cli-extensions/sre`
-2. Only for the first time, use `gcp-mcp-setup` skill to setup your GCP project, and MCP servers:
+2. 🛠️ **Setup your GCP project and MCP** (only for the first time usage):
    ```bash
    $ gemini 
    Use the gcp-mcp-setup skill to setup my GCP project "foo-bar-123" with email jane-doe-sre@credible-company.com 
    ```
-2. Invoke the entrypoint skill with your incident request. For example:
+3. 🔍 **Start an investigation**:
    ```bash 
    $ gemini
    Invoke the investigation entrypoint skill with this new incident: cluster gKE with ip 1.2.3.4 is reported down by numerous customers, please investigate.
    ```
-3. The agent will take it from there—fetching context, querying metrics, and formulating mitigations.
+4. 🤖 **The agent will take it from there** — fetching context, querying metrics and formulating mitigations.
 
 For detailed instructions on setup and usage, please refer to the [User Manual](USER_MANUAL.md).
 
