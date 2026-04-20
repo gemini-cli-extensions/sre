@@ -91,8 +91,9 @@ def generate_sparkline(vals, num_bins=16):
         return "▄" * len(binned)
     
     normalized = np.round((binned - vmin) / (vmax - vmin) * 7).astype(int)
-    chars = ['_', '▂', '▃', '▄', '▅', '▆', '▇', '█']
-    return "".join([chars[i] for i in normalized])
+    chars = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█']
+    shape_str = "".join([chars[i] for i in normalized])
+    return f"|{shape_str}|"
 
 def main():
     epilog_text = """
@@ -255,7 +256,7 @@ Ready-to-use Examples (just change <PROJECT_ID>):
             
             stats_summary[metric_name] = {
                 "count": len(vals),
-                "shape": generate_sparkline(vals, num_bins=args.num_bins),
+                "sparkline": generate_sparkline(vals, num_bins=args.num_bins),
                 "min": vals[min_idx],
                 "min_ts": metric_points[min_idx]["timestamp"],
                 "min_pos": get_position_label(min_idx, len(vals)),
@@ -291,7 +292,8 @@ Ready-to-use Examples (just change <PROJECT_ID>):
             max_time = s['max_ts'][11:19]
             
             print(f"\nMetric: {m}")
-            print(f"  Shape:    {s['shape']}")
+            print(f"  Sparkline:{s['sparkline']}")
+            print(f"  To gen:   uv run ../monitoring-graphs/scripts/csv_to_sparkline.py --csv {args.output} --values-column-name value")
             print(f"  Count:    {s['count']}")
             print(f"  Average:  {s['avg']:.4f}")
             print(f"  Variance: {s['var']:.4f}")
@@ -299,7 +301,7 @@ Ready-to-use Examples (just change <PROJECT_ID>):
             print(f"  Maximum:  [{max_time}] {s['max']:.4f} ({s['max_pos']})")
             
             # Write to CSV header
-            csvfile.write(f"# stats_{m}_shape: {s['shape']}\n")
+            csvfile.write(f"# stats_{m}_sparkline: {s['sparkline']}\n")
             csvfile.write(f"# stats_{m}_avg: {s['avg']}\n")
             csvfile.write(f"# stats_{m}_min: [{min_time}] {s['min']} ({s['min_pos']})\n")
             csvfile.write(f"# stats_{m}_max: [{max_time}] {s['max']} ({s['max_pos']})\n")
@@ -310,7 +312,7 @@ Ready-to-use Examples (just change <PROJECT_ID>):
             print("SYNOPTIC COMPARISON")
             print("="*40)
             for m, s in stats_summary.items():
-                print(f"{s['shape']}  {m}")
+                print(f"{s['sparkline']}  {m}")
             print("="*40)
 
         csvfile.write(f"# metadata_point_count: {len(all_data_points)}\n")
