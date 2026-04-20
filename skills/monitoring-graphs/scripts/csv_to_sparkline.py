@@ -62,7 +62,11 @@ def main():
 
     try:
         df = pd.read_csv(args.csv)
+    try:
+        df = pd.read_csv(args.csv)
     except Exception as e:
+        print(f"Error reading CSV '{args.csv}': {e}", file=sys.stderr)
+        sys.exit(1)
         print(f"Error reading CSV: {e}", file=sys.stderr)
         sys.exit(1)
 
