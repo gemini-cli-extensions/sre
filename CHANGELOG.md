@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.6] - 2026-04-20
+
+### Added
+
+- **Monitoring Graphs**: Extracted `csv_to_sparkline.py` to autogenerate Unicode sparklines wrapped in pipes for better spacing visibility on arbitrary CSVs.
+
+### Changed
+
+- **Cloud Monitoring**: Refactored the terminal statistics to adopt the 'Sparkline' naming convention and use the pipe encapsulation framework.
+
 ## [0.1.5] - 2026-04-17
 
 ### Added
