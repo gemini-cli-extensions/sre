@@ -4,7 +4,7 @@ description: 🐉 skill for generating high-quality, annotated incident graphs f
 #verbose_description: Expert SRE skill for generating high-quality, annotated incident graphs for post-mortems using Python and Monitoring MCP on Google Cloud. Use this when the user needs to visualize an outage, show error rates, or correlate metrics with incident milestones (start, detection, mitigation, end).
 metadata:
   author: Riccardo Carlesso
-  version: 0.0.5
+  version: 0.0.6
 ---
 
 # 📈 Monitoring & Incident Graphing Skill 📊
