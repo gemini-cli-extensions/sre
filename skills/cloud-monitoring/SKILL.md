@@ -1,7 +1,9 @@
 ---
 name: cloud-monitoring
 description: 🐉 Skill for interacting with Google Cloud Monitoring (CM) via APIs to avoid large context bloat. Produces nice short synoptic "gists" of graphs
-version: 0.2.17
+metadata:
+  author: Riccardo Carlesso
+  version: 0.2.17
 tools:
   - mcp_google-monitoring_get_alert
   - mcp_google-monitoring_get_alert_policy

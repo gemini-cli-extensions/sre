@@ -6,3 +6,5 @@ gha-creds-*.json
 
 agents/
 .git-privatize
+riccardo-only/
+justfile
