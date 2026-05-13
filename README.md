@@ -36,9 +36,6 @@ gemini extensions install https://github.com/gemini-cli-extensions/sre
 - **`anomaly-detection`**: Detects anomalies in time-series data from various sources (Isolation Forest, KNN, Z-score).
 - **`data-ingestion`**: Fetches and parses time-series data from various sources for downstream analysis.
 
-> [!WARNING]
-> The **`safe-sre-investigator`** skill is deprecated and has been merged into native playbooks.
-
 ## Quickstart
 
 1. Install this extension via the Gemini CLI's install command:

@@ -39,14 +39,122 @@ The `gcp-mcp-setup` skill automates the configuration of Google Managed MCP (One
 
 ---
 
-## Deprecated Skills
+### `investigation-entrypoint`
 
-### `safe-sre-investigator`
+**Status:** Active
 
-> [!WARNING]
-> **DEPRECATED:** The `safe-sre-investigator` skill is officially deprecated and is no longer recommended or supported for use. We are migrating to more robust, native open-source abstractions and localized SRE playbooks.
+The primary entrypoint for investigating production outages. It orchestrates the SRE response by gathering context, collecting data via other skills, and formulating mitigation strategies.
 
-Previously designed to provide read-only `safe_gcloud` and `safe_kubectl` CLI wrappers during live incident investigations, it has been retired in favor of native safety controls and less obtrusive RBAC configurations within the GCP and GKE ecosystem.
+**Key Features:**
+* **Context Gathering:** Automatically identifies target projects, regions, and services involved.
+* **Orchestration:** Delegates to `anomaly-detection`, `cloud-logging`, and `cloud-monitoring` for deep dives.
+* **Risk Assessment:** Provides verbose risk assessments (🟢 LOW, 🟡 MEDIUM, 🔴 HIGH) for suggested actions.
+
+---
+
+### `gcp-playbooks`
+
+**Status:** Beta
+
+Provides established SRE playbooks for GCP/GKE investigations, mapping generic SRE concepts to specific GCP actions.
+
+**Key Features:**
+* **Infrastructure Discovery:** Systematic identification of resources.
+* **Service-Specific Mitigations:** Tailored playbooks for Cloud Run (`run.md`) and GKE (`container.md`).
+* **Deterministic Naming:** Playbooks are named after the GCP API service (e.g., `run.googleapis.com`).
+
+---
+
+### `cloud-monitoring` & `cloud-logging`
+
+**Status:** Active
+
+Specialized skills for interacting with Google Cloud Monitoring and Logging APIs while avoiding context bloat.
+
+**Key Features:**
+* **Efficient Extraction:** Uses export scripts to surface time-series data as CSV with metadata headers.
+* **Visual Feedback:** Generates text-based "gists" of graph shapes (e.g., `█▇▆▇ ▂▃`) for immediate visual context.
+* **Token Efficiency:** Converts large JSON logs to Apache format for better LLM processing.
+
+---
+
+### `anomaly-detection`
+
+**Status:** Active
+
+Detects anomalies in time-series data using various algorithms like Isolation Forest, KNN, and Z-Score.
+
+**Key Features:**
+* **Automated Preprocessing:** Autonomously decides on smoothing (Moving Average/Exponential) based on noise heuristics.
+* **Self-Reflection:** Evaluates noise levels and automatically re-tunes parameters if results are too noisy.
+* **Visual Output:** Generates annotated plots of detected anomalies.
+
+---
+
+### `monitoring-graphs`
+
+**Status:** Active
+
+Generates high-quality, annotated incident graphs for post-mortems using Python.
+
+**Key Features:**
+* **Milestone Annotation:** Automatically highlights incident start, detection, mitigation, and end points.
+* **Data Integrity:** Ensures graphs use real data (no "AI hallucinations" of metrics).
+* **Correlation Support:** Creates dual-axis graphs to correlate different signals (e.g., traffic vs. error rate).
+
+---
+
+### `postmortem-generator`
+
+**Status:** Active
+
+Automates the creation of comprehensive PostMortem documents in Markdown and Google Docs format.
+
+**Key Features:**
+* **Timeline Consolidation:** Merges events from multiple sources into a standardized CSV timeline.
+* **Bug Integration:** Supports filing action items as bugs via `gh` CLI or other tools.
+* **Standardized Template:** Follows SRE best practices for executive summaries, root cause analysis, and lessons learned.
+
+---
+
+### `postmortem-aggregator`
+
+**Status:** Beta
+
+Aggregates and crunches data from multiple PostMortem files to identify recurring patterns and organizational statistics.
+
+**Key Features:**
+* **Trend Analysis:** Calculates Time to Detect (TTD) and Time to Mitigate (TTM) across multiple incidents.
+* **Pattern Recognition:** Identifies recurring root cause classes (e.g., HUMAN_ERROR, CONFIG_CHANGE).
+* **Statistical Reporting:** Generates `pomo_stats.csv` and summary tables by year and product area.
+
+---
+
+### `gcp-slo-management`
+
+**Status:** Active
+
+Enables the discovery and management of Service Level Objectives (SLOs) in Google Cloud Monitoring.
+
+**Key Features:**
+* **Service Discovery:** Automatically identifies Monitoring Services within a GCP project.
+* **SLO Creation:** Facilitates creating Availability and Latency SLOs via REST API calls.
+* **Basic SLI Support:** Simplifies the definition of 99.9% availability targets.
+
+---
+
+### `gcp-setup`
+
+**Status:** Active
+
+Initial Google Cloud environment verification and identity harmonization.
+
+**Key Features:**
+* **Identity Sync:** Verifies consistency across `gcloud`, ADC, and `kubectl` identities.
+* **Automated Fixes:** Provides one-click commands to log in or switch contexts if identities mismatch.
+* **Safe Mode Integration:** Automatically triggers safety protocols if `SAFE_MODE` is enabled.
+
+---
 
 ## Component Architecture
 
@@ -62,9 +170,14 @@ graph TD
     Skills --> Sk1(gcp-mcp-setup)
     Skills --> Sk2(gcp-playbooks)
     Skills --> Sk3(investigation-entrypoint)
-    Skills --> SkDepr[Deprecated]
-    
-    SkDepr -.-> SkDepr1(safe-sre-investigator)
+    Skills --> Sk4(cloud-monitoring)
+    Skills --> Sk5(cloud-logging)
+    Skills --> Sk6(anomaly-detection)
+    Skills --> Sk7(monitoring-graphs)
+    Skills --> Sk8(postmortem-generator)
+    Skills --> Sk9(gcp-slo-management)
+    Skills --> Sk10(generic-mitigations)
+    Skills --> Sk11(gcp-setup)
     
     style Ext fill:#4285F4,stroke:#fff,stroke-width:2px,color:#fff
     style Skills fill:#34A853,stroke:#fff,stroke-width:2px,color:#fff
