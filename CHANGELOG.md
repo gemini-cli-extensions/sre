@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
-- **Plugin Manifest**: Added `plugin.json` at the root of the repository to support integration, discovery, and usage in Antigravity/Jetski as a named SRE plugin.
+- **Plugin Manifest**: Added `plugin.json` at the root of the repository to support plugin integration and discovery as a named SRE extension.
 
 ### Changed
 
