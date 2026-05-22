@@ -5,9 +5,9 @@ Welcome to the **SRE Gemini CLI Extension** user manual. This repository is an a
 > [!NOTE]
 > 🧪 **Experimental Status:** Please note that the Agents provided in this repository are currently experimental. They are meant to assist and accelerate reasoning but should not replace human verification.
 
-## Loading as a Plugin (Antigravity & Claude Code)
+## Loading as a Plugin (Antigravity, Claude Code & OpenAI Codex)
 
-You can load this extension directly as a plugin in both **Antigravity** and **Claude Code**.
+You can load this extension directly as a plugin in **Antigravity**, **Claude Code**, and **OpenAI Codex**.
 
 ### Antigravity Integration
 To load the extension in Antigravity, place or symlink the repository folder inside one of these directories:
@@ -25,6 +25,12 @@ To load the extension in Claude Code:
     ```
 
 Claude Code will automatically discover the `.claude-plugin/plugin.json` manifest and expose all skills under the `/sre-extension:` namespace.
+
+### OpenAI Codex Integration
+To load the extension in Codex:
+*   **Workspace-Level / Manual Integration**: Place or symlink the repository folder inside `.codex-plugin/` at the root of your workspace or custom plugin marketplace directory.
+
+Codex will automatically discover the `.codex-plugin/plugin.json` manifest file at the root of the directory and register all SRE skills.
 
 ## Available Skills
 

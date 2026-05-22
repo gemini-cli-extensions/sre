@@ -16,9 +16,9 @@ gemini extensions install https://github.com/gemini-cli-extensions/sre
 ```
 
 
-## Usage as a Plugin (Antigravity & Claude Code)
+## Usage as a Plugin (Antigravity, Claude Code & OpenAI Codex)
 
-This extension can be loaded directly as a plugin in both **Antigravity** and **Claude Code**, sharing the same set of SRE skills.
+This extension can be loaded directly as a plugin in **Antigravity**, **Claude Code**, and **OpenAI Codex**, sharing the same set of SRE skills.
 
 ### 1. Antigravity Setup
 
@@ -36,6 +36,12 @@ Antigravity will automatically recognize the root `plugin.json` manifest and loa
     ```
 
 Claude Code will automatically recognize the `.claude-plugin/plugin.json` manifest and expose the skills under the `/sre-extension:` namespace.
+
+### 3. OpenAI Codex Setup
+
+*   **Workspace-Level / Manual Integration**: Place or symlink this repository folder inside `.codex-plugin/` or your configured plugin marketplace/custom project directory.
+
+Codex will automatically recognize the `.codex-plugin/plugin.json` manifest and register the skills.
 
 
 ## Available Skills

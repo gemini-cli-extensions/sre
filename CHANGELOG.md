@@ -10,7 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - **Plugin Manifest**: Added `plugin.json` at the root of the repository to support plugin integration and discovery as a named SRE extension.
 - **Claude Plugin Support**: Added `.claude-plugin/plugin.json` to enable native compatibility with Claude Code plugins.
-- **Documentation**: Updated `README.md` and `USER_MANUAL.md` with installation and loading guides for both Antigravity and Claude Code plugin systems.
+- **Codex Plugin Support**: Added `.codex-plugin/plugin.json` to enable native compatibility with OpenAI Codex plugins.
+- **Documentation**: Updated `README.md` and `USER_MANUAL.md` with installation and loading guides for Antigravity, Claude Code, and OpenAI Codex plugin systems.
 
 ### Changed
 
