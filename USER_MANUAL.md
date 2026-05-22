@@ -5,6 +5,15 @@ Welcome to the **SRE Gemini CLI Extension** user manual. This repository is an a
 > [!NOTE]
 > 🧪 **Experimental Status:** Please note that the Agents provided in this repository are currently experimental. They are meant to assist and accelerate reasoning but should not replace human verification.
 
+## Loading as an Antigravity Plugin
+
+You can load this extension directly in **Antigravity** by placing or symlinking the repository folder inside a valid plugin location.
+
+*   **Workspace-Level**: Place in `.agents/plugins/sre-extension/` (active only for the current workspace).
+*   **Global-Level**: Place in `~/.gemini/config/plugins/sre-extension/` (active across all workspaces).
+
+Antigravity will automatically discover the `plugin.json` manifest file at the root of the directory and expose all associated SRE skills, guidelines, and rules.
+
 ## Available Skills
 
 ### `gcp-mcp-setup`

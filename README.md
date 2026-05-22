@@ -16,6 +16,21 @@ gemini extensions install https://github.com/gemini-cli-extensions/sre
 ```
 
 
+## Usage as an Antigravity Plugin
+
+This extension can also be loaded directly as a plugin in **Antigravity**.
+
+### Workspace-Level Setup
+To make this plugin active only in your current workspace, place or symlink this repository folder inside:
+- `.agents/plugins/sre-extension/` or `_agents/plugins/sre-extension/` at the root of your workspace.
+
+### Global-Level Setup
+To make this plugin active globally across all workspaces, place or symlink this repository folder inside:
+- `~/.gemini/config/plugins/sre-extension/`
+
+Antigravity will automatically scan the folder, recognize the `plugin.json` manifest, and load the associated SRE skills and guidelines.
+
+
 ## Available Skills
 
 ### 🛠️ Core SRE Skills

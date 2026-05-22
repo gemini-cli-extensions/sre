@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 
 - **Plugin Manifest**: Added `plugin.json` at the root of the repository to support plugin integration and discovery as a named SRE extension.
+- **Documentation**: Updated `README.md` and `USER_MANUAL.md` with installation and loading guides for Antigravity plugin usage.
 
 ### Changed
 
