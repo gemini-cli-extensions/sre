@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.7] - 2026-05-22
+
+### Added
+
+- **Plugin Manifest**: Added `plugin.json` at the root of the repository to support integration, discovery, and usage in Antigravity/Jetski as a named SRE plugin.
+
+### Changed
+
+- **Extension Config**: Bumped extension metadata version to `0.1.7` in `gemini-extension.json`.
+
 ## [0.1.6] - 2026-04-20
 
 ### Added
