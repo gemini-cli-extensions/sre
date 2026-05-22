@@ -16,19 +16,26 @@ gemini extensions install https://github.com/gemini-cli-extensions/sre
 ```
 
 
-## Usage as an Antigravity Plugin
+## Usage as a Plugin (Antigravity & Claude Code)
 
-This extension can also be loaded directly as a plugin in **Antigravity**.
+This extension can be loaded directly as a plugin in both **Antigravity** and **Claude Code**, sharing the same set of SRE skills.
 
-### Workspace-Level Setup
-To make this plugin active only in your current workspace, place or symlink this repository folder inside:
-- `.agents/plugins/sre-extension/` or `_agents/plugins/sre-extension/` at the root of your workspace.
+### 1. Antigravity Setup
 
-### Global-Level Setup
-To make this plugin active globally across all workspaces, place or symlink this repository folder inside:
-- `~/.gemini/config/plugins/sre-extension/`
+*   **Workspace-Level**: Place or symlink this repository folder inside `.agents/plugins/sre-extension/` or `_agents/plugins/sre-extension/` at the root of your workspace.
+*   **Global-Level**: Place or symlink this repository folder inside `~/.gemini/config/plugins/sre-extension/`.
 
-Antigravity will automatically scan the folder, recognize the `plugin.json` manifest, and load the associated SRE skills and guidelines.
+Antigravity will automatically recognize the root `plugin.json` manifest and load the SRE skills.
+
+### 2. Claude Code Setup
+
+*   **Workspace-Level**: Place or symlink this repository folder inside `.claude/plugins/sre-extension/` at the root of your workspace.
+*   **Global-Level**: Run Claude Code with the plugin directory flag:
+    ```bash
+    claude --plugin-dir /path/to/sre-extension
+    ```
+
+Claude Code will automatically recognize the `.claude-plugin/plugin.json` manifest and expose the skills under the `/sre-extension:` namespace.
 
 
 ## Available Skills
