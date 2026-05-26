@@ -8,32 +8,41 @@
 
 ## INSTALL
 
-* You need [Gemini CLI installed](https://geminicli.com/).
-* Then type:
+This extension supports both **Gemini CLI** (as Extension), and **Antigravity** + **Claude Code** + **Codex** (as Plugin).
+
+### Gemini CLI (as Extension)
+
+On [Gemini CLI installed](https://geminicli.com/), you can install this extension by typing: 
 
 ```bash
 gemini extensions install https://github.com/gemini-cli-extensions/sre
 ```
 
+This will allow you to easily manage it's lifecycle by easily updating the extension with `/extensions update --all`.
+
 
 ## Usage as a Plugin (Antigravity, Claude Code & OpenAI Codex)
 
-This extension can be loaded directly as a plugin in **Antigravity**, **Claude Code**, and **OpenAI Codex**, sharing the same set of SRE skills.
+This "SRE extension" can also be loaded directly as a plugin in **Antigravity**, **Claude Code**, and **OpenAI Codex** (and most plugin-supporting harnesses), sharing the same set of SRE skills.
 
 ### 1. Antigravity Setup
 
 *   **Workspace-Level**: Place or symlink this repository folder inside `.agents/plugins/sre-extension/` or `_agents/plugins/sre-extension/` at the root of your workspace.
 *   **Global-Level**: Place or symlink this repository folder inside `~/.gemini/config/plugins/sre-extension/`.
 
-Antigravity will automatically recognize the root `plugin.json` manifest and load the SRE skills.
+Antigravity will automatically recognize the root `plugin.json` manifest and load the SRE skills. For instance:
+
+```bash
+# This will install the SRE Extension _globally_ for Antigravity
+mkdir -p ~/.gemini/config/plugins/
+cd ~/.gemini/config/plugins/
+git clone https://github.com/gemini-cli-extensions/sre sre-extension
+```
 
 ### 2. Claude Code Setup
 
 *   **Workspace-Level**: Place or symlink this repository folder inside `.claude/plugins/sre-extension/` at the root of your workspace.
-*   **Global-Level**: Run Claude Code with the plugin directory flag:
-    ```bash
-    claude --plugin-dir /path/to/sre-extension
-    ```
+*   **Global-Level**: Run Claude Code with the plugin directory flag: `claude --plugin-dir /path/to/sre-extension`
 
 Claude Code will automatically recognize the `.claude-plugin/plugin.json` manifest and expose the skills under the `/sre-extension:` namespace.
 
@@ -65,20 +74,24 @@ Codex will automatically recognize the `.codex-plugin/plugin.json` manifest and 
 - **`data-ingestion`**: Fetches and parses time-series data from various sources for downstream analysis.
 
 > [!WARNING]
-> The **`safe-sre-investigator`** skill is deprecated and has been merged into native playbooks.
+> The **`safe-sre-investigator`** skill is being deprecated and its logic is being merged into native playbooks.
 
 ## Quickstart
 
 1. Install this extension via the Gemini CLI's install command:
-   `gemini extensions install https://github.com/gemini-cli-extensions/sre`
+
+   ```bash
+   # Check INSTALL for other harnesses
+   gemini extensions install https://github.com/gemini-cli-extensions/sre
+   ```
 2. Only for the first time, use `gcp-mcp-setup` skill to setup your GCP project, and MCP servers:
    ```bash
-   $ gemini 
+   $ agy
    Use the gcp-mcp-setup skill to setup my GCP project "foo-bar-123" with email jane-doe-sre@credible-company.com 
    ```
 2. Invoke the entrypoint skill with your incident request. For example:
    ```bash 
-   $ gemini
+   $ agy
    Invoke the investigation entrypoint skill with this new incident: cluster gKE with ip 1.2.3.4 is reported down by numerous customers, please investigate.
    ```
 3. The agent will take it from there—fetching context, querying metrics, and formulating mitigations.
