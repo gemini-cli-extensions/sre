@@ -1,7 +1,10 @@
 ---
 name: cloud-logging
 description: 🐉 Skill for interacting with and analyzing Google Cloud Logging and Error Reporting. Use this when you need to process large JSON logs from GCP or convert them to Apache format for easier analysis.
-version: 0.3
+metadata:
+  author: Riccardo Carlesso
+  version: 0.3.0
+  status: published
 ---
 
 # Cloud Logging 

@@ -4,7 +4,7 @@ description: 🐉 Sets up and uses read-only Service Accounts for GCP and Kubern
 metadata:
     author: Riccardo Carlesso
     version: 1.0.8 
-    status: active development
+    status: draft
 # See CHANGELOG.md for version history
 ---
 

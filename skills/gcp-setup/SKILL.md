@@ -2,6 +2,7 @@
 name: gcp-setup
 description: 🐉 Initial Google Cloud environment verification and authentication setup. Use when starting a new session to ensure correct identities across gcloud, ADC, and kubectl.
 metadata:
+  author: Google
   version: 0.0.2
 ---
 
