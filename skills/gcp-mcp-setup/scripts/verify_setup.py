@@ -58,10 +58,14 @@ def get_adc_identity():
         return "Unknown (ADC not configured)"
 
 def get_configured_servers():
-    """Reads settings.json and returns a list of configured MCP server keys."""
+    """Reads settings.json and mcp_config.json paths and returns configured MCP server keys."""
     settings_paths = [
         os.path.join(os.getcwd(), ".gemini", "settings.json"),
-        os.path.expanduser("~/.gemini/settings.json")
+        os.path.expanduser("~/.gemini/settings.json"),
+        os.path.join(os.getcwd(), ".gemini", "antigravity", "mcp_config.json"),
+        os.path.expanduser("~/.gemini/antigravity/mcp_config.json"),
+        os.path.join(os.getcwd(), ".gemini", "config", "mcp_config.json"),
+        os.path.expanduser("~/.gemini/config/mcp_config.json")
     ]
     configured = []
     for path in settings_paths:

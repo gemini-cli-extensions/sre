@@ -3,7 +3,7 @@ name: gcp-mcp-setup
 description: 🐉 [SRE] Use when the user wants to set up Google Managed MCP (OneMCP) servers for their Gemini CLI environment. Automates enabling services, MCP servers, generating API keys, and configuring ~/.gemini/settings.json.
 metadata:
   author: Riccardo
-  version: 0.0.8
+  version: 0.0.9
   status: published
 ---
 
@@ -24,11 +24,13 @@ Use this skill when the user asks to "install OneMCP", "setup OneMCP", or "confi
    - By default, it installs a **Lean SRE toolset** (Logging, Monitoring, GKE, Run, Resource Manager, Developer Knowledge).
    - Use the `--all` flag to include optional services (Error Reporting, Databases, Vertex AI).
    - Script: `skills/gcp-mcp-setup/scripts/setup_onemcp.py <PROJECT_ID> [--local | --global] [--all] [--google-maps-key YOUR_KEY]`
-3. **Configure Settings**: The script securely injects the JSON configuration directly into `.gemini/settings.json` if `--local` is provided, or `~/.gemini/settings.json` if the `--global` flag is provided. This prevents accidental overwriting of existing settings. The script requires one of these flags explicitly.
+3. **Configure Settings**: The script automatically writes the `mcpServers` configuration to the correct location depending on which harness/CLI you are running:
+   - **If your harness is Gemini CLI**: The configuration is injected directly into `.gemini/settings.json` (if `--local` is provided) or `~/.gemini/settings.json` (if `--global` is provided).
+   - **If your harness is Antigravity CLI (agy)**: The configuration is written to both `.gemini/antigravity/mcp_config.json` and `.gemini/config/mcp_config.json` (if `--local` is provided) or the global equivalents under `~/.gemini/` (if `--global` is provided).
 4. **Verification & Diagnostics:**
    - Script: `skills/gcp-mcp-setup/scripts/verify_setup.py`
-   - This script runs `gemini -p "/mcp list"` and asserts that the OneMCP servers are configured and identifies identity mismatches.
-   - For direct endpoint diagnostics (without Gemini), use the curl-based tool:
+   - This script checks the configured settings across both Gemini and Antigravity paths, and tests actual endpoint connectivity.
+   - For direct endpoint diagnostics, use the curl-based tool:
      - Script: `skills/gcp-mcp-setup/scripts/test_mcp_endpoint.sh [ENDPOINT_URL]`
      - Example: `./skills/gcp-mcp-setup/scripts/test_mcp_endpoint.sh https://monitoring.googleapis.com/mcp`
 
@@ -53,5 +55,6 @@ If you encounter an identity mismatch:
 
 ## Documentation
 
+- Antigravity MCP integration guide: https://antigravity.google/docs/mcp
 - Code samples from Romin Irani: https://github.com/rominirani/google-mcp-servers/blob/main/demos/README.md
 - All supported products: https://docs.cloud.google.com/mcp/supported-products

@@ -56,10 +56,15 @@ def main():
     args = parser.parse_args()
     project_id = args.project_id
 
+    target_files = []
     if args.local:
-        settings_file = os.path.join(os.getcwd(), ".gemini", "settings.json")
+        target_files.append((os.path.join(os.getcwd(), ".gemini", "settings.json"), "gemini"))
+        target_files.append((os.path.join(os.getcwd(), ".gemini", "antigravity", "mcp_config.json"), "antigravity"))
+        target_files.append((os.path.join(os.getcwd(), ".gemini", "config", "mcp_config.json"), "antigravity"))
     else:
-        settings_file = os.path.expanduser("~/.gemini/settings.json")
+        target_files.append((os.path.expanduser("~/.gemini/settings.json"), "gemini"))
+        target_files.append((os.path.expanduser("~/.gemini/antigravity/mcp_config.json"), "antigravity"))
+        target_files.append((os.path.expanduser("~/.gemini/config/mcp_config.json"), "antigravity"))
 
     # Core SRE Services (Default)
     base_services = [
@@ -113,9 +118,6 @@ def main():
     ])
     dev_key = result.stdout.strip()
 
-    print(f"Updating {settings_file}...")
-    os.makedirs(os.path.dirname(settings_file), exist_ok=True)
-
     # Map service names to MCP config keys and URLs
     mcp_config_map = {
         'logging.googleapis.com': ('google-logging', 'https://logging.googleapis.com/mcp'),
@@ -133,48 +135,60 @@ def main():
         'bigquery.googleapis.com': ('google-bigquery', 'https://bigquery.googleapis.com/mcp'),
     }
 
-    new_mcp_servers = {}
-    for service in base_services:
-        if service == 'developerknowledge.googleapis.com':
-            new_mcp_servers['google-developer-knowledge'] = {
-                'httpUrl': 'https://developerknowledge.googleapis.com/mcp',
-                'headers': {'X-Goog-Api-Key': dev_key}
-            }
-        elif service == 'mapstools.googleapis.com':
-            new_mcp_servers['google-maps'] = {
-                'httpUrl': 'https://mapstools.googleapis.com/mcp',
-                'headers': {'X-Goog-Api-Key': args.google_maps_key}
-            }
-        elif service in mcp_config_map:
-            key, url = mcp_config_map[service]
-            new_mcp_servers[key] = {
-                'httpUrl': url,
-                'authProviderType': 'google_credentials',
-                'oauth': {'scopes': ['https://www.googleapis.com/auth/cloud-platform']},
-                'headers': {'X-goog-user-project': project_id}
-            }
+    def build_mcp_servers(target_type):
+        servers = {}
+        for service in base_services:
+            if service == 'developerknowledge.googleapis.com':
+                cfg = {
+                    'httpUrl': 'https://developerknowledge.googleapis.com/mcp',
+                    'serverUrl': 'https://developerknowledge.googleapis.com/mcp',
+                    'headers': {'X-Goog-Api-Key': dev_key}
+                }
+                servers['google-developer-knowledge'] = cfg
+            elif service == 'mapstools.googleapis.com':
+                cfg = {
+                    'httpUrl': 'https://mapstools.googleapis.com/mcp',
+                    'serverUrl': 'https://mapstools.googleapis.com/mcp',
+                    'headers': {'X-Goog-Api-Key': args.google_maps_key}
+                }
+                servers['google-maps'] = cfg
+            elif service in mcp_config_map:
+                key, url = mcp_config_map[service]
+                cfg = {
+                    'httpUrl': url,
+                    'serverUrl': url,
+                    'authProviderType': 'google_credentials',
+                    'oauth': {'scopes': ['https://www.googleapis.com/auth/cloud-platform']},
+                    'headers': {'X-goog-user-project': project_id}
+                }
+                servers[key] = cfg
+        return servers
 
-    data = {}
-    if os.path.exists(settings_file):
-        try:
-            with open(settings_file, 'r') as f:
-                data = json.load(f)
-        except json.JSONDecodeError:
-            print(f"Warning: {settings_file} contains invalid JSON. Overwriting.")
+    for config_file, target_type in target_files:
+        print(f"Updating {config_file}...")
+        os.makedirs(os.path.dirname(config_file), exist_ok=True)
 
-    if 'mcpServers' not in data:
-        data['mcpServers'] = {}
+        data = {}
+        if os.path.exists(config_file):
+            try:
+                with open(config_file, 'r') as f:
+                    data = json.load(f)
+            except json.JSONDecodeError:
+                print(f"Warning: {config_file} contains invalid JSON. Overwriting.")
 
-    # Merge or overwrite? The user likely wants to update their MCP servers.
-    data['mcpServers'].update(new_mcp_servers)
+        if 'mcpServers' not in data:
+            data['mcpServers'] = {}
 
-    with open(settings_file, 'w') as f:
-        json.dump(data, f, indent=2)
+        # Merge tailored servers
+        data['mcpServers'].update(build_mcp_servers(target_type))
 
-    print(f"Successfully updated {settings_file} with OneMCP servers.")
+        with open(config_file, 'w') as f:
+            json.dump(data, f, indent=2)
+
+        print(f"Successfully updated {config_file} with OneMCP servers.")
     print("\n======================================================")
     print(f"OneMCP Setup Complete for project: {project_id}")
-    print(f"Services Enabled: {', '.join(new_mcp_servers.keys())}")
+    print(f"Services Enabled: {', '.join(base_services)}")
     print("======================================================")
 
 if __name__ == "__main__":

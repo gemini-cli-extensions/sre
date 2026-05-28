@@ -2,6 +2,16 @@
 
 All notable changes to this skill will be documented in this file.
 
+## [0.0.9] - 2026-05-28
+### Added
+- **Antigravity CLI Support**: Added automated configuration support for the modern `agy` CLI and Antigravity Editor.
+- **Tailored Config Outputs**: The setup script now creates clean, tailored configurations (using strictly legacy `httpUrl` inside `.gemini/settings.json`, and strictly modern `serverUrl` inside `mcp_config.json` files) to avoid key pollution and comply with each tool's specification.
+- **Reference Templates**: Created structured sample templates under `references/gemini/settings.json` and `references/antigravity/mcp_config.json`.
+- **Diagnostic Verification**: Updated `verify_setup.py` to seamlessly check configuration health across both old and new paths.
+
+### Author
+- Riccardo
+
 ## [0.0.4] - 2026-03-30
 ### Added
 - **New OneMCP Endpoints**: Added automated support for GKE (`container.googleapis.com`) and Cloud Monitoring (`monitoring.googleapis.com`) MCP servers.

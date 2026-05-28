@@ -10,10 +10,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - **just plugin-version**: Exposed a parameterized recipe that retrieves the version from any plugin JSON manifest file.
 - **test/get_plugin_version.sh**: Added a robust helper bash script to extract version info from any JSON file using `jq` (with a zero-dependency fallback to `grep` and `sed`).
+- **OneMCP Support for Antigravity**: Refactored `gcp-mcp-setup` skill and `setup_onemcp.py` to seamlessly configure modern Antigravity CLI and Editor paths.
+- **Structured Reference Templates**: Created structured `settings.json` (Gemini CLI) and `mcp_config.json` (Antigravity) schemas under `skills/gcp-mcp-setup/references/`.
 
 ### Changed
 
 - **just install-agy**: Improved the recipe to check for an existing installation, compare the installed version with the workspace version, and print a warning or success message indicating whether they are in sync (e.g., `0.1.9 vs 0.1.10`).
+- **OneMCP Output Optimization**: Modified the config generator to write tailored settings keys (`httpUrl` for Gemini and `serverUrl` for Antigravity) to prevent diagnostic key pollution.
 
 ## [0.1.9] - 2026-05-28
 

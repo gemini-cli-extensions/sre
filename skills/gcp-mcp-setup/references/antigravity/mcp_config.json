@@ -1,0 +1,70 @@
+{
+  "mcpServers": {
+    "google-logging": {
+      "serverUrl": "https://logging.googleapis.com/mcp",
+      "authProviderType": "google_credentials",
+      "oauth": {
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ]
+      },
+      "headers": {
+        "X-goog-user-project": "YOUR_PROJECT_ID"
+      }
+    },
+    "google-monitoring": {
+      "serverUrl": "https://monitoring.googleapis.com/mcp",
+      "authProviderType": "google_credentials",
+      "oauth": {
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ]
+      },
+      "headers": {
+        "X-goog-user-project": "YOUR_PROJECT_ID"
+      }
+    },
+    "google-container": {
+      "serverUrl": "https://container.googleapis.com/mcp",
+      "authProviderType": "google_credentials",
+      "oauth": {
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ]
+      },
+      "headers": {
+        "X-goog-user-project": "YOUR_PROJECT_ID"
+      }
+    },
+    "google-run": {
+      "serverUrl": "https://run.googleapis.com/mcp",
+      "authProviderType": "google_credentials",
+      "oauth": {
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ]
+      },
+      "headers": {
+        "X-goog-user-project": "YOUR_PROJECT_ID"
+      }
+    },
+    "google-resourcemanager": {
+      "serverUrl": "https://cloudresourcemanager.googleapis.com/mcp",
+      "authProviderType": "google_credentials",
+      "oauth": {
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ]
+      },
+      "headers": {
+        "X-goog-user-project": "YOUR_PROJECT_ID"
+      }
+    },
+    "google-developer-knowledge": {
+      "serverUrl": "https://developerknowledge.googleapis.com/mcp",
+      "headers": {
+        "X-Goog-Api-Key": "YOUR_DEVELOPER_KNOWLEDGE_API_KEY_HERE"
+      }
+    }
+  }
+}
