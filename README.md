@@ -6,16 +6,23 @@
 
 **The SRE Gemini CLI Extension** is a dedicated toolkit comprising specialized **Skills** designed to augment Site Reliability Engineers (SREs). By integrating deeply with the Gemini CLI, this extension empowers SREs to investigate outages, configure MCP servers, formulate mitigations, and detect anomalies more rapidly. See [a few PostMortems we've created](https://github.com/palladius/about-sre-extension/) with this tool.
 
-## INSTALL
+## Installation
 
 This extension supports both **Gemini CLI** (as Extension), and **Antigravity** + **Claude Code** + **Codex** (as Plugin).
 
-### Gemini CLI (as Extension)
+For detailed installation instructions across all CLI environments, please refer to [INSTALL.md](INSTALL.md). 
 
-On [Gemini CLI installed](https://geminicli.com/), you can install this extension by typing: 
+Alternatively, if you have `just` installed, you can quickly set up the extension using our automated recipes:
 
 ```bash
-gemini extensions install https://github.com/gemini-cli-extensions/sre
+# Google Antigravity CLI (agy)
+just install-agy
+
+# Google Gemini CLI (deprecated)
+just install-geminicli
+
+# Claude Code
+just install-claude
 ```
 
 This will allow you to easily manage it's lifecycle by easily updating the extension with `/extensions update --all`.
@@ -53,6 +60,7 @@ Claude Code will automatically recognize the `.claude-plugin/plugin.json` manife
 Codex will automatically recognize the `.codex-plugin/plugin.json` manifest and register the skills.
 
 
+
 ## Available Skills
 
 ### 🛠️ Core SRE Skills
@@ -73,17 +81,9 @@ Codex will automatically recognize the `.codex-plugin/plugin.json` manifest and 
 - **`anomaly-detection`**: Detects anomalies in time-series data from various sources (Isolation Forest, KNN, Z-score).
 - **`data-ingestion`**: Fetches and parses time-series data from various sources for downstream analysis.
 
-> [!WARNING]
-> The **`safe-sre-investigator`** skill is being deprecated and its logic is being merged into native playbooks.
-
 ## Quickstart
 
-1. Install this extension via the Gemini CLI's install command:
-
-   ```bash
-   # Check INSTALL for other harnesses
-   gemini extensions install https://github.com/gemini-cli-extensions/sre
-   ```
+1. Install this extension by following the instructions in [INSTALL.md](INSTALL.md).
 2. Only for the first time, use `gcp-mcp-setup` skill to setup your GCP project, and MCP servers:
    ```bash
    $ agy
