@@ -4,13 +4,42 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.5] - 2026-05-28
+## [0.1.8] - 2026-05-28
 
 ### Added
 
 - **just install-agy**: Added a `just install-agy` recipe to automate cloning the SRE extension repository directly into the `agy` plugins directory (`~/.gemini/config/plugins/sre-extension`).
 - **just install-geminicli**: Added a `just install-geminicli` recipe to install the extension via the Gemini CLI extensions command.
 - **just install-claude**: Added a `just install-claude` recipe to run Claude Code pointing to this plugin directory.
+
+## [0.1.7] - 2026-05-22
+
+### Added
+
+- **Plugin Manifest**: Added `plugin.json` at the root of the repository to support plugin integration and discovery as a named SRE extension.
+- **Claude Plugin Support**: Added `.claude-plugin/plugin.json` to enable native compatibility with Claude Code plugins.
+- **Codex Plugin Support**: Added `.codex-plugin/plugin.json` to enable native compatibility with OpenAI Codex plugins.
+- **Documentation**: Updated `README.md` and `USER_MANUAL.md` with installation and loading guides for Antigravity, Claude Code, and OpenAI Codex plugin systems.
+
+### Changed
+
+- **Extension Config**: Bumped extension metadata version to `0.1.7` in `gemini-extension.json`.
+
+## [0.1.6] - 2026-04-20
+
+### Added
+
+- **Monitoring Graphs**: Extracted `csv_to_sparkline.py` to autogenerate Unicode sparklines wrapped in pipes for better spacing visibility on arbitrary CSVs.
+
+### Changed
+
+- **Cloud Monitoring**: Refactored the terminal statistics to adopt the 'Sparkline' naming convention and use the pipe encapsulation framework.
+
+## [0.1.5] - 2026-04-17
+
+### Added
+
+- **Cloud Monitoring**: Added 'gist' / 'graphical shape' feature to visually represent time-series data.
 
 ## [0.1.4] - 2026-04-17
 

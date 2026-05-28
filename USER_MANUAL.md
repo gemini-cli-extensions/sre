@@ -5,6 +5,33 @@ Welcome to the **SRE Gemini CLI Extension** user manual. This repository is an a
 > [!NOTE]
 > 🧪 **Experimental Status:** Please note that the Agents provided in this repository are currently experimental. They are meant to assist and accelerate reasoning but should not replace human verification.
 
+## Loading as a Plugin (Antigravity, Claude Code & OpenAI Codex)
+
+You can load this extension directly as a plugin in **Antigravity**, **Claude Code**, and **OpenAI Codex**.
+
+### Antigravity Integration
+To load the extension in Antigravity, place or symlink the repository folder inside one of these directories:
+*   **Workspace-Level**: Place in `.agents/plugins/sre-extension/` (active only for the current workspace).
+*   **Global-Level**: Place in `~/.gemini/config/plugins/sre-extension/` (active across all workspaces).
+
+Antigravity will automatically discover the `plugin.json` manifest file at the root of the directory and expose all SRE skills, guidelines, and rules.
+
+### Claude Code Integration
+To load the extension in Claude Code:
+*   **Workspace-Level**: Place or symlink the repository folder inside `.claude/plugins/sre-extension/` at the root of your workspace.
+*   **Global-Level**: Run the `claude` command with the plugin directory flag:
+    ```bash
+    claude --plugin-dir /path/to/sre-extension
+    ```
+
+Claude Code will automatically discover the `.claude-plugin/plugin.json` manifest and expose all skills under the `/sre-extension:` namespace.
+
+### OpenAI Codex Integration
+To load the extension in Codex:
+*   **Workspace-Level / Manual Integration**: Place or symlink the repository folder inside `.codex-plugin/` at the root of your workspace or custom plugin marketplace directory.
+
+Codex will automatically discover the `.codex-plugin/plugin.json` manifest file at the root of the directory and register all SRE skills.
+
 ## Available Skills
 
 ### `gcp-mcp-setup`

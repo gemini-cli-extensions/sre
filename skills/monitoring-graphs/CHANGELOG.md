@@ -2,6 +2,10 @@
 
 All notable changes to the `monitoring-graphs` skill will be documented in this file.
 
+## [0.0.6] - 2026-04-20
+### Added
+- Added `scripts/csv_to_sparkline.py` script extracted from `cloud-monitoring`. This generic script allows you to auto-generate an ASCII sparkline graphic wrapped in `|` for any given CSV numeric column. You can specify `--values-column-name` explicitly.
+
 ## [0.0.5] - 2026-04-07
 ### 📊 The "Data Integrity & Aesthetics" Update
 
