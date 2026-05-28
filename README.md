@@ -12,18 +12,16 @@ For detailed installation instructions across all CLI environments, please refer
 
 Alternatively, if you have `just` installed, you can quickly set up the extension using our automated recipes:
 
-*   **Google Antigravity CLI (`agy`):**
-    ```bash
-    just install-agy
-    ```
-*   **Google Gemini CLI:**
-    ```bash
-    just install-geminicli
-    ```
-*   **Claude Code:**
-    ```bash
-    just install-claude
-    ```
+```bash
+# Google Antigravity CLI (agy)
+just install-agy
+
+# Google Gemini CLI
+just install-geminicli
+
+# Claude Code
+just install-claude
+```
 
 
 
