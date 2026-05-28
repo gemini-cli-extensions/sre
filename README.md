@@ -2,7 +2,7 @@
   <img src="docs/sre-extension-logo.png" width="400" alt="SRE Extension Logo">
 </p>
 
-> **Note:** Given the recent [deprecation of Gemini CLI](https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/), note that this works as a Plugin for [agy CLI](https://antigravity.google), Claude Code, and Codex.
+> **Note:** Given the recent [deprecation of Gemini CLI](https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/), this Extension is also fully functional as a Plugin for [agy CLI](https://antigravity.google), Claude Code, and Codex.
 
 # About
 
