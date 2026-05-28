@@ -13,3 +13,8 @@ install-geminicli:
 # Run Claude Code with the plugin directory flag pointing to this directory
 install-claude:
   claude --plugin-dir "{{justfile_directory()}}"
+
+# Run all automated validation tests
+test:
+  test/run_tests.sh
+

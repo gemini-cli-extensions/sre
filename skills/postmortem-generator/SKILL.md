@@ -1,7 +1,6 @@
 ---
-name: [SRE] postmortem-generator
-description: 🐉 [SRE] Creates a PostMortem given enough context about an incident/outage. 
-  Will guide user to timeline, action items/bugs, and finally draft a Google Doc with the results.
+name: "postmortem-generator"
+description: "🐉 [SRE] Creates a PostMortem given enough context about an incident/outage. Will guide user to timeline, action items/bugs, and finally draft a Google Doc with the results."
 metadata:
   author: Riccardo Carlesso (creator/maintainer)
   version: 0.0.5

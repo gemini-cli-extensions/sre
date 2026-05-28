@@ -1,3 +1,10 @@
 {
-  "name": "sre-extension"
+  "name": "sre-extension",
+  "version": "0.1.9",
+  "description": "🐉 Curated collection of agent skills for Site Reliability Engineers (SREs).",
+  "author": {
+    "name": "Google"
+  },
+  "repository": "https://github.com/gemini-cli-extensions/sre",
+  "license": "Apache 2.0"
 }

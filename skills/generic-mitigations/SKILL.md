@@ -2,7 +2,7 @@
 name: generic-mitigations
 description: 🐉 Guidance on utilizing generic mitigations for rapid incident response.
 metadata:
-  author: [Ramón Medrano Llamas](https://github.com/rmedranollamas)
+  author: "[Ramón Medrano Llamas](https://github.com/rmedranollamas)"
   version: 0.0.1
   status: published
 ---
