@@ -5,10 +5,25 @@
 list:
   just -l
 
-# Install SRE extension into agy CLI plugins directory
 install-agy:
-  mkdir -p ~/.gemini/config/plugins
-  git clone git@github.com:gemini-cli-extensions/sre.git ~/.gemini/config/plugins/sre-extension
+  #!/usr/bin/env bash
+  set -euo pipefail
+  TARGET_DIR="$HOME/.gemini/config/plugins/sre-extension"
+
+  if [ -d "$TARGET_DIR" ] && [ -f "$TARGET_DIR/plugin.json" ]; then
+      echo "🟢 SRE extension is already installed in $TARGET_DIR"
+      exit 0
+  fi
+
+  if [ -d "$TARGET_DIR" ]; then
+      echo "❌ Directory $TARGET_DIR exists but plugin.json was not found." >&2
+      echo "To perform a clean installation, please remove it manually first:" >&2
+      echo "  rm -rf \"$TARGET_DIR\"" >&2
+      exit 1
+  fi
+
+  mkdir -p "$HOME/.gemini/config/plugins"
+  git clone https://github.com/gemini-cli-extensions/sre.git "$TARGET_DIR"
 
 # Install SRE extension into gemini CLI extensions directory
 install-geminicli:
