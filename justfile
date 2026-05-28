@@ -1,4 +1,7 @@
 # To install just: brew install just
+
+
+# lists all targets
 list:
   just -l
 
