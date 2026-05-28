@@ -25,8 +25,6 @@ just install-geminicli
 just install-claude
 ```
 
-This will allow you to easily manage it's lifecycle by easily updating the extension with `/extensions update --all`.
-
 
 ## Usage as a Plugin (Antigravity, Claude Code & OpenAI Codex)
 

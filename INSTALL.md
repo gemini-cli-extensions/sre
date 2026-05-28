@@ -45,6 +45,8 @@ You can install this extension via the Gemini CLI's install command:
 gemini extensions install https://github.com/gemini-cli-extensions/sre
 ```
 
+This will allow you to easily manage its lifecycle by easily updating the extension with `/extensions update --all`.
+
 ### Antigravity CLI (`agy`)
 You can clone this repository directly into the `agy` plugins directory:
 ```bash
