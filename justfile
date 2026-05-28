@@ -1,3 +1,4 @@
+# To install just: brew install just
 list:
   just -l
 
