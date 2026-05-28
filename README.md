@@ -96,6 +96,8 @@ Codex will automatically recognize the `.codex-plugin/plugin.json` manifest and 
 
 For detailed instructions on setup and usage, please refer to the [User Manual](USER_MANUAL.md).
 
+If you're interested, check out our [testing suite](https://github.com/palladius/sre-testing-suite) (currently a work in progress).
+
 
 ## Contributing
 
