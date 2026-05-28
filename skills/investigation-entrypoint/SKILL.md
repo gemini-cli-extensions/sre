@@ -1,9 +1,10 @@
 ---
 name: investigation-entrypoint
 description: 🐉 The primary entrypoint for investigating production outages, orchestrating SRE response, and mitigating incidents on Google Cloud Platform (GKE, Cloud Run, etc.). Start here when an incident occurs.
-version: 1.3.0
-author: Riccardo
-status: active
+metadata:
+  author: Riccardo Carlesso
+  version: 1.3.0
+  status: draft
 # Incident systems support:
 # ++ PagerDuty -> N8N + Pagerduty integration https://n8n.io/integrations/google-ai-studio-gemini/and/pagerduty/
 # * betterstack?

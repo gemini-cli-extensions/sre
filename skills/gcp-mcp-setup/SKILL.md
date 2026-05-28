@@ -1,8 +1,10 @@
 ---
 name: gcp-mcp-setup
-version: 0.0.8
-author: Riccardo
 description: 🐉 [SRE] Use when the user wants to set up Google Managed MCP (OneMCP) servers for their Gemini CLI environment. Automates enabling services, MCP servers, generating API keys, and configuring ~/.gemini/settings.json.
+metadata:
+  author: Riccardo
+  version: 0.0.8
+  status: published
 ---
 
 # OneMCP Setup Skill
