@@ -13,23 +13,16 @@ Ensure you have **at least one** of the supported CLI harnesses installed:
 
 ## 🚀 Easy Installation via Justfile
 
-If you have `just` installed, we provide a unified set of recipes to install the extension for your chosen harness. Run `just -l` to see available recipes, or run the command for your preferred CLI:
+If you have `just` installed, we provide a unified set of recipes to install the extension for your chosen harness:
 
-### 1. Google Antigravity CLI (`agy`)
-To install the extension into the Antigravity CLI's plugin directory:
 ```bash
+# Google Antigravity CLI (agy)
 just install-agy
-```
 
-### 2. Google Gemini CLI
-To install the extension using the standard Gemini CLI extensions mechanism:
-```bash
+# Google Gemini CLI (deprecated)
 just install-geminicli
-```
 
-### 3. Claude Code
-To launch Claude Code with this extension loaded globally as a plugin:
-```bash
+# Claude Code
 just install-claude
 ```
 
@@ -39,7 +32,8 @@ just install-claude
 
 If you prefer not to use `just`, you can install the extension manually.
 
-### Gemini CLI (Recommended)
+### 1. Google Gemini CLI (deprecated)
+
 You can install this extension via the Gemini CLI's install command:
 ```bash
 gemini extensions install https://github.com/gemini-cli-extensions/sre
@@ -47,15 +41,25 @@ gemini extensions install https://github.com/gemini-cli-extensions/sre
 
 This will allow you to easily manage its lifecycle by easily updating the extension with `/extensions update --all`.
 
-### Antigravity CLI (`agy`)
-You can clone this repository directly into the `agy` plugins directory:
+### 2. Antigravity Setup
+
+*   **Workspace-Level**: Place or symlink this repository folder inside `.agents/plugins/sre-extension/` or `_agents/plugins/sre-extension/` at the root of your workspace.
+*   **Global-Level**: Place or symlink this repository folder inside `~/.gemini/config/plugins/sre-extension/`.
+
+To install globally manually:
 ```bash
-mkdir -p ~/.gemini/config/plugins
+mkdir -p ~/.gemini/config/plugins/
 git clone git@github.com:gemini-cli-extensions/sre.git ~/.gemini/config/plugins/sre-extension
 ```
 
-### Claude Code
-Run Claude Code with the `--plugin-dir` flag pointing to this repository's absolute path:
+### 3. Claude Code Setup
+
+*   **Workspace-Level**: Place or symlink this repository folder inside `.claude/plugins/sre-extension/` at the root of your workspace.
+*   **Global-Level**: Run Claude Code with the plugin directory flag:
 ```bash
 claude --plugin-dir "/path/to/sre-extension"
 ```
+
+### 4. OpenAI Codex Setup
+
+*   **Workspace-Level / Manual Integration**: Place or symlink this repository folder inside `.codex-plugin/` or your configured plugin marketplace/custom project directory.
