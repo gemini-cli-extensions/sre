@@ -16,7 +16,7 @@ Alternatively, if you have `just` installed, you can quickly set up the extensio
 # Google Antigravity CLI (agy)
 just install-agy
 
-# Google Gemini CLI
+# Google Gemini CLI (deprecated)
 just install-geminicli
 
 # Claude Code
