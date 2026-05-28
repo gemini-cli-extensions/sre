@@ -11,7 +11,13 @@ install-agy:
   TARGET_DIR="$HOME/.gemini/config/plugins/sre-extension"
 
   if [ -d "$TARGET_DIR" ] && [ -f "$TARGET_DIR/plugin.json" ]; then
-      echo "🟢 SRE extension is already installed in $TARGET_DIR"
+      INSTALLED_VERSION=$(test/get_plugin_version.sh "$TARGET_DIR/plugin.json")
+      WORKSPACE_VERSION=$(test/get_plugin_version.sh "{{justfile_directory()}}/plugin.json")
+      if [ "$INSTALLED_VERSION" = "$WORKSPACE_VERSION" ]; then
+          echo "🟢 SRE extension is already installed in $TARGET_DIR (version matches workspace: $INSTALLED_VERSION)"
+      else
+          echo "🟡 SRE extension is already installed in $TARGET_DIR (installed: $INSTALLED_VERSION vs workspace: $WORKSPACE_VERSION)"
+      fi
       exit 0
   fi
 
@@ -25,6 +31,10 @@ install-agy:
   mkdir -p "$HOME/.gemini/config/plugins"
   git clone https://github.com/gemini-cli-extensions/sre.git "$TARGET_DIR"
 
+# Get the version from any JSON plugin/manifest file (defaults to plugin.json)
+plugin-version filepath="plugin.json":
+  @test/get_plugin_version.sh "{{filepath}}"
+
 # Install SRE extension into gemini CLI extensions directory
 install-geminicli:
   gemini extensions install https://github.com/gemini-cli-extensions/sre
@@ -36,4 +46,5 @@ install-claude:
 # Run all automated validation tests
 test:
   test/run_tests.sh
+
 
