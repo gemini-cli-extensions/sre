@@ -6,14 +6,25 @@
 
 **The SRE Gemini CLI Extension** is a dedicated toolkit comprising specialized **Skills** designed to augment Site Reliability Engineers (SREs). By integrating deeply with the Gemini CLI, this extension empowers SREs to investigate outages, configure MCP servers, formulate mitigations, and detect anomalies more rapidly.
 
-## INSTALL
+## Installation
 
-* You need [Gemini CLI installed](https://geminicli.com/).
-* Then type:
+For detailed installation instructions across all CLI environments, please refer to [INSTALL.md](INSTALL.md). 
 
-```bash
-gemini extensions install https://github.com/gemini-cli-extensions/sre
-```
+Alternatively, if you have `just` installed, you can quickly set up the extension using our automated recipes:
+
+*   **Google Antigravity CLI (`agy`):**
+    ```bash
+    just install-agy
+    ```
+*   **Google Gemini CLI:**
+    ```bash
+    just install-geminicli
+    ```
+*   **Claude Code:**
+    ```bash
+    just install-claude
+    ```
+
 
 
 ## Available Skills
@@ -38,8 +49,7 @@ gemini extensions install https://github.com/gemini-cli-extensions/sre
 
 ## Quickstart
 
-1. Install this extension via the Gemini CLI's install command:
-   `gemini extensions install https://github.com/gemini-cli-extensions/sre`
+1. Install this extension by following the instructions in [INSTALL.md](INSTALL.md).
 2. Only for the first time, use `gcp-mcp-setup` skill to setup your GCP project, and MCP servers:
    ```bash
    $ gemini 
