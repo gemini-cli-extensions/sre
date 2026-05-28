@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - **just install-agy**: Added a `just install-agy` recipe to automate cloning the SRE extension repository directly into the `agy` plugins directory (`~/.gemini/config/plugins/sre-extension`).
 - **just install-geminicli**: Added a `just install-geminicli` recipe to install the extension via the Gemini CLI extensions command.
+- **just install-claude**: Added a `just install-claude` recipe to run Claude Code pointing to this plugin directory.
 
 ## [0.1.4] - 2026-04-17
 
