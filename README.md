@@ -6,15 +6,17 @@
 
 # About
 
-**The SRE Gemini CLI Extension** is a dedicated toolkit comprising specialized **Skills** designed to augment Site Reliability Engineers (SREs). By integrating deeply with the Gemini CLI, this extension empowers SREs to investigate outages, configure MCP servers, formulate mitigations, and detect anomalies more rapidly. See [a few PostMortems we've created](https://github.com/palladius/about-sre-extension/) with this tool.
+**The SRE Gemini CLI Extension** is a dedicated toolkit comprising specialized **Skills** designed to augment Site Reliability Engineers (SREs). By integrating deeply with the Gemini CLI, this extension empowers SREs to investigate outages, configure MCP servers, formulate mitigations, and detect anomalies more rapidly.
+
+See also:
+* [Reference PostMortems](https://github.com/palladius/about-sre-extension/) we've created with this tool.
+* [SRE Testing Suite](https://github.com/palladius/sre-testing-suite) to test your setups (currently a work in progress).
 
 ## Installation
 
-This extension supports both **Gemini CLI** (as Extension), and **Antigravity** + **Claude Code** + **Codex** (as Plugin).
+For detailed installation and configuration instructions across all CLI environments, please refer to the [Installation Guide (INSTALL.md)](INSTALL.md).
 
-For detailed installation instructions across all CLI environments, please refer to [INSTALL.md](INSTALL.md). 
-
-Alternatively, if you have `just` installed, you can quickly set up the extension using our automated recipes:
+If you have `just` installed, you can quickly set up the extension:
 
 ```bash
 # Google Antigravity CLI (agy)
@@ -26,38 +28,6 @@ just install-geminicli
 # Claude Code
 just install-claude
 ```
-
-
-## Usage as a Plugin (Antigravity, Claude Code & OpenAI Codex)
-
-This "SRE extension" can also be loaded directly as a plugin in **Antigravity**, **Claude Code**, and **OpenAI Codex** (and most plugin-supporting harnesses), sharing the same set of SRE skills.
-
-### 1. Antigravity Setup
-
-*   **Workspace-Level**: Place or symlink this repository folder inside `.agents/plugins/sre-extension/` or `_agents/plugins/sre-extension/` at the root of your workspace.
-*   **Global-Level**: Place or symlink this repository folder inside `~/.gemini/config/plugins/sre-extension/`.
-
-Antigravity will automatically recognize the root `plugin.json` manifest and load the SRE skills. For instance:
-
-```bash
-# This will install the SRE Extension _globally_ for Antigravity
-mkdir -p ~/.gemini/config/plugins/
-cd ~/.gemini/config/plugins/
-git clone https://github.com/gemini-cli-extensions/sre sre-extension
-```
-
-### 2. Claude Code Setup
-
-*   **Workspace-Level**: Place or symlink this repository folder inside `.claude/plugins/sre-extension/` at the root of your workspace.
-*   **Global-Level**: Run Claude Code with the plugin directory flag: `claude --plugin-dir /path/to/sre-extension`
-
-Claude Code will automatically recognize the `.claude-plugin/plugin.json` manifest and expose the skills under the `/sre-extension:` namespace.
-
-### 3. OpenAI Codex Setup
-
-*   **Workspace-Level / Manual Integration**: Place or symlink this repository folder inside `.codex-plugin/` or your configured plugin marketplace/custom project directory.
-
-Codex will automatically recognize the `.codex-plugin/plugin.json` manifest and register the skills.
 
 
 
@@ -97,8 +67,6 @@ Codex will automatically recognize the `.codex-plugin/plugin.json` manifest and 
 3. The agent will take it from there—fetching context, querying metrics, and formulating mitigations.
 
 For detailed instructions on setup and usage, please refer to the [User Manual](USER_MANUAL.md).
-
-If you're interested, check out our [testing suite](https://github.com/palladius/sre-testing-suite) (currently a work in progress).
 
 
 ## Contributing
