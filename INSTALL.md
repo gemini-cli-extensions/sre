@@ -4,8 +4,8 @@ This guide covers installing and configuring the **SRE Extension** across differ
 
 ## Prerequisites
 
-Ensure you have one of the supported CLI harnesses installed:
-*   [Gemini CLI](https://geminicli.com/)
+Ensure you have **at least one** of the supported CLI harnesses installed:
+*   [Gemini CLI](https://geminicli.com/) (*being deprecated soon*)
 *   [Antigravity CLI (agy)](https://antigravity.google/)
 *   [Claude Code](https://github.com/anthropics/claude-code)
 
