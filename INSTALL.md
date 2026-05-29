@@ -54,11 +54,59 @@ git clone git@github.com:gemini-cli-extensions/sre.git ~/.gemini/config/plugins/
 
 ### 3. Claude Code Setup
 
-*   **Workspace-Level**: Place or symlink this repository folder inside `.claude/plugins/sre-extension/` at the root of your workspace.
-*   **Global-Level**: Run Claude Code with the plugin directory flag:
+Claude Code has **two distinct ways** to load this extension. They behave very
+differently, so pick the one that matches your needs.
+
+#### Option A — Session-scoped (`--plugin-dir`)
+
+Loads the plugin for a **single Claude session only**. Nothing is written to your
+config; when you quit Claude, it is gone. Great for trying it out or for
+development on the extension itself.
+
 ```bash
 claude --plugin-dir "/path/to/sre-extension"
+# or, from inside this repo:
+just install-claude
 ```
+
+#### Option B — Persistent install (marketplace)
+
+Installs the extension **permanently** so its skills are available in every
+future Claude session (including non-interactive `claude -p "..."` runs). This
+repo doubles as a single-plugin **marketplace** (see `.claude-plugin/marketplace.json`),
+so the flow is "add the marketplace, then install the plugin from it":
+
+```bash
+claude plugin marketplace add gemini-cli-extensions/sre
+claude plugin install sre-extension@sre
+# or, from inside this repo:
+just install-claude-persistent
+```
+
+Here the marketplace is named **`sre`** and the plugin is named
+**`sre-extension`**, which is why the install reference is `sre-extension@sre`.
+
+**Install scope** (`--scope`) controls *where* the install is recorded:
+
+| Scope | Flag | Stored in | Loads in `claude -p`? |
+| --- | --- | --- | --- |
+| User (default) | `--scope user` | `~/.claude` (global) | ✅ Yes |
+| Project | `--scope project` | `.claude/settings.json` (shared, committed) | ✅ Yes |
+| Local | `--scope local` | `.claude/settings.local.json` (per-machine) | ⚠️ Did **not** surface skills in `-p` testing — prefer `user` or `project` |
+
+Useful management commands:
+
+```bash
+claude plugin list                       # show installed plugins + scope + status
+claude plugin details sre-extension      # component inventory + token cost
+claude plugin uninstall sre-extension    # remove it (add --scope to match install)
+claude plugin marketplace remove sre     # forget the marketplace
+claude plugin validate .                 # validate the plugin/marketplace manifests
+```
+
+> **Note on `.claude/plugins/`:** unlike Gemini/Antigravity, Claude Code does
+> **not** auto-discover plugins dropped into a `.claude/plugins/` folder. Use one
+> of the two options above instead.
 
 ### 4. OpenAI Codex Setup
 

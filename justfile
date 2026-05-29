@@ -39,9 +39,14 @@ plugin-version filepath="plugin.json":
 install-geminicli:
   gemini extensions install https://github.com/gemini-cli-extensions/sre
 
-# Run Claude Code with the plugin directory flag pointing to this directory
+# Claude Code: load the plugin for ONE session only (session-scoped, nothing persisted)
 install-claude:
   claude --plugin-dir "{{justfile_directory()}}"
+
+# Claude Code: install persistently via the marketplace (user scope, available in every session incl. `-p`)
+install-claude-persistent:
+  claude plugin marketplace add gemini-cli-extensions/sre
+  claude plugin install sre-extension@sre
 
 # Run all automated validation tests
 test:

@@ -3,6 +3,6 @@
   "description": "🐉 Specialised SRE skills for outage investigations, monitoring graphs, and post-mortems on Google Cloud Platform.",
   "version": "0.1.10",
   "author": {
-    "name": "Riccardo Carlesso"
+    "name": "Google"
   }
 }
