@@ -1,6 +1,6 @@
 {
   "name": "sre-extension",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "🐉 Curated collection of agent skills for Site Reliability Engineers (SREs).",
   "author": {
     "name": "Google"

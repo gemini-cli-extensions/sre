@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.12] - 2026-05-29
+
+### Added
+
+- **Harness Compatibility Matrix**: Introduced a comprehensive client capability and support matrix directly in `README.md`, clarifying feature coverage (installation, GCP MCP setup, and general SRE capabilities) across Gemini CLI, Antigravity CLI, Claude Code, and OpenAI Codex.
+
 ## [0.1.11] - 2026-05-29
 
 ### Changed

@@ -24,10 +24,8 @@ Once installed:
 ```bash
 # Google Antigravity CLI (agy)
 just install-agy
-
 # Google Gemini CLI (deprecated)
 just install-gemini
-
 # Claude Code
 just install-claude
 ```
@@ -53,6 +51,18 @@ just install-claude
 - **`monitoring-graphs`**: Generates high-quality, annotated incident graphs for post-mortems using Python to visualize outages and error rates (nice graphs visible [here](https://github.com/palladius/about-sre-extension/)).
 - **`anomaly-detection`**: Detects anomalies in time-series data from various sources (Isolation Forest, KNN, Z-score).
 - **`data-ingestion`**: Fetches and parses time-series data from various sources for downstream analysis.
+
+## Compatibility & Harness Support
+
+| Capability            | Gemini CLI | Antigravity (`agy`)                                      | Claude Code                                              | Codex                                                    |
+| :----------------------| :----------:| :--------------------------------------------------------:| :--------------------------------------------------------:| :--------------------------------------------------------:|
+| **Type**              | Extension  | [Plugin](https://code.claude.com/docs/plugins/reference) | [Plugin](https://code.claude.com/docs/plugins/reference) | [Plugin](https://code.claude.com/docs/plugins/reference) |
+| **Install**           | ✅          | ✅                                                        | ✅                                                        | 🟢                                                        |
+| **MCP Setup**         | ✅          | ✅                                                        | 🟢                                                        | 🟢                                                        |
+| **SRE Skills**        | ✅          | ✅                                                       | 🟢                                                        | 🟢                                                        |
+| **GKE Investigation** | ✅          | ✅                                                        | 🟢                                                        | 🟢                                                        |
+
+**Legend:** ✅ Works (Tested) | 🟢 Works (Untested) | 🔴 Doesn't Work (Red Flag)
 
 ## Quickstart
 
