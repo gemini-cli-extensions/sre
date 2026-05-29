@@ -16,7 +16,10 @@ See also:
 
 For detailed installation and configuration instructions across all CLI environments, please refer to the [Installation Guide (INSTALL.md)](INSTALL.md).
 
-If you have `just` installed, you can quickly set up the extension:
+If you have [`just`](https://github.com/casey/just) (a modern `make` clone) installed, you can quickly set up the extension. If you don't have `just` yet, you can quickly install it via `brew install just` / 
+`sudo apt-get install just` (or see [casey/just](https://github.com/casey/just#installation) for more options).
+
+Once installed:
 
 ```bash
 # Google Antigravity CLI (agy)

@@ -31,12 +31,26 @@ install-agy:
   mkdir -p "$HOME/.gemini/config/plugins"
   git clone https://github.com/gemini-cli-extensions/sre.git "$TARGET_DIR"
 
+# Uninstall SRE extension from agy plugins directory
+uninstall-agy:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  TARGET_DIR="$HOME/.gemini/config/plugins/sre-extension"
+
+  if [ -d "$TARGET_DIR" ] || [ -L "$TARGET_DIR" ]; then
+      echo "🧹 Removing SRE extension from $TARGET_DIR..."
+      rm -rf "$TARGET_DIR"
+      echo "✨ SRE extension has been uninstalled successfully."
+  else
+      echo "ℹ️ SRE extension is not installed in $TARGET_DIR"
+  fi
+
 # Get the version from any JSON plugin/manifest file (defaults to plugin.json)
 plugin-version filepath="plugin.json":
   @test/get_plugin_version.sh "{{filepath}}"
 
 # Install SRE extension into gemini CLI extensions directory
-install-geminicli:
+install-gemini:
   gemini extensions install https://github.com/gemini-cli-extensions/sre
 
 # Claude Code: load the plugin for ONE session only (session-scoped, nothing persisted)
