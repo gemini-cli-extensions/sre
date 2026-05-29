@@ -60,12 +60,15 @@ just install-claude
 2. Only for the first time, use `gcp-mcp-setup` skill to setup your GCP project, and MCP servers:
    ```bash
    $ agy
-   Use the gcp-mcp-setup skill to setup my GCP project "foo-bar-123" with email jane-doe-sre@credible-company.com 
+   Use the gcp-mcp-setup skill to setup my GCP project "foo-bar-123"
+   with email jane-doe-sre@credible-company.com 
    ```
 2. Invoke the entrypoint skill with your incident request. For example:
    ```bash 
    $ agy
-   Invoke the investigation entrypoint skill with this new incident: cluster gKE with ip 1.2.3.4 is reported down by numerous customers, please investigate.
+   /investigation-entrypoint Use investigation entrypoint skill
+   with this new incident: GKE cluster with frontend 1.2.3.4 is reported 
+   down by numerous customers, please investigate.
    ```
 3. The agent will take it from there—fetching context, querying metrics, and formulating mitigations.
 

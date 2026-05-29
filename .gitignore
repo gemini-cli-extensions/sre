@@ -8,3 +8,4 @@ agents/
 .git-privatize
 riccardo-only/
 .claude/settings.local.json
+.DS_Store
