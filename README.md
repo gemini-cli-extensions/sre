@@ -26,7 +26,7 @@ Once installed:
 just install-agy
 
 # Google Gemini CLI (deprecated)
-just install-geminicli
+just install-gemini
 
 # Claude Code
 just install-claude
