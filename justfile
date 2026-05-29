@@ -31,6 +31,9 @@ install-agy:
   mkdir -p "$HOME/.gemini/config/plugins"
   git clone https://github.com/gemini-cli-extensions/sre.git "$TARGET_DIR"
 
+  INSTALLED_VERSION=$(test/get_plugin_version.sh "$TARGET_DIR/plugin.json")
+  echo "🟢 SRE extension successfully installed in $TARGET_DIR (version: $INSTALLED_VERSION)"
+
 # Uninstall SRE extension from agy plugins directory
 uninstall-agy:
   #!/usr/bin/env bash

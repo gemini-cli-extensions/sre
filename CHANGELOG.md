@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.11] - 2026-05-29
+
+### Changed
+
+- **just install-agy**: Enhanced the recipe to output a clean, green success emoji showing the installed version on first-time installation as well, matching the second-time check output.
+
 ## [0.1.10] - 2026-05-28
 
 ### Added
