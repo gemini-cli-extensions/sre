@@ -59,7 +59,7 @@ just install-claude
 | **Type**              | Extension  | [Plugin](https://code.claude.com/docs/plugins/reference) | [Plugin](https://code.claude.com/docs/plugins/reference) | [Plugin](https://code.claude.com/docs/plugins/reference) |
 | **Install**           | ✅          | ✅                                                        | ✅                                                        | 🟢                                                        |
 | **MCP Setup**         | ✅          | ✅                                                        | 🟢                                                        | 🟢                                                        |
-| **SRE Skills**        | ✅          | ✅                                                       | 🟢                                                        | 🟢                                                        |
+| **SRE Skills**        | ✅          | ✅                                                        | 🟢                                                        | 🟢                                                        |
 | **GKE Investigation** | ✅          | ✅                                                        | 🟢                                                        | 🟢                                                        |
 
 **Legend:** ✅ Works (Tested) | 🟢 Works (Untested) | 🔴 Doesn't Work (Red Flag)
@@ -67,11 +67,15 @@ just install-claude
 ## Quickstart
 
 1. Install this extension by following the instructions in [INSTALL.md](INSTALL.md).
-2. Only for the first time, use `gcp-mcp-setup` skill to setup your GCP project, and MCP servers:
+2. Only for the first time, use `gcp-setup` and `gcp-mcp-setup` skill to ensure your GCP project and MCP servers are set up correctly:
    ```bash
    $ agy
-   Use the gcp-mcp-setup skill to setup my GCP project "foo-bar-123"
-   with email jane-doe-sre@credible-company.com 
+   /gcp-setup Setup my GCP project "foo-bar-123"
+   with email `jane-doe-sre@credible-company.com`.
+   [..]
+   /gcp-mcp-setup Also set up MCP access to Cloud Logging,
+   Cloud Monitoring, GKE and Documentation (Developer Knowledge). Skip
+   BQ and Cloud Run for this time.
    ```
 2. Invoke the entrypoint skill with your incident request. For example:
    ```bash 
