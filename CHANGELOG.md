@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.13] - 2026-06-01
+
+### Changed
+
+- **Investigation Entrypoint**: Added guidelines instructing the Investigator to automatically leverage sparklines and ASCII/Unicode graphs (`export_timeseries_to_csv.py` or `csv_to_sparkline.py`) alongside start/end timestamp context to give the user a rapid visual overview of incident metrics.
+
 ## [0.1.12] - 2026-05-29
 
 ### Added
