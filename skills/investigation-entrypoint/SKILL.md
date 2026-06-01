@@ -3,7 +3,7 @@ name: investigation-entrypoint
 description: 🐉 The primary entrypoint for investigating production outages, orchestrating SRE response, and mitigating incidents on Google Cloud Platform (GKE, Cloud Run, etc.). Start here when an incident occurs.
 metadata:
   author: Riccardo Carlesso
-  version: 1.3.0
+  version: 1.3.1
   status: draft
 # Incident systems support:
 # ++ PagerDuty -> N8N + Pagerduty integration https://n8n.io/integrations/google-ai-studio-gemini/and/pagerduty/
@@ -83,6 +83,7 @@ kubectl rollout undo deployment/api-server
 - Be serious, direct, and straightforward.
 - Quote exact log messages, crash reasons, or threshold violations.
 - Provide structured findings with clear confidence levels.
+- **Visual Sparkline Feedback:** Whenever you exchange metric/graphing info with the user, try to use the scripts in the `cloud-monitoring` (specifically `export_timeseries_to_csv.py`) or `monitoring-graphs` (specifically `csv_to_sparkline.py`) skills to show the user the Unicode Sparkline (e.g., `|█▇▆▇ ▂▃   ▂ ▂|`) and the begin/end timestamp context. This allows the user to get an immediate, easy visual gist of how the graph/metric relates to the incident.
 
 ## Output Format
 
