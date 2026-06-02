@@ -17,7 +17,7 @@ See also:
 
 Watch the **SRE Extension** in action as it performs a live production outage investigation and generates a detailed PostMortem:
 
-[![SRE Extension Demo Outage Investigation](https://img.youtube.com/vi/5GGw0HegE3E/hq1.jpg)](https://www.youtube.com/watch?v=5GGw0HegE3E)
+[![SRE Extension Demo Outage Investigation](docs/sre-demo-video-thumbnail.png)](https://www.youtube.com/watch?v=5GGw0HegE3E)
 
 
 ## Installation

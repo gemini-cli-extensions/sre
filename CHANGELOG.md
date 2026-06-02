@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
-- **Outage Demo Video Thumbnail**: Swapped the demo video preview to use snapshot 1 (`hq1.jpg`) showing the start of the video for a cleaner initial visual appearance.
+- **Outage Demo Video Thumbnail**: Swapped the demo video preview to use a stunning custom screenshot (`docs/sre-demo-video-thumbnail.png`) showing the active multi-endpoint availability graph and SRE checklist for maximum visual impact.
 
 ## [0.1.14] - 2026-06-02
 
