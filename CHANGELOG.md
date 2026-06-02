@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.14] - 2026-06-02
+
+### Added
+
+- **Outage Demo Video**: Embedded a high-quality video link at the top of `README.md` showcasing a live SRE investigation and PostMortem generation with the extension.
+- **Installation Walkthrough Video**: Added a step-by-step video guide card at the top of `INSTALL.md` to help users get set up quickly.
+
 ## [0.1.13] - 2026-06-01
 
 ### Changed

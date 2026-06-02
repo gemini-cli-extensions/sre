@@ -2,6 +2,16 @@
 
 This guide covers installing and configuring the **SRE Extension** across different terminal harnesses (Google Gemini CLI, Antigravity CLI, and Claude Code).
 
+---
+
+## 📺 Installation & Setup Walkthrough
+
+Watch the step-by-step video guide to get up and running with the SRE Extension:
+
+[![SRE Extension Installation & Setup Walkthrough](https://img.youtube.com/vi/_sqPO2oYUoM/maxresdefault.jpg)](https://youtu.be/_sqPO2oYUoM)
+
+---
+
 ## Prerequisites
 
 Ensure you have **at least one** of the supported CLI harnesses installed:

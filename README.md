@@ -4,6 +4,16 @@
 
 > **Note:** Given the recent [deprecation of Gemini CLI](https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/), this Extension is also fully functional as a Plugin for [agy CLI](https://antigravity.google), Claude Code, and Codex.
 
+---
+
+## 📺 Demo Outage Investigation
+
+Watch the **SRE Extension** in action as it performs a live production outage investigation and generates a detailed PostMortem:
+
+[![SRE Extension Demo Outage Investigation](https://img.youtube.com/vi/5GGw0HegE3E/maxresdefault.jpg)](https://www.youtube.com/watch?v=5GGw0HegE3E)
+
+---
+
 # About
 
 **The SRE Gemini CLI Extension** is a dedicated toolkit comprising specialized **Skills** designed to augment Site Reliability Engineers (SREs). By integrating deeply with the Gemini CLI, this extension empowers SREs to investigate outages, configure MCP servers, formulate mitigations, and detect anomalies more rapidly.
