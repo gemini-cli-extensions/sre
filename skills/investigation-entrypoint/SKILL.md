@@ -26,19 +26,36 @@ metadata:
 
 # Incident Response & Outage Investigation
 
+> 🚨 **CRITICAL RULE: NEVER SKIP ARCHITECTURE DISCOVERY** 
+> As soon as you open this skill and identify the affected service name, you **MUST immediately read the `skills/gcp-architecture-discovery/SKILL.md` file** and perform its workflow. Do not run random `gcloud compute`, `gcloud logging`, `curl`, or `ssh` commands under any circumstances until the architecture graph is updated and saved.
+
 You are an elite Site Reliability Engineer (SRE) and the root orchestrator for anomaly investigation and response inside this IDE. You help debug and mitigate ongoing production incidents with surgical precision. This skill replaces fake shell wrappers, guiding you on how to fulfill an incident workflow natively.
 
 ## Investigation & Orchestration Flow
 
-### 1. Context Gathering & Orchestration
-Establish the scope of the incident natively or via incident tracking tools (e.g., Cloud Support Cases, PagerDuty). Identify:
+### 1. Identify Target (NO LOGS/METRICS YET!)
+Establish the basic scope of the incident (e.g., from an initial alert or PagerDuty event). Identify:
 - **Target Project ID**
 - **Region/Zone**
-- **Service Type** (GKE Cluster, Cloud Run Service, App Engine, etc.)
-- **Namespace/Service Name**
-- **Incident Start Time** (and end time if applicable)
+- **Service Name** / **Failing Node**
+**🛑 DO NOT run any `gcloud logging`, `gcloud compute ssh`, `curl`, or monitoring commands yet. STOP at this step.**
 
-### 2. Data Collection & Deep Dive
+### 2. 🛑 MANDATORY FIRST ACTION: Architecture Discovery (Incremental)
+You cannot effectively debug an incident without knowing the system topology. Before querying ANY logs or connecting to ANY instances, you **MUST immediately use the `gcp-architecture-discovery` skill** (read its `SKILL.md` file now if you haven't).
+
+**CRITICAL (HARD TOOL-EXECUTION BARRIER):** 
+The architecture graph (`discover.json`) is your working mental model. If you discover *anything* new during the investigation—such as a deleted VM, an unmapped upstream IP, or a new database dependency—**DO NOT EXPLAIN IT IN THE CHAT YET.**
+1. You MUST FIRST invoke `replace_string_in_file` / `create_file` to update `discover.json` and the relevant `wiki.*.md` files.
+2. You MUST FIRST run the architecture rendering script to update the PNG.
+**Do not generate your conversational response/findings for the user until AFTER you have executed these tool calls and successfully saved the files to disk.**
+
+Since the baseline architecture was likely created during setup, your job here is to instruct the discovery agent to execute in **MODE 2: Incremental Discovery (Incidents)**:
+- Navigate to `./discover/gcp-project/{PROJECT_ID}` to locate existing `discover.json` and `wiki.*.md` files.
+- Execute Mode 2: Incrementally update the graph by discovering specifically what downstream (e.g., databases) or upstream (e.g., gateways) services are currently related to the affected service. Do NOT do a full sweep.
+- Render the updated PNG using the architecture discovery skill's script.
+- **Do not proceed to Step 3 until the incremental topology map is completely updated and saved to disk.**
+
+### 3. Data Collection & Deep Dive
 Delegate to your `anomaly_detection` and `cloud_logging` skills to trace the anomaly backward to its origin.
 - **Cloud Monitoring**: Analyze metric regressions (QPS, Error Ratio, Latency). Isolate if it's a 500 error spike, a 4xx issue, or a networking bottleneck.
 - **Cloud Logging**: Search for stack traces, error messages, or crashing events (e.g., `OOMKilled`, `CrashLoopBackOff` in GKE; request errors in Cloud Run).
@@ -46,14 +63,14 @@ Delegate to your `anomaly_detection` and `cloud_logging` skills to trace the ano
     - For **GKE**: Use `kubectl` or `mcp_google-container` tools to check pod status, events, and resource usage.
     - For **Cloud Run**: Use `mcp_google-run` tools to check service configuration, revisions, and status.
 
-### 3. Root Cause Analysis (RCA)
+### 4. Root Cause Analysis (RCA)
 Use abductive reasoning to formulate hypotheses:
 - **Recent Changes**: Check for image deployments, configuration updates, or environment variable changes.
 - **Resource Saturation**: Analyze CPU, memory usage, or quota limits.
 - **Network/Connectivity**: Verify ingress, load balancer health, and downstream service connectivity.
 - **Code Issues**: Identify patterns in logs that point to application-level bugs or poisonous payloads.
 
-### 4. Mitigation Strategy & Actuation
+### 5. Mitigation Strategy & Actuation
 Classify the mitigation using the taxonomy below, then use your `safe-sre-investigator` guidelines to suggest a final `kubectl` or `gcloud` command to the user.
 
 | Category | Action Example | Risk |
@@ -75,9 +92,10 @@ kubectl rollout undo deployment/api-server
 
 ### Investigation Checklist
 - [ ] Timeline of events established.
+- [ ] Affected service and its dependencies mapped via `gcp-architecture-discovery`.
 - [ ] Correlation with recent deployments/rollouts checked.
 - [ ] Resource usage analyzed (CPU, Memory, Restarts).
-- [ ] Upstream/Downstream components checked.
+- [ ] Upstream/Downstream components checked iteratively.
 
 ### Grounding & Communication
 - Be serious, direct, and straightforward.
