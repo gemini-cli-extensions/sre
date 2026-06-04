@@ -4,6 +4,9 @@
 # GitHub App credentials
 gha-creds-*.json
 
+# GCP architecture discovery cache
+GCP/
+
 agents/
 .git-privatize
 riccardo-only/

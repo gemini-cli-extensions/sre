@@ -26,6 +26,9 @@ metadata:
 
 # Incident Response & Outage Investigation
 
+> 🚨 **CRITICAL RULE: DO NOT SKIP ARCHITECTURE DISCOVERY** 
+> As soon as you identify the affected service, you **MUST** use the `gcp-architecture-discovery` skill. You cannot effectively debug an incident without knowing the system topology (load balancers, databases, downstream APIs). Do not proceed to querying logs or metrics until you have established the architecture map.
+
 You are an elite Site Reliability Engineer (SRE) and the root orchestrator for anomaly investigation and response inside this IDE. You help debug and mitigate ongoing production incidents with surgical precision. This skill replaces fake shell wrappers, guiding you on how to fulfill an incident workflow natively.
 
 ## Investigation & Orchestration Flow
@@ -38,7 +41,13 @@ Establish the scope of the incident natively or via incident tracking tools (e.g
 - **Namespace/Service Name**
 - **Incident Start Time** (and end time if applicable)
 
-### 2. Data Collection & Deep Dive
+### 2. 🛑 MANDATORY: Architecture Discovery
+Once the affected service is identified, **STOP**. You **MUST immediately use the `gcp-architecture-discovery` skill** (read its instructions via tools if you haven't already) to map infrastructure and dependencies incrementally.
+- Let the `gcp-architecture-discovery` skill locate or generate the architecture documentation and topology maps.
+- Determine what downstream (e.g., databases) or upstream (e.g., gateways) services might be involved.
+- **Do not proceed to Step 3 until the architecture is mapped.**
+
+### 3. Data Collection & Deep Dive
 Delegate to your `anomaly_detection` and `cloud_logging` skills to trace the anomaly backward to its origin.
 - **Cloud Monitoring**: Analyze metric regressions (QPS, Error Ratio, Latency). Isolate if it's a 500 error spike, a 4xx issue, or a networking bottleneck.
 - **Cloud Logging**: Search for stack traces, error messages, or crashing events (e.g., `OOMKilled`, `CrashLoopBackOff` in GKE; request errors in Cloud Run).
@@ -46,14 +55,14 @@ Delegate to your `anomaly_detection` and `cloud_logging` skills to trace the ano
     - For **GKE**: Use `kubectl` or `mcp_google-container` tools to check pod status, events, and resource usage.
     - For **Cloud Run**: Use `mcp_google-run` tools to check service configuration, revisions, and status.
 
-### 3. Root Cause Analysis (RCA)
+### 4. Root Cause Analysis (RCA)
 Use abductive reasoning to formulate hypotheses:
 - **Recent Changes**: Check for image deployments, configuration updates, or environment variable changes.
 - **Resource Saturation**: Analyze CPU, memory usage, or quota limits.
 - **Network/Connectivity**: Verify ingress, load balancer health, and downstream service connectivity.
 - **Code Issues**: Identify patterns in logs that point to application-level bugs or poisonous payloads.
 
-### 4. Mitigation Strategy & Actuation
+### 5. Mitigation Strategy & Actuation
 Classify the mitigation using the taxonomy below, then use your `safe-sre-investigator` guidelines to suggest a final `kubectl` or `gcloud` command to the user.
 
 | Category | Action Example | Risk |
@@ -75,9 +84,10 @@ kubectl rollout undo deployment/api-server
 
 ### Investigation Checklist
 - [ ] Timeline of events established.
+- [ ] Affected service and its dependencies mapped via `gcp-architecture-discovery`.
 - [ ] Correlation with recent deployments/rollouts checked.
 - [ ] Resource usage analyzed (CPU, Memory, Restarts).
-- [ ] Upstream/Downstream components checked.
+- [ ] Upstream/Downstream components checked iteratively.
 
 ### Grounding & Communication
 - Be serious, direct, and straightforward.
