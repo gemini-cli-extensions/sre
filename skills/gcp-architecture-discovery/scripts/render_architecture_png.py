@@ -11,28 +11,45 @@ import urllib.request
 import zlib
 import os
 
-def render_mermaid_to_png(md_path):
-    if not os.path.exists(md_path):
-        print(f"Error: File {md_path} not found.")
+def render_mermaid_to_png(input_path):
+    if not os.path.exists(input_path):
+        print(f"Error: File {input_path} not found.")
         sys.exit(1)
 
-    with open(md_path, 'r', encoding='utf-8') as f:
+    with open(input_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Extract mermaid block
-    match = re.search(r'```mermaid\n(.*?)\n```', content, re.DOTALL)
-    if not match:
-        print(f"No Mermaid block found in {md_path}. Skipping PNG generation.")
-        sys.exit(0)
-
-    mermaid_code = match.group(1).strip()
+    # If it's a markdown file, extract mermaid block.
+    # If it's a JSON file, try to extract from a "mermaid" key.
+    # Otherwise assume raw mermaid code.
+    if input_path.endswith('.md'):
+        match = re.search(r'```mermaid\n(.*?)\n```', content, re.DOTALL)
+        if not match:
+            print(f"No Mermaid block found in {input_path}. Skipping PNG generation.")
+            sys.exit(0)
+        mermaid_code = match.group(1).strip()
+    elif input_path.endswith('.json'):
+        try:
+            data = json.loads(content)
+            mermaid_code = data.get('mermaid', '').strip()
+            if not mermaid_code:
+                print(f"No 'mermaid' key found in JSON {input_path}. Skipping.")
+                sys.exit(0)
+        except json.JSONDecodeError:
+            print(f"Invalid JSON in {input_path}. Skipping.")
+            sys.exit(1)
+    else:
+        mermaid_code = content.strip()
+        # Remove mermaid markdown fence if accidentally included
+        mermaid_code = re.sub(r'^```mermaid\n', '', mermaid_code)
+        mermaid_code = re.sub(r'\n```$', '', mermaid_code).strip()
     
     # Encode to base64 for mermaid.ink
-    # mermaid.ink expects base64 encoded string of the diagram or json state
     encoded = base64.urlsafe_b64encode(mermaid_code.encode('utf-8')).decode('ascii')
     
     api_url = f"https://mermaid.ink/img/{encoded}"
-    out_png_path = os.path.splitext(md_path)[0] + '.png'
+    out_png_path = os.path.splitext(input_path)[0] + '.png'
+
     
     print(f"Rendering diagram to {out_png_path}...")
     try:
