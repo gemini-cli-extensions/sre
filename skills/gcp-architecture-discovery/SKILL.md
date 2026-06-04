@@ -2,7 +2,7 @@
 name: gcp-architecture-discovery
 description: 🐉 [SRE] Discover and map GCP infrastructure architecture including compute, networking, storage, and service dependencies. Use when the user asks to "investigate", "check", or "troubleshoot" an issue (incremental mode) or explicitly requests to map the system. 
 metadata:
-  author: SRE Team
+  author: sstawski
   version: 0.1.0
   status: draft
 ---
