@@ -107,6 +107,29 @@ def check_skill_frontmatter(file_path, verbose=False):
             if not description.startswith('🐉'):
                 errors.append("Description must start with the dragon emoji '🐉'")
 
+        # Validate Anthropic tool name limits: length <= 64, no reserved words
+        if 'name' in data:
+            name_str = str(data['name'])
+            if len(name_str) > 64:
+                errors.append(f"Skill name '{name_str}' exceeds Anthropic limit of 64 characters (current length: {len(name_str)})")
+            
+            reserved_words = ['anthropic', 'claude']
+            for rw in reserved_words:
+                if rw in name_str.lower():
+                    errors.append(f"Skill name '{name_str}' contains Anthropic reserved word '{rw}'")
+
+        # Validate Anthropic tool description limit: length <= 1024
+        if 'description' in data:
+            description_str = str(data['description'])
+            if len(description_str) > 1024:
+                errors.append(f"Skill description exceeds Anthropic limit of 1024 characters (current length: {len(description_str)})")
+
+        # Validate SKILL.md line count: <= 500 lines
+        lines = content.splitlines()
+        line_count = len(lines)
+        if line_count > 500:
+            errors.append(f"SKILL.md file length exceeds Anthropic recommendation of 500 lines (current lines: {line_count})")
+
     except Exception as e:
         errors.append(f"Unexpected error: {str(e)}")
     
