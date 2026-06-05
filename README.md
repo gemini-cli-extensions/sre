@@ -45,6 +45,7 @@ You also need `python` and `uv` installed.
 
 ### 🛠️ Core SRE Skills
 - **`investigation-entrypoint`**: Primary entrypoint for investigating production outages, orchestrating SRE response, and mitigating incidents. Start here when an incident occurs!
+- **`gcp-architecture-discovery`**: Discover and map GCP infrastructure architecture including compute, networking, storage, and service dependencies.
 - **`gcp-playbooks`**: Follows established SRE playbooks for GCP/GKE investigations, including infrastructure discovery and common mitigation steps.
 - **`gcp-mcp-setup`**: Automates enabling services, Google Managed MCP (OneMCP) servers, generating API keys, and configuring `~/.gemini/settings.json`.
 - **`gcp-slo-management`**: Discover Monitoring Services, list existing SLOs, or create new SLOs (Availability/Latency) via the REST API.
@@ -76,7 +77,7 @@ You also need `python` and `uv` installed.
 ## Quickstart
 
 1. Install this extension by following the instructions in [INSTALL.md](INSTALL.md).
-2. Only for the first time, use `gcp-setup` and `gcp-mcp-setup` skill to ensure your GCP project and MCP servers are set up correctly:
+2. Only for the first time, use `gcp-setup` and `gcp-mcp-setup` skills to ensure your GCP project and MCP servers are set up correctly:
    ```bash
    $ agy
    /gcp-setup Setup my GCP project "foo-bar-123"
@@ -86,14 +87,14 @@ You also need `python` and `uv` installed.
    Cloud Monitoring, GKE and Documentation (Developer Knowledge). Skip
    BQ and Cloud Run for this time.
    ```
-2. Invoke the entrypoint skill with your incident request. For example:
+3. Invoke the entrypoint skill with your incident request. For example:
    ```bash 
    $ agy
    /investigation-entrypoint Use investigation entrypoint skill
    with this new incident: GKE cluster with frontend 1.2.3.4 is reported 
    down by numerous customers, please investigate.
    ```
-3. The agent will take it from there—fetching context, querying metrics, and formulating mitigations.
+4. The agent will take it from there—fetching context, querying metrics, and formulating mitigations.
 
 For detailed instructions on setup and usage, please refer to the [User Manual](USER_MANUAL.md).
 

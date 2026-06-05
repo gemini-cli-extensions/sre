@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.16] - 2026-06-05
+
+### Added
+
+- **Architecture Discovery Skill**: Added the `gcp-architecture-discovery` skill (`skills/gcp-architecture-discovery/`) to discover and map GCP infrastructure architecture including compute, networking, storage, and service dependencies.
+
+### Changed
+
+- **Entrypoint & Setup Orchestration**: Updated `gcp-setup` and `investigation-entrypoint` skills to integrate the new architecture discovery workflow as a mandatory baseline and incremental investigation step before performing queries or log analysis.
+
 ## [0.1.15] - 2026-06-02
 
 ### Changed
@@ -129,8 +139,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - **Pre-publication Cleanup**:
   - Replaced internal email addresses with GitHub profile links in `README.md` and skill metadata.
-  - Removed internal `go/` shortlinks and `/google/` infrastructure paths.
-  - Moved internal-only `TODO`s to untracked local files.
+  - Removed internal `go/` shortlinks and `/google/` infrastructure paths. <!-- pre-publish-checker: ignore -->
+  - Moved internal-only `TODO`s to untracked local files. <!-- pre-publish-checker: ignore -->
   - Restricted experimental `agents/` directory from the public repository.
 - **Improved Tooling**:
   - Added a `pre-publish-checker` skill with automated scripts for scanning profanity, internal links, and professionalism.
