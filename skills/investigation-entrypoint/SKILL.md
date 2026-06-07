@@ -26,9 +26,6 @@ metadata:
 
 # Incident Response & Outage Investigation
 
-> 🚨 **CRITICAL RULE: NEVER SKIP ARCHITECTURE DISCOVERY** 
-> As soon as you open this skill and identify the affected service name, you **MUST immediately read the `skills/gcp-architecture-discovery/SKILL.md` file** and perform its workflow. Do not run random `gcloud compute`, `gcloud logging`, `curl`, or `ssh` commands under any circumstances until the architecture graph is updated and saved.
-
 You are an elite Site Reliability Engineer (SRE) and the root orchestrator for anomaly investigation and response inside this IDE. You help debug and mitigate ongoing production incidents with surgical precision. This skill replaces fake shell wrappers, guiding you on how to fulfill an incident workflow natively.
 
 ## Investigation & Orchestration Flow
@@ -40,8 +37,8 @@ Establish the basic scope of the incident (e.g., from an initial alert or PagerD
 - **Service Name** / **Failing Node**
 **🛑 DO NOT run any `gcloud logging`, `gcloud compute ssh`, `curl`, or monitoring commands yet. STOP at this step.**
 
-### 2. 🛑 MANDATORY FIRST ACTION: Architecture Discovery (Incremental)
-You cannot effectively debug an incident without knowing the system topology. Before querying ANY logs or connecting to ANY instances, you **MUST immediately use the `gcp-architecture-discovery` skill** (read its `SKILL.md` file now if you haven't).
+### 2. Architecture Discovery
+You cannot effectively debug an incident without knowing the system topology. Before querying ANY logs or connecting to ANY instances, you **MUST immediately use the `gcp-architecture-discovery` skill**
 
 **CRITICAL (HARD TOOL-EXECUTION BARRIER):** 
 The architecture graph (`discover.json`) is your working mental model. If you discover *anything* new during the investigation—such as a deleted VM, an unmapped upstream IP, or a new database dependency—**DO NOT EXPLAIN IT IN THE CHAT YET.**
@@ -49,11 +46,11 @@ The architecture graph (`discover.json`) is your working mental model. If you di
 2. You MUST FIRST run the architecture rendering script to update the PNG.
 **Do not generate your conversational response/findings for the user until AFTER you have executed these tool calls and successfully saved the files to disk.**
 
-Since the baseline architecture was likely created during setup, your job here is to instruct the discovery agent to execute in **MODE 2: Incremental Discovery (Incidents)**:
+Instruct the discovery agent to execute building the topology map:
 - Navigate to `./discover/gcp-project/{PROJECT_ID}` to locate existing `discover.json` and `wiki.*.md` files.
-- Execute Mode 2: Incrementally update the graph by discovering specifically what downstream (e.g., databases) or upstream (e.g., gateways) services are currently related to the affected service. Do NOT do a full sweep.
+- Run a discovery to update the graph by discovering specifically what downstream (e.g., databases) or upstream (e.g., gateways) services are currently related to the affected service.
 - Render the updated PNG using the architecture discovery skill's script.
-- **Do not proceed to Step 3 until the incremental topology map is completely updated and saved to disk.**
+- **Do not proceed to Step 3 until the topology map is completely updated and saved to disk.**
 
 ### 3. Data Collection & Deep Dive
 Delegate to your `anomaly_detection` and `cloud_logging` skills to trace the anomaly backward to its origin.
@@ -87,6 +84,10 @@ Classify the mitigation using the taxonomy below, then use your `safe-sre-invest
 # ⚠️ Risk: 🟡 MEDIUM: This safely reverts the ingress routing to the previous known good state, but active connections on the faulty paths may drop.
 kubectl rollout undo deployment/api-server
 ```
+
+### 6.Post-Mitigation Architecture Update
+Once proposed mitigation actions have been accepted, the architecture may have structurally or functionally changed (e.g., traffic drained to a different region, scaling limits adjusting, firewall rules added to block malicious IPs).
+- You **MUST** run the `gcp-architecture-discovery` skill again to map the updated state.
 
 ## Technical Guidelines
 
