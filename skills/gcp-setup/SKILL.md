@@ -17,7 +17,7 @@ Use this skill to verify and harmonize your GCP identities at the start of an in
     *   To fix `gcloud`: `gcloud auth login [ACCOUNT]`
     *   To fix ADC: `gcloud auth application-default login`
     *   To fix GKE/kubectl: `gcloud container clusters get-credentials [CLUSTER] --region [REGION] --project [PROJECT]`
-3.  **🛑 MANDATORY Next Step: Architecture Discovery**: Once identities are verified and correct, check if the `./discover/{gcp-project|azure-subscription}/{PROJECT_ID_OR_NAME}` directory exists. If it is missing or empty, you **MUST** immediately transition to the `gcp-architecture-discovery` skill and explicitly instruct it to execute in **MODE 1: Initial/Full Discovery (Baseline)** to aggressively sweep and map the entire infrastructure state.
+3.  **🛑 MANDATORY Next Step: Architecture Discovery**: Once identities are verified and correct, check if the `./discover/{gcp-project|azure-subscription}/{PROJECT_ID_OR_NAME}` directory exists. If it is missing or empty, you **MUST** immediately transition to the `gcp-architecture-discovery` skill and explicitly instruct it to execute a full baseline discovery to sweep and map the entire infrastructure state.
 
 ## Bundled Scripts
 
