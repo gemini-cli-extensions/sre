@@ -16,6 +16,9 @@ defaults:
   run:
     shell: 'bash'
 
+env:
+    GEMINI_CLI_TRUST_WORKSPACE: 'true'
+
 jobs:
   review:
     runs-on: 'ubuntu-latest'
