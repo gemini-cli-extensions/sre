@@ -25,6 +25,9 @@ defaults:
   run:
     shell: 'bash'
 
+env:
+    GEMINI_CLI_TRUST_WORKSPACE: 'true'
+
 jobs:
   triage:
     runs-on: 'ubuntu-latest'
