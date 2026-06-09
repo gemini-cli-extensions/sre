@@ -8,7 +8,7 @@ This guide covers installing and configuring the **SRE Extension** across differ
 
 Watch the step-by-step video guide to get up and running with the SRE Extension:
 
-[![SRE Extension Installation & Setup Walkthrough](https://img.youtube.com/vi/_sqPO2oYUoM/maxresdefault.jpg)](https://youtu.be/_sqPO2oYUoM)
+[![SRE Extension Installation & Setup Walkthrough](https://img.youtube.com/vi/W1RMWhSDnvI/maxresdefault.jpg)](https://youtu.be/W1RMWhSDnvI)
 
 ---
 
