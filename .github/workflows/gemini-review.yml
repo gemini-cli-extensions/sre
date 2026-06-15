@@ -80,19 +80,16 @@ jobs:
               },
               "mcpServers": {
                 "github": {
-                  "command": "docker",
+                  "command": "npx",
                   "args": [
-                    "run",
-                    "-i",
-                    "--rm",
-                    "-e",
-                    "GITHUB_PERSONAL_ACCESS_TOKEN",
-                    "ghcr.io/github/github-mcp-server:v0.27.0"
+                    "-y",
+                    "@modelcontextprotocol/server-github"
                   ],
                   "includeTools": [
-                    "add_comment_to_pending_review",
-                    "pull_request_read",
-                    "pull_request_review_write"
+                    "get_pull_request",
+                    "get_pull_request_files",
+                    "get_pull_request_diff",
+                    "create_pull_request_review"
                   ],
                   "env": {
                     "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
