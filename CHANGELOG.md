@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.19] - 2026-06-15
+
+### Changed
+
+- **GitHub Actions**: Opted into Node.js 24 for all workflows by setting `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'`. Updated `actions/github-script` to `v8.0.0` to resolve deprecation warnings.
+
 ## [0.1.18] - 2026-06-15
 
 ### Fixed
