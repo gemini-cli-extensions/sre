@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.17] - 2026-06-16
+
+### Added
+
+- **Trust Workspace Environment Variable**: Added `GEMINI_CLI_TRUST_WORKSPACE` configuration across all GitHub Actions workflow files (`gemini-dispatch.yml`, `gemini-invoke.yml`, `gemini-plan-execute.yml`, `gemini-review.yml`, `gemini-scheduled-triage.yml`, `gemini-triage.yml`).
+- **Anthropic Skill Constraints**: Added documentation and automated validation checks in `test/check_skills_frontmatter.py` to ensure skill frontmatter and metadata conform to Anthropic's platform constraints.
+
+### Changed
+
+- **Architecture Discovery Skill**: Significantly refactored and compressed the `gcp-architecture-discovery` skill (`skills/gcp-architecture-discovery/SKILL.md`) for improved clarity and token efficiency.
+- **Walkthrough Videos**: Updated the YouTube walkthrough links in `README.md` and `INSTALL.md` to point to the official GCT unlisted video versions.
+
 ## [0.1.16] - 2026-06-05
 
 ### Added
