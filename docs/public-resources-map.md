@@ -2,6 +2,10 @@
 
 This document visualizes the relationships between the public SRE Extension resources, testing tools, and learning materials.
 
+## Compiled Graph Image
+
+![Public SRE Resources Map](public-resources-map.png)
+
 ## Mermaid Diagram
 
 ```mermaid
