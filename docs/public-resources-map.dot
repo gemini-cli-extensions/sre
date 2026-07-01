@@ -12,17 +12,19 @@ digraph G {
     sre_blog [label="Google Cloud Blog\n(How SREs use Gemini CLI)", fillcolor="#8ab4f8", fontcolor=black];
     survey [label="SRE Extension Survey\n(Google Forms)", fillcolor="#9c27b0"];
 
-    // Relationships (Verbs)
+    // Central Star Links (SRE Extension -> All Nodes)
     sre_extension -> about_sre_extension [label="references"];
     sre_extension -> testing_suite [label="references"];
-    sre_extension -> survey [label="collects feedback via"];
+    sre_extension -> gke_codelab [label="has tutorial"];
     sre_extension -> sre_classroom [label="references"];
     sre_extension -> sre_blog [label="references"];
+    sre_extension -> survey [label="collects feedback via"];
 
+    // Other Relationships
+    about_sre_extension -> sre_extension [label="references"];
     testing_suite -> gke_codelab [label="has related"];
     gke_codelab -> testing_suite [label="references"];
     gke_codelab -> sre_extension [label="demonstrates"];
-
     sre_classroom -> sre_extension [label="philosophical basis for"];
     sre_blog -> sre_extension [label="showcases"];
 }
