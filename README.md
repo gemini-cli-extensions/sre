@@ -12,6 +12,7 @@
 See also:
 * [Reference PostMortems](https://github.com/palladius/about-sre-extension/) we've created with this tool.
 * [SRE Testing Suite](https://github.com/palladius/sre-testing-suite) to test your setups (currently a work in progress).
+* [GKE Cluster Breakage Codelab](https://codelabs.developers.google.com/codelabs/investigate-gke-cluster-breakage-scenarios-with-postmortem#0) to practice outage investigation and postmortem scenarios.
 
 ## 📺 Demo Outage Investigation
 
