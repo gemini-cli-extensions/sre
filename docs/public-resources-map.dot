@@ -1,30 +1,47 @@
 digraph G {
     rankdir=LR;
-    node [shape=box, style="filled,rounded", color="#1a73e8", fontcolor=white, fontname="Helvetica"];
+    node [fontname="Helvetica", fontsize=10];
     edge [fontname="Helvetica", fontsize=10];
 
-    // Nodes
-    sre_extension [label="SRE Extension\n(gemini-cli-extensions/sre)", fillcolor="#1a73e8"];
-    about_sre_extension [label="Reference PostMortems\n(palladius/about-sre-extension)", fillcolor="#34a853"];
-    testing_suite [label="SRE Testing Suite\n(palladius/sre-testing-suite)", fillcolor="#f9ab00", fontcolor=black];
-    gke_codelab [label="GKE Breakage Codelab\n(Google Codelabs)", fillcolor="#ea4335"];
-    sre_classroom [label="Google SRE Classroom\n(Generic Mitigations)", fillcolor="#8ab4f8", fontcolor=black];
-    sre_blog [label="Google Cloud Blog\n(How SREs use Gemini CLI)", fillcolor="#8ab4f8", fontcolor=black];
-    survey [label="SRE Extension Survey\n(Google Forms)", fillcolor="#9c27b0"];
+    // --- TYPE 1: Code (Repositories) ---
+    node [shape=box, style="filled,rounded", color="#1a73e8", fillcolor="#1a73e8", fontcolor=white];
+    sre_extension [
+        label=<🐙 SRE Extension<br/><font face="Courier">gemini-cli-extensions/sre</font>>,
+        URL="https://github.com/gemini-cli-extensions/sre"
+    ];
+    testing_suite [
+        label=<🧪 SRE Testing Suite<br/><font face="Courier">palladius/sre-testing-suite</font>>,
+        URL="https://github.com/palladius/sre-testing-suite"
+    ];
+
+    // --- TYPE 2: Articles / Docs ---
+    node [shape=note, style="filled", color="#34a853", fillcolor="#34a853", fontcolor=white];
+    about_sre_extension [
+        label=<📝 Reference PostMortems<br/><font face="Courier">palladius/about-sre-extension</font>>,
+        URL="https://github.com/palladius/about-sre-extension"
+    ];
+    sre_blog [
+        label=<☁️📰 Google Cloud Blog<br/><font face="Courier">cloud.google.com/blog/...</font>>,
+        URL="https://cloud.google.com/blog/topics/developers-practitioners/how-google-sres-use-gemini-cli-to-solve-real-world-outages"
+    ];
+
+    // --- TYPE 3: Codelabs / Tutorials ---
+    node [shape=component, style="filled", color="#ea4335", fillcolor="#ea4335", fontcolor=white];
+    gke_codelab [
+        label=<🎓 GKE Breakage Codelab<br/><font face="Courier">codelabs.developers.google.com</font>>,
+        URL="https://codelabs.developers.google.com/codelabs/investigate-gke-cluster-breakage-scenarios-with-postmortem#0"
+    ];
 
     // Central Star Links (SRE Extension -> All Nodes)
     sre_extension -> about_sre_extension [label="references"];
     sre_extension -> testing_suite [label="references"];
     sre_extension -> gke_codelab [label="has tutorial"];
-    sre_extension -> sre_classroom [label="references"];
     sre_extension -> sre_blog [label="references"];
-    sre_extension -> survey [label="collects feedback via"];
 
     // Other Relationships
     about_sre_extension -> sre_extension [label="references"];
     testing_suite -> gke_codelab [label="has related"];
     gke_codelab -> testing_suite [label="references"];
     gke_codelab -> sre_extension [label="demonstrates"];
-    sre_classroom -> sre_extension [label="philosophical basis for"];
     sre_blog -> sre_extension [label="showcases"];
 }

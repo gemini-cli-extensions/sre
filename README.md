@@ -105,6 +105,14 @@ Check `CONTRIBUTING.md`.
 
 
 
+## 🗺️ Public Resources Map
+
+Here is a visual map showing how the SRE Extension codebase, testing suite, postmortems, and learning tutorials relate to each other:
+
+![Public SRE Resources Map](docs/public-resources-map.png)
+
+For a detailed description of the mappings, see [docs/public-resources-map.md](docs/public-resources-map.md).
+
 ## Feedback 
 
 For feedback, please report **bugs** and **feature requests** in the issue tracker.
