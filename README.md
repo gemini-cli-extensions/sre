@@ -36,6 +36,8 @@ just install-agy
 just install-gemini
 # Claude Code
 just install-claude
+# GitHub Copilot CLI
+just install-copilot-persistent
 ```
 
 You also need `python` and `uv` installed.
@@ -64,13 +66,13 @@ You also need `python` and `uv` installed.
 
 ## Compatibility & Harness Support
 
-| Capability            | Gemini CLI | Antigravity (`agy`)                                      | Claude Code                                              | Codex                                                    |
-| :----------------------| :----------:| :--------------------------------------------------------:| :--------------------------------------------------------:| :--------------------------------------------------------:|
-| **Type**              | Extension  | [Plugin](https://code.claude.com/docs/plugins/reference) | [Plugin](https://code.claude.com/docs/plugins/reference) | [Plugin](https://code.claude.com/docs/plugins/reference) |
-| **Install**           | ✅          | ✅                                                        | ✅                                                        | 🟢                                                        |
-| **MCP Setup**         | ✅          | ✅                                                        | 🟢                                                        | 🟢                                                        |
-| **SRE Skills**        | ✅          | ✅                                                        | 🟢                                                        | 🟢                                                        |
-| **GKE Investigation** | ✅          | ✅                                                        | 🟢                                                        | 🟢                                                        |
+| Capability            | Gemini CLI | Antigravity (`agy`)                                      | Claude Code                                              | Codex                                                    | Copilot CLI                                              |
+| :----------------------| :----------:| :--------------------------------------------------------:| :--------------------------------------------------------:| :--------------------------------------------------------:| :--------------------------------------------------------:|
+| **Type**              | Extension  | [Plugin](https://code.claude.com/docs/plugins/reference) | [Plugin](https://code.claude.com/docs/plugins/reference) | [Plugin](https://code.claude.com/docs/plugins/reference) | [Plugin](https://docs.github.com/copilot/how-tos/copilot-cli/customize-copilot/plugins-creating) |
+| **Install**           | ✅          | ✅                                                        | ✅                                                        | 🟢                                                        | 🟢                                                        |
+| **MCP Setup**         | ✅          | ✅                                                        | 🟢                                                        | 🟢                                                        | 🟢                                                        |
+| **SRE Skills**        | ✅          | ✅                                                        | 🟢                                                        | 🟢                                                        | 🟢                                                        |
+| **GKE Investigation** | ✅          | ✅                                                        | 🟢                                                        | 🟢                                                        | 🟢                                                        |
 
 **Legend:** ✅ Works (Tested) | 🟢 Works (Untested) | 🔴 Doesn't Work (Red Flag)
 

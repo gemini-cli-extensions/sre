@@ -121,3 +121,44 @@ claude plugin validate .                 # validate the plugin/marketplace manif
 ### 4. OpenAI Codex Setup
 
 *   **Workspace-Level / Manual Integration**: Place or symlink this repository folder inside `.codex-plugin/` or your configured plugin marketplace/custom project directory.
+
+### 5. GitHub Copilot CLI Setup
+
+GitHub Copilot CLI has **two ways** to load this extension.
+
+#### Option A — Local install (dev/trial)
+
+Installs the plugin from a local clone of this repo. Useful for development or trying it out.
+
+```bash
+# From inside this repo:
+just install-copilot
+# Or manually (point to the repo root, not a subfolder):
+copilot plugin install /path/to/sre-extension
+```
+
+To uninstall: `copilot plugin uninstall sre-extension`
+
+#### Option B — Persistent install (marketplace)
+
+Installs the extension permanently so its skills are available in every future Copilot session.
+
+```bash
+copilot plugin marketplace add gemini-cli-extensions/sre
+copilot plugin install sre-extension@sre
+# Or, from inside this repo:
+just install-copilot-persistent
+```
+
+The marketplace is named **`sre`** and the plugin is **`sre-extension`**, hence `sre-extension@sre`.
+
+Useful management commands:
+
+```bash
+copilot plugin list                        # show installed plugins
+copilot plugin update sre-extension        # update to latest version
+copilot plugin uninstall sre-extension     # remove it
+copilot plugin marketplace remove sre      # forget the marketplace
+/skills list                               # list loaded skills in a session
+```
+
