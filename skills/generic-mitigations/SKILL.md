@@ -52,3 +52,8 @@ When dealing with a live incident:
 
 *Remember: An unfamiliar mitigation is a hazard. Rely primarily on tools you
 have exercised.*
+
+## References
+
+- **Generic Mitigations: A Philosophy of Duct-Tape Outage Resolution** by Jennifer Mace: [Google SRE Classroom](https://sre.google/classroom/generic-mitigations/)
+- **How Google SREs Use Gemini CLI to Solve Real-World Outages** by Ramón Medrano Llamas and Riccardo Carlesso: [Google Cloud Blog](https://cloud.google.com/blog/topics/developers-practitioners/how-google-sres-use-gemini-cli-to-solve-real-world-outages?e=48754805)

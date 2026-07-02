@@ -11,7 +11,7 @@
 
 See also:
 * [Reference PostMortems](https://github.com/palladius/about-sre-extension/) we've created with this tool.
-* [SRE Testing Suite](https://github.com/palladius/sre-testing-suite) to test your setups (currently a work in progress).
+* [SRE Testing Suite](https://github.com/palladius/sre-testing-suite) to test your setups (currently a work in progress) and its related **[Codelab](https://codelabs.developers.google.com/codelabs/investigate-gke-cluster-breakage-scenarios-with-postmortem#0)**.
 
 ## 📺 Demo Outage Investigation
 
@@ -106,6 +106,14 @@ For detailed instructions on setup and usage, please refer to the [User Manual](
 Check `CONTRIBUTING.md`.
 
 
+
+## 🗺️ Public Resources Map
+
+Here is a visual map showing how the SRE Extension codebase, testing suite, postmortems, and learning tutorials relate to each other:
+
+![Public SRE Resources Map](docs/public-resources-map.png)
+
+For a detailed description of the mappings, see [docs/public-resources-map.md](docs/public-resources-map.md).
 
 ## Feedback 
 
