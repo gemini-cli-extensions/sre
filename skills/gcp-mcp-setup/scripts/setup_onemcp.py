@@ -17,10 +17,13 @@
 """
 OneMCP Setup Script
 This script sets the gcloud project, installs beta components, enables required services
-and MCP servers. 
+and MCP servers.
 
 By default, it installs a lean SRE toolset (Logging, Monitoring, GKE, Run, RM, ErrorReporting, DK).
 Use --all to include databases (SQL, Spanner, Firestore, BigQuery) and Vertex AI.
+
+Use --harness to target a specific CLI harness (gemini, antigravity, copilot).
+Defaults to gemini+antigravity when omitted.
 
 # Thanks to Romin Irani guidance: https://github.com/rominirani/google-mcp-servers/blob/main/demos/README.md
 """
@@ -34,37 +37,89 @@ import time
 
 def run_command(command, check=True):
     print(f"Running: {' '.join(command)}")
-    result = subprocess.run(command, text=True, capture_output=True)
+    result = subprocess.run(command, text=True, capture_output=True, shell=(sys.platform == "win32"))
     if check and result.returncode != 0:
         print(f"Command failed with error: {result.stderr}", file=sys.stderr)
         sys.exit(result.returncode)
     return result
 
+def get_gemini_mcp_format(url, *, project_id=None, api_key=None):
+    """Returns an MCP server entry in the Gemini/Antigravity mcp format."""
+    if api_key:
+        return {'httpUrl': url, 'serverUrl': url, 'headers': {'X-Goog-Api-Key': api_key}}
+    return {
+        'httpUrl': url,
+        'serverUrl': url,
+        'authProviderType': 'google_credentials',
+        'oauth': {'scopes': ['https://www.googleapis.com/auth/cloud-platform']},
+        'headers': {'X-goog-user-project': project_id},
+    }
+
+def get_copilot_mcp_format(url, *, project_id=None, api_key=None):
+    """Returns an MCP server entry in the Copilot CLI mcp format."""
+    headers = {'X-Goog-Api-Key': api_key} if api_key else {'X-goog-user-project': project_id}
+    return {'type': 'http', 'url': url, 'headers': headers, 'tools': ['*']}
+
+# Harness registry: defines config file paths and format builder per harness.
+# Add a new entry here to support additional CLI harnesses.
+HARNESS_REGISTRY = {
+    "gemini": {
+        "global": ["~/.gemini/settings.json"],
+        "local":  [".gemini/settings.json"],
+        "builder": get_gemini_mcp_format,
+    },
+    "antigravity": {
+        "global": ["~/.gemini/antigravity/mcp_config.json", "~/.gemini/config/mcp_config.json"],
+        "local":  [".gemini/antigravity/mcp_config.json", ".gemini/config/mcp_config.json"],
+        "builder": get_gemini_mcp_format,
+    },
+    "copilot": {
+        # Copilot CLI has no workspace-level MCP config yet; --local falls back to global.
+        "global": ["~/.copilot/mcp-config.json"],
+        "local":  ["~/.copilot/mcp-config.json"],
+        "builder": get_copilot_mcp_format,
+    },
+}
+
 def main():
     parser = argparse.ArgumentParser(
-        description="Set up Google Managed MCP (OneMCP) for Gemini CLI."
+        description="Set up Google Managed MCP (OneMCP) for your CLI harness."
     )
     parser.add_argument("project_id", help="The Google Cloud Project ID to use.")
-    
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("--local", action="store_true", help="Update the local .gemini/settings.json file.")
-    group.add_argument("--global", action="store_true", dest="global_config", help="Update the global ~/.gemini/settings.json file.")
 
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--local", action="store_true", help="Update the local config file (workspace-scoped).")
+    group.add_argument("--global", action="store_true", dest="global_config", help="Update the global config file (user-scoped).")
+
+    parser.add_argument(
+        "--harness",
+        choices=list(HARNESS_REGISTRY.keys()),
+        default=None,
+        help="Target CLI harness to configure. Defaults to gemini+antigravity (legacy behaviour).",
+    )
     parser.add_argument("--all", action="store_true", help="Enable all supported OneMCP servers, including databases and Vertex AI.")
     parser.add_argument("--google-maps-key", dest="google_maps_key", help="The Google Maps API Key to enable mapstools MCP.")
 
     args = parser.parse_args()
     project_id = args.project_id
+    scope = "local" if args.local else "global"
+
+    # Resolve target config files from the registry.
+    # No --harness = legacy behaviour: write to both gemini and antigravity paths.
+    if args.harness:
+        harnesses = [args.harness]
+        if args.harness == "copilot" and args.local:
+            print("Note: Copilot CLI has no workspace-level MCP config. Writing to global ~/.copilot/mcp-config.json.")
+    else:
+        harnesses = ["gemini", "antigravity"]
 
     target_files = []
-    if args.local:
-        target_files.append((os.path.join(os.getcwd(), ".gemini", "settings.json"), "gemini"))
-        target_files.append((os.path.join(os.getcwd(), ".gemini", "antigravity", "mcp_config.json"), "antigravity"))
-        target_files.append((os.path.join(os.getcwd(), ".gemini", "config", "mcp_config.json"), "antigravity"))
-    else:
-        target_files.append((os.path.expanduser("~/.gemini/settings.json"), "gemini"))
-        target_files.append((os.path.expanduser("~/.gemini/antigravity/mcp_config.json"), "antigravity"))
-        target_files.append((os.path.expanduser("~/.gemini/config/mcp_config.json"), "antigravity"))
+    for harness in harnesses:
+        config = HARNESS_REGISTRY[harness]
+        builder = config["builder"]
+        for path in config[scope]:
+            resolved = os.path.expanduser(path) if path.startswith("~") else os.path.join(os.getcwd(), path)
+            target_files.append((resolved, builder))
 
     # Core SRE Services (Default)
     base_services = [
@@ -135,36 +190,23 @@ def main():
         'bigquery.googleapis.com': ('google-bigquery', 'https://bigquery.googleapis.com/mcp'),
     }
 
-    def build_mcp_servers(target_type):
+    def build_mcp_servers(builder):
         servers = {}
         for service in base_services:
             if service == 'developerknowledge.googleapis.com':
-                cfg = {
-                    'httpUrl': 'https://developerknowledge.googleapis.com/mcp',
-                    'serverUrl': 'https://developerknowledge.googleapis.com/mcp',
-                    'headers': {'X-Goog-Api-Key': dev_key}
-                }
-                servers['google-developer-knowledge'] = cfg
+                servers['google-developer-knowledge'] = builder(
+                    'https://developerknowledge.googleapis.com/mcp', api_key=dev_key
+                )
             elif service == 'mapstools.googleapis.com':
-                cfg = {
-                    'httpUrl': 'https://mapstools.googleapis.com/mcp',
-                    'serverUrl': 'https://mapstools.googleapis.com/mcp',
-                    'headers': {'X-Goog-Api-Key': args.google_maps_key}
-                }
-                servers['google-maps'] = cfg
+                servers['google-maps'] = builder(
+                    'https://mapstools.googleapis.com/mcp', api_key=args.google_maps_key
+                )
             elif service in mcp_config_map:
                 key, url = mcp_config_map[service]
-                cfg = {
-                    'httpUrl': url,
-                    'serverUrl': url,
-                    'authProviderType': 'google_credentials',
-                    'oauth': {'scopes': ['https://www.googleapis.com/auth/cloud-platform']},
-                    'headers': {'X-goog-user-project': project_id}
-                }
-                servers[key] = cfg
+                servers[key] = builder(url, project_id=project_id)
         return servers
 
-    for config_file, target_type in target_files:
+    for config_file, builder in target_files:
         print(f"Updating {config_file}...")
         os.makedirs(os.path.dirname(config_file), exist_ok=True)
 
@@ -179,8 +221,7 @@ def main():
         if 'mcpServers' not in data:
             data['mcpServers'] = {}
 
-        # Merge tailored servers
-        data['mcpServers'].update(build_mcp_servers(target_type))
+        data['mcpServers'].update(build_mcp_servers(builder))
 
         with open(config_file, 'w') as f:
             json.dump(data, f, indent=2)

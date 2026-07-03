@@ -2,6 +2,12 @@
 
 All notable changes to this skill will be documented in this file.
 
+## [0.0.10] - 2026-07-03
+### Added
+- **GitHub Copilot CLI support**: `setup_onemcp.py` now accepts a `--harness {gemini,antigravity,copilot}` flag and writes the correct MCP config format and path per harness (`~/.copilot/mcp-config.json` using Copilot's `type/url/tools` wire format).
+- **Harness registry**: Introduced `HARNESS_REGISTRY` in `setup_onemcp.py`. Adding a new harness only requires a new registry entry and a corresponding builder function.
+- **Harness-agnostic MCP verification**: `verify_setup.py` now accepts `--harness {gemini,antigravity,copilot}` and dispatches to the correct CLI command (`gemini -p "/mcp list"`, `agy -p "/mcp list"`, or `copilot mcp list`) via a `HARNESS_MCP_LIST_CMD` registry. Also scans `~/.copilot/mcp-config.json` when checking configured servers.
+
 ## [0.0.9] - 2026-05-28
 ### Added
 - **Antigravity CLI Support**: Added automated configuration support for the modern `agy` CLI and Antigravity Editor.
