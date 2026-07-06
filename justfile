@@ -1,5 +1,6 @@
 # To install just: brew install just
-
+# On Windows, just uses PowerShell for recipes without an explicit shebang.
+set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
 
 # lists all targets
 list:
@@ -64,6 +65,15 @@ install-claude:
 install-claude-persistent:
   claude plugin marketplace add gemini-cli-extensions/sre
   claude plugin install sre-extension@sre
+
+# GitHub Copilot CLI: install locally from this repo (dev/trial use)
+install-copilot:
+  copilot plugin install "{{justfile_directory()}}"
+
+# GitHub Copilot CLI: install persistently via the marketplace (available in every session)
+install-copilot-persistent:
+  copilot plugin marketplace add gemini-cli-extensions/sre
+  copilot plugin install sre-extension@sre
 
 # Run all automated validation tests
 test:

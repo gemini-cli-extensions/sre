@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.20] - 2026-06-25
+
+### Added
+
+- **GitHub Copilot CLI support**: Added `.copilot-plugin/plugin.json` (Copilot-specific plugin manifest) and `.copilot-plugin/marketplace.json` (canonical Copilot marketplace location).
+- **Justfile**: New `install-copilot` (local dev install) and `install-copilot-persistent` (marketplace install) recipes.
+- **Documentation**: Updated `INSTALL.md` with a GitHub Copilot CLI installation section (Option A — local, Option B — marketplace). Updated `README.md` compatibility table and quickstart to include Copilot CLI.
+
 ## [0.1.19] - 2026-06-15
 
 ### Changed
