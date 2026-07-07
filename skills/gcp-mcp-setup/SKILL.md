@@ -44,8 +44,8 @@ Note that the **gcloud CLI Identity** (how you are currently logged in via `gclo
 
 MCP servers typically use ADC to authenticate. If these identities do not match, you may encounter permission errors (e.g., `serviceusage.serviceUsageConsumer` denied) even if `gcloud` commands work correctly.
 
-If MCP doesn't work, yhou can poropose to run this on user's behalf: `gcloud auth application-default login --account <PROPOSED_IDENTITY_EMAIL>`
-                                                                                                                                                          
+If MCP doesn't work, you can propose to run this on user's behalf: `gcloud auth application-default login --account <PROPOSED_IDENTITY_EMAIL>`
+
 ### 💡 Path Forward
 
 If you encounter an identity mismatch:

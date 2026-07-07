@@ -35,51 +35,23 @@ import os
 import sys
 import time
 
+sys.path.insert(0, os.path.dirname(__file__))
+from harness_registry import HARNESS_REGISTRY, HarnessName
+
+# On Windows, the default encoding is cp1252 which cannot encode emojis. Use UTF-8 to avoid encoding errors.
+if sys.stdout.encoding.lower() != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8')
+if sys.stderr.encoding.lower() != 'utf-8':
+    sys.stderr.reconfigure(encoding='utf-8')
+
+
 def run_command(command, check=True):
     print(f"Running: {' '.join(command)}")
-    result = subprocess.run(command, text=True, capture_output=True, shell=(sys.platform == "win32"))
+    result = subprocess.run(command, text=True, encoding='utf-8', capture_output=True, shell=(sys.platform == "win32"))
     if check and result.returncode != 0:
         print(f"Command failed with error: {result.stderr}", file=sys.stderr)
         sys.exit(result.returncode)
     return result
-
-def get_gemini_mcp_format(url, *, project_id=None, api_key=None):
-    """Returns an MCP server entry in the Gemini/Antigravity mcp format."""
-    if api_key:
-        return {'httpUrl': url, 'serverUrl': url, 'headers': {'X-Goog-Api-Key': api_key}}
-    return {
-        'httpUrl': url,
-        'serverUrl': url,
-        'authProviderType': 'google_credentials',
-        'oauth': {'scopes': ['https://www.googleapis.com/auth/cloud-platform']},
-        'headers': {'X-goog-user-project': project_id},
-    }
-
-def get_copilot_mcp_format(url, *, project_id=None, api_key=None):
-    """Returns an MCP server entry in the Copilot CLI mcp format."""
-    headers = {'X-Goog-Api-Key': api_key} if api_key else {'X-goog-user-project': project_id}
-    return {'type': 'http', 'url': url, 'headers': headers, 'tools': ['*']}
-
-# Harness registry: defines config file paths and format builder per harness.
-# Add a new entry here to support additional CLI harnesses.
-HARNESS_REGISTRY = {
-    "gemini": {
-        "global": ["~/.gemini/settings.json"],
-        "local":  [".gemini/settings.json"],
-        "builder": get_gemini_mcp_format,
-    },
-    "antigravity": {
-        "global": ["~/.gemini/antigravity/mcp_config.json", "~/.gemini/config/mcp_config.json"],
-        "local":  [".gemini/antigravity/mcp_config.json", ".gemini/config/mcp_config.json"],
-        "builder": get_gemini_mcp_format,
-    },
-    "copilot": {
-        # Copilot CLI has no workspace-level MCP config yet; --local falls back to global.
-        "global": ["~/.copilot/mcp-config.json"],
-        "local":  ["~/.copilot/mcp-config.json"],
-        "builder": get_copilot_mcp_format,
-    },
-}
 
 def main():
     parser = argparse.ArgumentParser(
@@ -93,9 +65,9 @@ def main():
 
     parser.add_argument(
         "--harness",
-        choices=list(HARNESS_REGISTRY.keys()),
+        choices=[h.value for h in HarnessName],
         default=None,
-        help="Target CLI harness to configure. Defaults to gemini+antigravity (legacy behaviour).",
+        help="Target CLI harness to configure (gemini, antigravity, copilot). Defaults to gemini+antigravity.",
     )
     parser.add_argument("--all", action="store_true", help="Enable all supported OneMCP servers, including databases and Vertex AI.")
     parser.add_argument("--google-maps-key", dest="google_maps_key", help="The Google Maps API Key to enable mapstools MCP.")
@@ -104,22 +76,19 @@ def main():
     project_id = args.project_id
     scope = "local" if args.local else "global"
 
-    # Resolve target config files from the registry.
-    # No --harness = legacy behaviour: write to both gemini and antigravity paths.
+    # Resolve target harnesses: explicit selection or default to gemini+antigravity.
     if args.harness:
-        harnesses = [args.harness]
-        if args.harness == "copilot" and args.local:
-            print("Note: Copilot CLI has no workspace-level MCP config. Writing to global ~/.copilot/mcp-config.json.")
+        selected_harnesses = [args.harness]
     else:
-        harnesses = ["gemini", "antigravity"]
+        selected_harnesses = [HarnessName.GEMINI, HarnessName.ANTIGRAVITY]
 
+    # Resolve target config files from the registry.
     target_files = []
-    for harness in harnesses:
-        config = HARNESS_REGISTRY[harness]
-        builder = config["builder"]
-        for path in config[scope]:
+    for harness in selected_harnesses:
+        harness_config = HARNESS_REGISTRY[harness]
+        for path in harness_config.paths(scope):
             resolved = os.path.expanduser(path) if path.startswith("~") else os.path.join(os.getcwd(), path)
-            target_files.append((resolved, builder))
+            target_files.append((resolved, harness_config.builder))
 
     # Core SRE Services (Default)
     base_services = [
@@ -128,7 +97,7 @@ def main():
         "container.googleapis.com",
         "run.googleapis.com",
         "cloudresourcemanager.googleapis.com",
-        "developerknowledge.googleapis.com"
+        # "developerknowledge.googleapis.com"
     ]
 
     # Extra Services (Enabled with --all)

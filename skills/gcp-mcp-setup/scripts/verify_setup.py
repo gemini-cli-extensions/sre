@@ -21,10 +21,19 @@ import json
 import unittest
 import urllib.request
 from unittest.mock import patch, MagicMock
- 
+
+sys.path.insert(0, os.path.dirname(__file__))
+from harness_registry import HARNESS_REGISTRY, HarnessCommand, HarnessName
+
+# On Windows, the default encoding is cp1252 which cannot encode emojis. Use UTF-8 to avoid encoding errors.
+if sys.stdout.encoding.lower() != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8')
+if sys.stderr.encoding.lower() != 'utf-8':
+    sys.stderr.reconfigure(encoding='utf-8')
+
+
 def run_command(command, check=True):
-    print(f"Running: {' '.join(command)}")
-    result = subprocess.run(command, text=True, capture_output=True, shell=(sys.platform == "win32"))
+    result = subprocess.run(command, text=True, encoding='utf-8', capture_output=True, shell=(sys.platform == "win32"))
     if check and result.returncode != 0:
         print(f"Command failed with error: {result.stderr}", file=sys.stderr)
         sys.exit(result.returncode)
@@ -55,18 +64,16 @@ def get_adc_identity():
         return "Unknown (ADC not configured)"
 
 def get_configured_servers():
-    """Reads settings.json and mcp_config.json paths and returns configured MCP server keys."""
-    settings_paths = [
-        os.path.join(os.getcwd(), ".gemini", "settings.json"),
-        os.path.expanduser("~/.gemini/settings.json"),
-        os.path.join(os.getcwd(), ".gemini", "antigravity", "mcp_config.json"),
-        os.path.expanduser("~/.gemini/antigravity/mcp_config.json"),
-        os.path.join(os.getcwd(), ".gemini", "config", "mcp_config.json"),
-        os.path.expanduser("~/.gemini/config/mcp_config.json"),
-        os.path.expanduser("~/.copilot/mcp-config.json"),
-    ]
+    """Reads all known harness MCP config paths (derived from HARNESS_REGISTRY) and returns configured MCP server keys."""
+    all_paths = set()
+    for harness_config in HARNESS_REGISTRY.values():
+        for scope in ("global", "local"):
+            for path in harness_config.paths(scope):
+                resolved = os.path.expanduser(path) if path.startswith("~") else os.path.join(os.getcwd(), path)
+                all_paths.add(resolved)
+
     configured = []
-    for path in settings_paths:
+    for path in all_paths:
         if os.path.exists(path):
             try:
                 with open(path, 'r') as f:
@@ -77,22 +84,19 @@ def get_configured_servers():
     return list(set(configured))
 
 # Maps harness name to the command that lists registered MCP servers.
-HARNESS_MCP_LIST_CMD = {
-    "gemini":      ["gemini", "-p", "/mcp list"],
-    "antigravity": ["agy", "-p", "/mcp list"],
-    "copilot":     ["copilot", "mcp", "list"],
-}
-
 def run_mcp_list(harness):
     """Runs the MCP list command for the given harness and returns its output."""
-    cmd = HARNESS_MCP_LIST_CMD.get(harness)
-    if not cmd:
+    harness_config = HARNESS_REGISTRY.get(harness)
+    if not harness_config:
         return f"Error: unknown harness '{harness}'"
     try:
+        cmd = harness_config.get_command(HarnessCommand.MCP_LIST)
         result = run_command(cmd, check=False)
         return result.stdout + result.stderr
+    except ValueError as e:
+        return f"Error: {e}"
     except Exception as e:
-        return f"Error running '{' '.join(cmd)}': {str(e)}"
+        return f"Error running mcp list for '{harness}': {str(e)}"
 
 # --- Integration / Live System Checks ---
 
@@ -238,8 +242,8 @@ if __name__ == "__main__":
         parser = argparse.ArgumentParser(description="Verify OneMCP setup for a given harness.")
         parser.add_argument(
             "--harness",
-            choices=list(HARNESS_MCP_LIST_CMD.keys()),
-            default="gemini",
+            choices=[h.value for h in HarnessName],
+            default=HarnessName.GEMINI,
             help="CLI harness to verify against (default: gemini).",
         )
         args = parser.parse_args()
