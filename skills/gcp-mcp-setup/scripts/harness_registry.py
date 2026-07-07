@@ -6,7 +6,7 @@ Single source of truth for:
   - MCP server entry format builders per harness
   - CLI commands per harness (keyed by HarnessCommand enum)
 
-To add a new harness, add one HarnessConfig entry to HARNESS_REGISTRY below.
+To add a new harness, add one HarnessConfig entry to HARNESS_REGISTRY below and to the HarnessName enum.
 """
 
 from dataclasses import dataclass
@@ -16,15 +16,12 @@ from typing import Callable
 
 class HarnessCommand(str, Enum):
     """Abstract command names supported across harnesses.
-    Using str mixin allows instances to be used directly as dict keys and in string contexts.
     """
     MCP_LIST = "mcp_list"
 
 
 class HarnessName(str, Enum):
     """Known CLI harness identifiers.
-    Using str mixin means HARNESS_REGISTRY[args.harness] works without casting,
-    since argparse returns a plain string that compares equal to the enum value.
     """
     GEMINI      = "gemini"
     ANTIGRAVITY = "antigravity"
@@ -45,7 +42,6 @@ class HarnessConfig:
 
     def get_command(self, key: "HarnessCommand") -> list[str]:
         """Returns the command list for the given key.
-
         Raises ValueError if the key is absent, None, or maps to an empty list.
         """
         cmd = self.commands.get(key)
