@@ -97,7 +97,7 @@ def main():
         "container.googleapis.com",
         "run.googleapis.com",
         "cloudresourcemanager.googleapis.com",
-        # "developerknowledge.googleapis.com"
+        "developerknowledge.googleapis.com"
     ]
 
     # Extra Services (Enabled with --all)
