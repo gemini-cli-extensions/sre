@@ -18,6 +18,7 @@ Ensure you have **at least one** of the supported CLI harnesses installed:
 *   [Gemini CLI](https://geminicli.com/) (*being deprecated soon*)
 *   [Antigravity CLI (agy)](https://antigravity.google/)
 *   [Claude Code](https://github.com/anthropics/claude-code)
+*   [GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli)
 
 ---
 
@@ -34,6 +35,9 @@ just install-geminicli
 
 # Claude Code
 just install-claude
+
+# GitHub Copilot CLI
+just install-copilot
 ```
 
 ---

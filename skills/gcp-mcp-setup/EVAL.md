@@ -28,6 +28,11 @@
 - Prompt: "What does "ConnectionPoolExhausted: Unable to acquire aconnection from the pool within the timeout." error mean?"
 - Test: Should use MCP to search for this in the DKP knowledge base.
 
+## Copilot CLI Setup
+
+- Prompt: "Please install OneMCP on my project my-gcp-project using Copilot CLI"
+- Test: Should run `setup_onemcp.py my-gcp-project --global --harness copilot` and write to `~/.copilot/mcp-config.json` using the `type/url/tools` format.
+
 ## Good Skill Structure
 
 <!-- Note: this should be available on EVERY skill, so this is the wrong place.-->

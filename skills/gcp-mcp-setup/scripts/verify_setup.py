@@ -22,17 +22,27 @@ import unittest
 import urllib.request
 from unittest.mock import patch, MagicMock
 
-# --- Utility Functions ---
+sys.path.insert(0, os.path.dirname(__file__))
+from harness_registry import HARNESS_REGISTRY, HarnessCommand, HarnessName
+
+# On Windows, the default encoding is cp1252 which cannot encode emojis. Use UTF-8 to avoid encoding errors.
+if sys.stdout.encoding.lower() != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8')
+if sys.stderr.encoding.lower() != 'utf-8':
+    sys.stderr.reconfigure(encoding='utf-8')
+
+
+def run_command(command, check=True):
+    result = subprocess.run(command, text=True, encoding='utf-8', capture_output=True, shell=(sys.platform == "win32"))
+    if check and result.returncode != 0:
+        print(f"Command failed with error: {result.stderr}", file=sys.stderr)
+        sys.exit(result.returncode)
+    return result
 
 def get_gcloud_identity():
     """Retrieves the current gcloud account email."""
     try:
-        res = subprocess.run(
-            ["gcloud", "config", "get-value", "account"],
-            capture_output=True,
-            text=True,
-            check=True
-        )
+        res = run_command(["gcloud", "config", "get-value", "account"], check=False)
         return res.stdout.strip()
     except Exception:
         return "Unknown"
@@ -40,12 +50,8 @@ def get_gcloud_identity():
 def get_adc_identity():
     """Retrieves the email associated with Application Default Credentials."""
     try:
-        # Get ADC token
-        token_res = subprocess.run(
-            ["gcloud", "auth", "application-default", "print-access-token"],
-            capture_output=True,
-            text=True,
-            check=True
+        token_res = run_command(
+            ["gcloud", "auth", "application-default", "print-access-token"], check=False
         )
         token = token_res.stdout.strip()
         
@@ -58,17 +64,16 @@ def get_adc_identity():
         return "Unknown (ADC not configured)"
 
 def get_configured_servers():
-    """Reads settings.json and mcp_config.json paths and returns configured MCP server keys."""
-    settings_paths = [
-        os.path.join(os.getcwd(), ".gemini", "settings.json"),
-        os.path.expanduser("~/.gemini/settings.json"),
-        os.path.join(os.getcwd(), ".gemini", "antigravity", "mcp_config.json"),
-        os.path.expanduser("~/.gemini/antigravity/mcp_config.json"),
-        os.path.join(os.getcwd(), ".gemini", "config", "mcp_config.json"),
-        os.path.expanduser("~/.gemini/config/mcp_config.json")
-    ]
+    """Reads all known harness MCP config paths (derived from HARNESS_REGISTRY) and returns configured MCP server keys."""
+    all_paths = set()
+    for harness_config in HARNESS_REGISTRY.values():
+        for scope in ("global", "local"):
+            for path in harness_config.paths(scope):
+                resolved = os.path.expanduser(path) if path.startswith("~") else os.path.join(os.getcwd(), path)
+                all_paths.add(resolved)
+
     configured = []
-    for path in settings_paths:
+    for path in all_paths:
         if os.path.exists(path):
             try:
                 with open(path, 'r') as f:
@@ -78,22 +83,25 @@ def get_configured_servers():
                 pass
     return list(set(configured))
 
-def run_gemini_command(prompt):
-    """Executes a gemini command in headless mode and returns the output."""
+# Maps harness name to the command that lists registered MCP servers.
+def run_mcp_list(harness):
+    """Runs the MCP list command for the given harness and returns its output."""
+    harness_config = HARNESS_REGISTRY.get(harness)
+    if not harness_config:
+        return f"Error: unknown harness '{harness}'"
     try:
-        result = subprocess.run(
-            ["gemini", "-p", prompt],
-            capture_output=True,
-            text=True,
-            timeout=60
-        )
+        cmd = harness_config.get_command(HarnessCommand.MCP_LIST)
+        result = run_command(cmd, check=False)
         return result.stdout + result.stderr
+    except ValueError as e:
+        return f"Error: {e}"
     except Exception as e:
-        return f"Error running gemini: {str(e)}"
+        return f"Error running mcp list for '{harness}': {str(e)}"
 
 # --- Integration / Live System Checks ---
 
 class TestOneMCPIntegration(unittest.TestCase):
+    harness = "gemini"  # overridden by --unittest path before test run
     
     def test_identity_match(self):
         """Verifies that gcloud and ADC identities match."""
@@ -110,26 +118,26 @@ class TestOneMCPIntegration(unittest.TestCase):
         print("  ✅ Identities match.")
 
     def test_mcp_list_output(self):
-        """Verifies that /mcp list contains our expected OneMCP servers."""
-        print("\n[Integration] Verifying MCP server configuration via Gemini CLI...")
-        output = run_gemini_command("/mcp list")
+        """Verifies that the MCP list command contains our expected OneMCP servers."""
+        print(f"\n[Integration] Verifying MCP server configuration via {self.harness}...")
+        output = run_mcp_list(self.harness)
         
         configured_servers = get_configured_servers()
         # Only check for google-managed ones
         expected_servers = [s for s in configured_servers if s.startswith("google-")]
         
         if not expected_servers:
-            print("  ⚠️ No google-* MCP servers found in settings.json. Skipping list check.")
+            print("  ⚠️ No google-* MCP servers found in config. Skipping list check.")
             return
 
         for server in expected_servers:
             with self.subTest(server=server):
-                self.assertIn(server, output, f"MCP server '{server}' not found in /mcp list output")
+                self.assertIn(server, output, f"MCP server '{server}' not found in mcp list output")
                 print(f"  ✅ Found {server}")
 
     def test_mcp_status_emojis(self):
         """Checks if servers are showing the green status emoji if connected."""
-        output = run_gemini_command("/mcp list")
+        output = run_mcp_list(self.harness)
         
         if "🟢" in output or "Ready" in output or "Connected" in output:
             print("  ✅ Green status (🟢) or 'Ready' detected for at least one server!")
@@ -166,12 +174,7 @@ class TestOneMCPSetupLogic(unittest.TestCase):
 def get_kubectl_context():
     """Retrieves current kubectl context and user from config."""
     try:
-        res = subprocess.run(
-            ["kubectl", "config", "view", "--minify", "-o", "json"],
-            capture_output=True,
-            text=True,
-            check=True
-        )
+        res = run_command(["kubectl", "config", "view", "--minify", "-o", "json"], check=False)
         data = json.loads(res.stdout)
         contexts = data.get("contexts", [])
         if contexts:
@@ -183,12 +186,7 @@ def get_kubectl_context():
 def get_kubectl_whoami():
     """Retrieves current kubectl authenticated identity from the server."""
     try:
-        res = subprocess.run(
-            ["kubectl", "auth", "whoami", "-o", "json"],
-            capture_output=True,
-            text=True,
-            check=True
-        )
+        res = run_command(["kubectl", "auth", "whoami", "-o", "json"], check=False)
         data = json.loads(res.stdout)
         # Kubernetes 1.25+ returns json with status fields
         username = data.get("status", {}).get("userInfo", {}).get("username", "Unknown")
@@ -197,12 +195,7 @@ def get_kubectl_whoami():
     except Exception:
         # Fallback to non-json parsing if -o json is not supported or fails
         try:
-            res = subprocess.run(
-                ["kubectl", "auth", "whoami"],
-                capture_output=True,
-                text=True,
-                check=True
-            )
+            res = run_command(["kubectl", "auth", "whoami"], check=False)
             # Parse table output
             lines = res.stdout.strip().split("\n")
             username = "Unknown"
@@ -235,9 +228,27 @@ class TestKubectlIntegration(unittest.TestCase):
 if __name__ == "__main__":
     # If run with --unittest, execute the unit tests and integration tests
     if len(sys.argv) > 1 and sys.argv[1] == "--unittest":
+        # Parse --harness before handing off to unittest (which owns sys.argv)
+        harness_arg = "gemini"
+        if "--harness" in sys.argv:
+            harness_idx = sys.argv.index("--harness")
+            if harness_idx + 1 < len(sys.argv):
+                harness_arg = sys.argv.pop(harness_idx + 1)
+            sys.argv.pop(harness_idx)
+        TestOneMCPIntegration.harness = harness_arg
         unittest.main(argv=[sys.argv[0]])
     else:
-        # Simple execution mode (original behavior)
+        import argparse
+        parser = argparse.ArgumentParser(description="Verify OneMCP setup for a given harness.")
+        parser.add_argument(
+            "--harness",
+            choices=[h.value for h in HarnessName],
+            default=HarnessName.GEMINI,
+            help="CLI harness to verify against (default: gemini).",
+        )
+        args = parser.parse_args()
+
+        # Simple execution mode
         print("Starting OneMCP Verification...")
         
         gcloud_id = get_gcloud_identity()
@@ -266,8 +277,8 @@ if __name__ == "__main__":
         else:
             print("  ✅ kubectl configured.")
 
-        output = run_gemini_command("/mcp list")
-        print("\n--- Gemini Output ---")
+        output = run_mcp_list(args.harness)
+        print(f"\n--- MCP List ({args.harness}) ---")
         print(output)
         print("----------------------\n")
         
@@ -277,9 +288,7 @@ if __name__ == "__main__":
         all_found = True
         for s in expected:
             if s in output:
-                # Check for 🟢 indicator in a simple way
-                status = "🟢" if "🟢" in output and s in output else "⚪"
-                print(f"{status} {s}: Found")
+                print(f"✅ {s}: Found")
             else:
                 print(f"❌ {s}: MISSING")
                 all_found = False

@@ -49,7 +49,7 @@ You also need `python` and `uv` installed.
 - **`investigation-entrypoint`**: Primary entrypoint for investigating production outages, orchestrating SRE response, and mitigating incidents. Start here when an incident occurs!
 - **`gcp-architecture-discovery`**: Discover and map GCP infrastructure architecture including compute, networking, storage, and service dependencies.
 - **`gcp-playbooks`**: Follows established SRE playbooks for GCP/GKE investigations, including infrastructure discovery and common mitigation steps.
-- **`gcp-mcp-setup`**: Automates enabling services, Google Managed MCP (OneMCP) servers, generating API keys, and configuring `~/.gemini/settings.json`.
+- **`gcp-mcp-setup`**: Automates enabling services, Google Managed MCP (OneMCP) servers, generating API keys, and configuring the MCP settings file for your CLI harness (Gemini, Antigravity, or Copilot).
 - **`gcp-slo-management`**: Discover Monitoring Services, list existing SLOs, or create new SLOs (Availability/Latency) via the REST API.
 - **`postmortem-generator`**: Creates a generated PostMortem given enough context about a resolved incident/outage.
 
@@ -70,7 +70,7 @@ You also need `python` and `uv` installed.
 | :----------------------| :----------:| :--------------------------------------------------------:| :--------------------------------------------------------:| :--------------------------------------------------------:| :--------------------------------------------------------:|
 | **Type**              | Extension  | [Plugin](https://antigravity.google/docs/plugins) | [Plugin](https://code.claude.com/docs/en/plugins-reference) | [Plugin](https://developers.openai.com/codex/plugins) | [Plugin](https://docs.github.com/copilot/how-tos/copilot-cli/customize-copilot/plugins-creating) |
 | **Install**           | ✅          | ✅                                                        | ✅                                                        | 🟢                                                        | ✅                                                        |
-| **MCP Setup**         | ✅          | ✅                                                        | 🟢                                                        | 🟢                                                        | 🔴                                                        |
+| **MCP Setup**         | ✅          | ✅                                                        | 🟢                                                        | 🟢                                                        | ✅                                                        |
 | **SRE Skills**        | ✅          | ✅                                                        | 🟢                                                        | 🟢                                                        | ✅                                                        |
 | **GKE Investigation** | ✅          | ✅                                                        | 🟢                                                        | 🟢                                                        | 🟢                                                        |
 
