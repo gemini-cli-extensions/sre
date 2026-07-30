@@ -12,6 +12,10 @@ metadata:
 
 This skill provides a **discovery** approach for GCP infrastructure. It discovers what's needed for the current investigation and caches results for future use.
 
+> **RULE: ASYNCHRONOUS INVOCATION ONLY**
+> You MUST NEVER execute this skill in the main conversation thread. Because architecture discovery is a long-running, blocking task, you must **ALWAYS** invoke it as a background subagent, regardless of whether you are in an investigation, setting up a new project, or performing a routine audit.
+> **How to invoke:** Use the `invoke_subagent` tool to spawn a clone of yourself (Subagent Type: `self`), and provide it with a prompt to execute this discovery workflow and notify you via `send_message` when complete. The main agent must continue its tasks immediately without waiting.
+
 ## When to Use
 
 - When investigating a failing service or starting an incident response.
