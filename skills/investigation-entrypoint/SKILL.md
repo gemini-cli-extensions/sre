@@ -37,20 +37,14 @@ Establish the basic scope of the incident (e.g., from an initial alert or PagerD
 - **Service Name** / **Failing Node**
 **🛑 DO NOT run any `gcloud logging`, `gcloud compute ssh`, `curl`, or monitoring commands yet. STOP at this step.**
 
-### 2. Architecture Discovery
-You cannot effectively debug an incident without knowing the system topology. Before querying ANY logs or connecting to ANY instances, you **MUST immediately use the `gcp-architecture-discovery` skill**
+### 2. Architecture Discovery (Asynchronous Background Task)
+You cannot effectively debug an incident without knowing the system topology. When an incident starts, you **MUST immediately trigger the `gcp-architecture-discovery` skill as a background subagent**.
 
-**CRITICAL (HARD TOOL-EXECUTION BARRIER):** 
-The architecture graph (`discover.json`) is your working mental model. If you discover *anything* new during the investigation—such as a deleted VM, an unmapped upstream IP, or a new database dependency—**DO NOT EXPLAIN IT IN THE CHAT YET.**
-1. You MUST FIRST invoke `replace_string_in_file` / `create_file` to update `discover.json` and the relevant `wiki.*.md` files.
-2. You MUST FIRST run the architecture rendering script to update the PNG.
-**Do not generate your conversational response/findings for the user until AFTER you have executed these tool calls and successfully saved the files to disk.**
-
-Instruct the discovery agent to execute building the topology map:
-- Navigate to `./discover/gcp-project/{PROJECT_ID}` to locate existing `discover.json` and `wiki.*.md` files.
-- Run a discovery to update the graph by discovering specifically what downstream (e.g., databases) or upstream (e.g., gateways) services are currently related to the affected service.
-- Render the updated PNG using the architecture discovery skill's script.
-- **Do not proceed to Step 3 until the topology map is completely updated and saved to disk.**
+**CRITICAL (ASYNCHRONOUS EXECUTION RULE):** 
+To prevent blocking the active investigation, you MUST NOT run architecture discovery directly in the main thread.
+1. Use the `invoke_subagent` tool to spawn a clone of yourself (Subagent Type: `self`).
+2. Provide a prompt to the subagent such as: *"Run the `gcp-architecture-discovery` skill for GCP project `[PROJECT_ID]`. Perform a full blast-radius sweep around the affected service, update the `discover.json` cache, generate the `.png` topology graph, and write the `wiki.*.md` files to the local directory. Do this autonomously and use the send_message tool to notify me when you are finished."*
+3. The main agent **MUST NOT wait** for the subagent to finish. Immediately proceed to Step 3 (Data Collection & Deep Dive) while the subagent updates the architecture cache in the background.
 
 ### 3. Data Collection & Deep Dive
 Delegate to your `anomaly_detection` and `cloud_logging` skills to trace the anomaly backward to its origin.
@@ -85,9 +79,9 @@ Classify the mitigation using the taxonomy below, then use your `safe-sre-invest
 kubectl rollout undo deployment/api-server
 ```
 
-### 6.Post-Mitigation Architecture Update
+### 6. Post-Mitigation Architecture Update
 Once proposed mitigation actions have been accepted, the architecture may have structurally or functionally changed (e.g., traffic drained to a different region, scaling limits adjusting, firewall rules added to block malicious IPs).
-- You **MUST** run the `gcp-architecture-discovery` skill again to map the updated state.
+- You **MUST** trigger the `gcp-architecture-discovery` skill again via a background subagent to asynchronously map the updated state.
 
 ## Technical Guidelines
 
