@@ -1,5 +1,6 @@
 # gemini-cli settings
 .gemini/
+!.gemini/settings.sample.json
 
 # GitHub App credentials
 gha-creds-*.json
