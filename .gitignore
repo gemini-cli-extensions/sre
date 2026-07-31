@@ -1,5 +1,6 @@
 # gemini-cli settings
 .gemini/
+!.gemini/settings.sample.json
 
 # GitHub App credentials
 gha-creds-*.json
@@ -12,3 +13,8 @@ agents/
 riccardo-only/
 .claude/settings.local.json
 .DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class

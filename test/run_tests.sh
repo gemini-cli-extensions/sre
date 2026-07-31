@@ -27,3 +27,6 @@ python3 test/check_scripts_extension.py
 
 echo "=== Running Skills Frontmatter Check ==="
 uv run --with pyyaml python3 test/check_skills_frontmatter.py
+
+echo "=== Running Architecture Discovery Tests ==="
+python3 skills/gcp-architecture-discovery/scripts/test_render_architecture_png.py
