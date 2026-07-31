@@ -12,3 +12,8 @@ agents/
 riccardo-only/
 .claude/settings.local.json
 .DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
