@@ -3,7 +3,7 @@ name: gcp-architecture-discovery
 description: 🐉 [SRE] Discover and map GCP infrastructure architecture including compute, networking, storage, and service dependencies.
 metadata:
   author: sstawski
-  version: 0.1.1
+  version: 0.1.2
 ---
 
 # GCP Architecture Discovery
@@ -49,7 +49,7 @@ Inside each project/subscription directory, maintain these explicit files:
 1. **`discover.json` (Structured Data Cache)**:
    - Contains a list of instances.
    - Contains references/dependencies to other resources.
-   - Holds the raw Mermaid code inside a `"mermaid"` key for rendering.
+   - Holds the raw Graphviz DOT code inside a `"graphviz"` key for rendering.
    - Easy for the agent to parse programmatically.
 
 2. **`wiki.<category>.md` (Topological Documentation by Resource Type)**:
@@ -84,9 +84,9 @@ You **MUST always perform this step**. Never skip saving your discoveries to dis
 **CRITICAL:** You must physically execute the `replace_string_in_file` or `create_file` tools to update these files *BEFORE* responding to the user.
 - Add newly discovered resources to `./discover/{gcp-project|azure-subscription}/{PROJECT_ID_OR_NAME}/discover.json`. Create the file/directory if it does not exist.
 - Update timestamps inside `discover.json`.
-- Update the context in the respective `./discover/{gcp-project|azure-subscription}/{PROJECT_ID_OR_NAME}/wiki.<category>.md` files based on resource type (e.g., `wiki.vnet.md`, `wiki.gce.md`). Create the files if they do not exist. Ensure there are NO raw mermaid blocks inside any wiki file.
-- Save the raw Mermaid code inside the `"mermaid"` key of `./discover/{gcp-project|azure-subscription}/{PROJECT_ID_OR_NAME}/discover.json`.
-- **CRITICAL GRAPHING RULE**: The Mermaid graph **MUST visually encompass all topological layers**. You must map EVERY resource and application into proper `subgraph` structures that represent their actual Network boundaries (Virtual Networks, VPCs, Subnets), Security Perimeters (VPC Service Controls, IAM domains), and Firewall rules (ingress/egress policies). No compute resource should "hang flat" without its network/security context.
+- Update the context in the respective `./discover/{gcp-project|azure-subscription}/{PROJECT_ID_OR_NAME}/wiki.<category>.md` files based on resource type (e.g., `wiki.vnet.md`, `wiki.gce.md`). Create the files if they do not exist. Ensure there are NO raw graphviz blocks inside any wiki file.
+- Save the raw Graphviz DOT code inside the `"graphviz"` key of `./discover/{gcp-project|azure-subscription}/{PROJECT_ID_OR_NAME}/discover.json`.
+- **CRITICAL GRAPHING RULE**: The Graphviz graph **MUST visually encompass all topological layers**. You must map EVERY resource and application into proper `subgraph` structures that represent their actual Network boundaries (Virtual Networks, VPCs, Subnets), Security Perimeters (VPC Service Controls, IAM domains), and Firewall rules (ingress/egress policies). No compute resource should "hang flat" without its network/security context.
 - Run `python skills/gcp-architecture-discovery/scripts/render_architecture_png.py ./discover/{gcp-project|azure-subscription}/{PROJECT_ID_OR_NAME}/discover.json` to generate a PNG graphic of the architecture.
 
 **Step 5: Document in Session**
