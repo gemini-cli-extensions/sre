@@ -1,10 +1,12 @@
 {
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "sre-extension",
   "version": "0.1.21",
-  "description": "🐉 Curated collection of agent skills for Site Reliability Engineers (SREs).",
+  "description": "🐉 SRE extension for AI agents: incident investigation, SLO management, cloud monitoring and log auditing.",
   "author": {
-    "name": "Google"
+    "name": "Gemini CLI Extensions Community"
   },
+  "homepage": "https://github.com/gemini-cli-extensions/sre#readme",
   "repository": "https://github.com/gemini-cli-extensions/sre",
-  "license": "Apache 2.0"
+  "license": "Apache-2.0"
 }
