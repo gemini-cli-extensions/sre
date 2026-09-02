@@ -2,6 +2,7 @@
 name: gcp-setup
 description: 🐉 Initial Google Cloud environment verification and authentication setup. Use when starting a new session to ensure correct identities across gcloud, ADC, and kubectl.
 metadata:
+  author: Google
   version: 0.0.2
 ---
 
@@ -16,6 +17,7 @@ Use this skill to verify and harmonize your GCP identities at the start of an in
     *   To fix `gcloud`: `gcloud auth login [ACCOUNT]`
     *   To fix ADC: `gcloud auth application-default login`
     *   To fix GKE/kubectl: `gcloud container clusters get-credentials [CLUSTER] --region [REGION] --project [PROJECT]`
+3.  **Next Step: Architecture Discovery(Optional)**: Once identities are verified and correct, check if the `./discover/{gcp-project|azure-subscription}/{PROJECT_ID_OR_NAME}` directory exists. If it is missing or empty, and user asked transition to the `gcp-architecture-discovery` skill and explicitly instruct it to execute a full baseline discovery to sweep and map the entire infrastructure state.
 
 ## Bundled Scripts
 

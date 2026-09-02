@@ -1,10 +1,20 @@
 # gemini-cli settings
 .gemini/
+!.gemini/settings.sample.json
 
 # GitHub App credentials
 gha-creds-*.json
 
+# GCP architecture discovery cache
+GCP/
+
 agents/
 .git-privatize
 riccardo-only/
-justfile
+.claude/settings.local.json
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class

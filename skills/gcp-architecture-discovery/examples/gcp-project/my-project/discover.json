@@ -1,0 +1,32 @@
+{
+  "product": "cloud_run",
+  "project_id": "my-project",
+  "last_updated": "2026-06-02T15:00:00Z",
+  "network_context": {
+    "vpc": "my-main-vpc",
+    "subnet": "default-us-central1",
+    "ingress_firewall": "allow-web-traffic"
+  },
+  "instances": [
+    {
+      "name": "frontend",
+      "region": "us-central1",
+      "discovered_at": "2026-06-02T14:30:00Z"
+    }
+  ],
+  "references": {
+    "frontend": [
+      {
+        "type": "cloud_sql",
+        "target_project": "my-project",
+        "target_name": "postgres-db"
+      },
+      {
+        "type": "pubsub",
+        "target_project": "my-project",
+        "target_name": "events-topic"
+      }
+    ]
+  },
+  "mermaid": "graph TD\n    Client((Client)) -->|Ingress/HTTPS| LB[Cloud Load Balancer]\n    \n    subgraph \"Security Perimeter: VPC Service Controls\"\n        subgraph \"VPC: my-main-vpc\"\n            subgraph \"Subnet: us-central1 / Firewall: allow-web-traffic\"\n                LB --> Frontend[Cloud Run: frontend]\n                Frontend -->|Reads/Writes Profiles| DB[(Cloud SQL: postgres-db)]\n            end\n        end\n\n        Frontend -->|Publishes Events| Async[Pub/Sub: events-topic]\n    end\n    \n    style Frontend fill:#326ce5,stroke:#fff,stroke-width:2px,color:#fff\n    style LB fill:#8b42f5,stroke:#fff,stroke-width:2px,color:#fff"
+}

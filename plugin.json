@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "sre-extension",
-  "version": "0.1.8",
+  "version": "0.1.21",
   "description": "🐉 SRE extension for AI agents: incident investigation, SLO management, cloud monitoring and log auditing.",
   "author": {
     "name": "Gemini CLI Extensions Community"

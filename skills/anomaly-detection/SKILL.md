@@ -1,6 +1,10 @@
 ---
 name: anomaly-detection
 description: 🐉 Detects anomalies in time-series data from various sources.
+metadata:
+  author: Google
+  version: 0.1.0
+  status: published
 ---
 
 # Anomaly Detection Skill

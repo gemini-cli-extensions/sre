@@ -1,0 +1,82 @@
+# To install just: brew install just
+# On Windows, just uses PowerShell for recipes without an explicit shebang.
+set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
+
+# lists all targets
+list:
+  just -l
+
+install-agy:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  TARGET_DIR="$HOME/.gemini/config/plugins/sre-extension"
+
+  if [ -d "$TARGET_DIR" ] && [ -f "$TARGET_DIR/plugin.json" ]; then
+      INSTALLED_VERSION=$(test/get_plugin_version.sh "$TARGET_DIR/plugin.json")
+      WORKSPACE_VERSION=$(test/get_plugin_version.sh "{{justfile_directory()}}/plugin.json")
+      if [ "$INSTALLED_VERSION" = "$WORKSPACE_VERSION" ]; then
+          echo "🟢 SRE extension is already installed in $TARGET_DIR (version matches workspace: $INSTALLED_VERSION)"
+      else
+          echo "🟡 SRE extension is already installed in $TARGET_DIR (installed: $INSTALLED_VERSION vs workspace: $WORKSPACE_VERSION)"
+      fi
+      exit 0
+  fi
+
+  if [ -d "$TARGET_DIR" ]; then
+      echo "❌ Directory $TARGET_DIR exists but plugin.json was not found." >&2
+      echo "To perform a clean installation, please remove it manually first:" >&2
+      echo "  rm -rf \"$TARGET_DIR\"" >&2
+      exit 1
+  fi
+
+  mkdir -p "$HOME/.gemini/config/plugins"
+  git clone https://github.com/gemini-cli-extensions/sre.git "$TARGET_DIR"
+
+  INSTALLED_VERSION=$(test/get_plugin_version.sh "$TARGET_DIR/plugin.json")
+  echo "🟢 SRE extension successfully installed in $TARGET_DIR (version: $INSTALLED_VERSION)"
+
+# Uninstall SRE extension from agy plugins directory
+uninstall-agy:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  TARGET_DIR="$HOME/.gemini/config/plugins/sre-extension"
+
+  if [ -d "$TARGET_DIR" ] || [ -L "$TARGET_DIR" ]; then
+      echo "🧹 Removing SRE extension from $TARGET_DIR..."
+      rm -rf "$TARGET_DIR"
+      echo "✨ SRE extension has been uninstalled successfully."
+  else
+      echo "ℹ️ SRE extension is not installed in $TARGET_DIR"
+  fi
+
+# Get the version from any JSON plugin/manifest file (defaults to plugin.json)
+plugin-version filepath="plugin.json":
+  @test/get_plugin_version.sh "{{filepath}}"
+
+# Install SRE extension into gemini CLI extensions directory
+install-gemini:
+  gemini extensions install https://github.com/gemini-cli-extensions/sre
+
+# Claude Code: load the plugin for ONE session only (session-scoped, nothing persisted)
+install-claude:
+  claude --plugin-dir "{{justfile_directory()}}"
+
+# Claude Code: install persistently via the marketplace (user scope, available in every session incl. `-p`)
+install-claude-persistent:
+  claude plugin marketplace add gemini-cli-extensions/sre
+  claude plugin install sre-extension@sre
+
+# GitHub Copilot CLI: install locally from this repo (dev/trial use)
+install-copilot:
+  copilot plugin install "{{justfile_directory()}}"
+
+# GitHub Copilot CLI: install persistently via the marketplace (available in every session)
+install-copilot-persistent:
+  copilot plugin marketplace add gemini-cli-extensions/sre
+  copilot plugin install sre-extension@sre
+
+# Run all automated validation tests
+test:
+  test/run_tests.sh
+
+

@@ -4,6 +4,113 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.21] - 2026-07-31
+
+### Changed
+
+- **Architecture Discovery Skill**: Switched from external Mermaid rendering (`mermaid.ink`) to secure, offline Graphviz (`dot`) rendering for GCP architecture PNG generation to prevent data exfiltration.
+- **Testing**: Added `test_render_architecture_png.py` to `test/run_tests.sh` to validate local rendering script offline capabilities.
+
+## [0.1.20] - 2026-06-25
+
+### Added
+
+- **GitHub Copilot CLI support**: Added `.copilot-plugin/plugin.json` (Copilot-specific plugin manifest) and `.copilot-plugin/marketplace.json` (canonical Copilot marketplace location).
+- **Justfile**: New `install-copilot` (local dev install) and `install-copilot-persistent` (marketplace install) recipes.
+- **Documentation**: Updated `INSTALL.md` with a GitHub Copilot CLI installation section (Option A — local, Option B — marketplace). Updated `README.md` compatibility table and quickstart to include Copilot CLI.
+
+## [0.1.19] - 2026-06-15
+
+### Changed
+
+- **GitHub Actions**: Opted into Node.js 24 for all workflows by setting `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'`. Updated `actions/github-script` to `v8.0.0` to resolve deprecation warnings.
+
+## [0.1.18] - 2026-06-15
+
+### Fixed
+
+- **Gemini CLI GHA Integration**: Resolved issue #37 by correcting GitHub MCP tool names (`get_issue`, `get_pull_request`, etc.) in TOML prompts and workflow YAML configurations. Switched from Docker to `npx` for the GitHub MCP server to improve reliability and performance in GitHub Actions.
+
+## [0.1.17] - 2026-06-09
+
+### Changed
+
+- **Documentation**: Updated walkthrough video links and environment configurations for workspace trust.
+
+## [0.1.16] - 2026-06-05
+
+### Added
+
+- **Architecture Discovery Skill**: Added the `gcp-architecture-discovery` skill (`skills/gcp-architecture-discovery/`) to discover and map GCP infrastructure architecture including compute, networking, storage, and service dependencies.
+
+### Changed
+
+- **Entrypoint & Setup Orchestration**: Updated `gcp-setup` and `investigation-entrypoint` skills to integrate the new architecture discovery workflow as a mandatory baseline and incremental investigation step before performing queries or log analysis.
+
+## [0.1.15] - 2026-06-02
+
+### Changed
+
+- **Outage Demo Video Thumbnail**: Swapped the demo video preview to use a stunning custom screenshot (`docs/sre-demo-video-thumbnail.png`) showing the active multi-endpoint availability graph and SRE checklist for maximum visual impact.
+
+## [0.1.14] - 2026-06-02
+
+### Added
+
+- **Outage Demo Video**: Embedded a high-quality video link at the top of `README.md` showcasing a live SRE investigation and PostMortem generation with the extension.
+- **Installation Walkthrough Video**: Added a step-by-step video guide card at the top of `INSTALL.md` to help users get set up quickly.
+
+## [0.1.13] - 2026-06-01
+
+### Changed
+
+- **Investigation Entrypoint**: Added guidelines instructing the Investigator to automatically leverage sparklines and ASCII/Unicode graphs (`export_timeseries_to_csv.py` or `csv_to_sparkline.py`) alongside start/end timestamp context to give the user a rapid visual overview of incident metrics.
+
+## [0.1.12] - 2026-05-29
+
+### Added
+
+- **Harness Compatibility Matrix**: Introduced a comprehensive client capability and support matrix directly in `README.md`, clarifying feature coverage (installation, GCP MCP setup, and general SRE capabilities) across Gemini CLI, Antigravity CLI, Claude Code, and OpenAI Codex.
+
+## [0.1.11] - 2026-05-29
+
+### Changed
+
+- **just install-agy**: Enhanced the recipe to output a clean, green success emoji showing the installed version on first-time installation as well, matching the second-time check output.
+
+## [0.1.10] - 2026-05-28
+
+### Added
+
+- **just plugin-version**: Exposed a parameterized recipe that retrieves the version from any plugin JSON manifest file.
+- **test/get_plugin_version.sh**: Added a robust helper bash script to extract version info from any JSON file using `jq` (with a zero-dependency fallback to `grep` and `sed`).
+- **OneMCP Support for Antigravity**: Refactored `gcp-mcp-setup` skill and `setup_onemcp.py` to seamlessly configure modern Antigravity CLI and Editor paths.
+- **Structured Reference Templates**: Created structured `settings.json` (Gemini CLI) and `mcp_config.json` (Antigravity) schemas under `skills/gcp-mcp-setup/references/`.
+
+### Changed
+
+- **just install-agy**: Improved the recipe to check for an existing installation, compare the installed version with the workspace version, and print a warning or success message indicating whether they are in sync (e.g., `0.1.9 vs 0.1.10`).
+- **OneMCP Output Optimization**: Modified the config generator to write tailored settings keys (`httpUrl` for Gemini and `serverUrl` for Antigravity) to prevent diagnostic key pollution.
+
+## [0.1.9] - 2026-05-28
+
+### Added
+
+- **Automated Validation Tests**: Created a unified test runner `test/run_tests.sh` that checks version consistency across manifests (`test/check_manifest_versions.py`) and ensures skills frontmatter conforms to specifications.
+- **just test**: Added a `just test` recipe to easily execute all validation checks with a single command.
+
+### Fixed
+
+- **Skill Frontmatter**: Quoted name/description fields, added missing emojis, and aligned statuses to satisfy metadata schema requirements across multiple skills.
+
+## [0.1.8] - 2026-05-28
+
+### Added
+
+- **just install-agy**: Added a `just install-agy` recipe to automate cloning the SRE extension repository directly into the `agy` plugins directory (`~/.gemini/config/plugins/sre-extension`).
+- **just install-geminicli**: Added a `just install-geminicli` recipe to install the extension via the Gemini CLI extensions command.
+- **just install-claude**: Added a `just install-claude` recipe to run Claude Code pointing to this plugin directory.
+
 ## [0.1.7] - 2026-05-22
 
 ### Added
@@ -65,8 +172,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - **Pre-publication Cleanup**:
   - Replaced internal email addresses with GitHub profile links in `README.md` and skill metadata.
-  - Removed internal `go/` shortlinks and `/google/` infrastructure paths.
-  - Moved internal-only `TODO`s to untracked local files.
+  - Removed internal `go/` shortlinks and `/google/` infrastructure paths. <!-- pre-publish-checker: ignore -->
+  - Moved internal-only `TODO`s to untracked local files. <!-- pre-publish-checker: ignore -->
   - Restricted experimental `agents/` directory from the public repository.
 - **Improved Tooling**:
   - Added a `pre-publish-checker` skill with automated scripts for scanning profanity, internal links, and professionalism.

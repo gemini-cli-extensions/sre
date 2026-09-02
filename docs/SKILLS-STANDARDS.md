@@ -33,6 +33,14 @@ metadata:                                           # SHOULD have it
 ---
 ```
 
+## Anthropic Tool Constraints
+
+To ensure compatibility with Anthropic's tool-use limits and best practices (see [Anthropic Agent Skills Best Practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)):
+*   **Tool Name Length**: Must be at most 64 characters.
+*   **Tool Name Content**: Must not contain reserved words like `anthropic` or `claude`.
+*   **Tool Description Length**: Must be at most 1024 characters.
+*   **SKILL.md File Length**: The `SKILL.md` file must be under 500 lines to prevent excessive token consumption and ensure optimal performance.
+
 ## CHANGELOG.md (optional)
 
 Aligned to version number in `SKILL.md`

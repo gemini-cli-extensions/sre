@@ -2,6 +2,10 @@
 
 All notable changes to the `investigation-entrypoint` skill will be documented in this file.
 
+## [1.3.1] - 2026-06-01
+### Added
+- **Visual Sparkline Feedback:** Instructed the Investigator to automatically leverage sparklines and ASCII/Unicode graphs (`export_timeseries_to_csv.py` or `csv_to_sparkline.py`) alongside start/end timestamp context to give the user a rapid visual overview of incident metrics.
+
 ## [1.3.0] - 2026-04-07
 ### 🔄 The "Grand Unification" Update
 

@@ -1,9 +1,10 @@
 ---
 name: data-ingestion
 description: 🐉 Fetches and parses time-series data from various sources.
-author: Szymon Stawski # + Gemini
-version: 0.2.0
-status: development
+metadata:
+  author: "Szymon Stawski + Gemini"
+  version: 0.2.0
+  status: draft
 ---
 
 # Data Ingestion Skill

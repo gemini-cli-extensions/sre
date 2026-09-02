@@ -1,0 +1,16 @@
+{
+  "name": "sre",
+  "owner": {
+    "name": "Google"
+  },
+  "metadata": {
+    "description": "Marketplace for the SRE extension: curated agent skills for Site Reliability Engineers on Google Cloud."
+  },
+  "plugins": [
+    {
+      "name": "sre-extension",
+      "source": "./",
+      "description": "🐉 Specialised SRE skills for outage investigations, monitoring graphs, and post-mortems on Google Cloud Platform."
+    }
+  ]
+}

@@ -17,10 +17,13 @@
 """
 OneMCP Setup Script
 This script sets the gcloud project, installs beta components, enables required services
-and MCP servers. 
+and MCP servers.
 
 By default, it installs a lean SRE toolset (Logging, Monitoring, GKE, Run, RM, ErrorReporting, DK).
 Use --all to include databases (SQL, Spanner, Firestore, BigQuery) and Vertex AI.
+
+Use --harness to target a specific CLI harness (gemini, antigravity, copilot).
+Defaults to gemini+antigravity when omitted.
 
 # Thanks to Romin Irani guidance: https://github.com/rominirani/google-mcp-servers/blob/main/demos/README.md
 """
@@ -32,9 +35,19 @@ import os
 import sys
 import time
 
+sys.path.insert(0, os.path.dirname(__file__))
+from harness_registry import HARNESS_REGISTRY, HarnessName
+
+# On Windows, the default encoding is cp1252 which cannot encode emojis. Use UTF-8 to avoid encoding errors.
+if sys.stdout.encoding.lower() != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8')
+if sys.stderr.encoding.lower() != 'utf-8':
+    sys.stderr.reconfigure(encoding='utf-8')
+
+
 def run_command(command, check=True):
     print(f"Running: {' '.join(command)}")
-    result = subprocess.run(command, text=True, capture_output=True)
+    result = subprocess.run(command, text=True, encoding='utf-8', capture_output=True, shell=(sys.platform == "win32"))
     if check and result.returncode != 0:
         print(f"Command failed with error: {result.stderr}", file=sys.stderr)
         sys.exit(result.returncode)
@@ -42,24 +55,40 @@ def run_command(command, check=True):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Set up Google Managed MCP (OneMCP) for Gemini CLI."
+        description="Set up Google Managed MCP (OneMCP) for your CLI harness."
     )
     parser.add_argument("project_id", help="The Google Cloud Project ID to use.")
-    
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("--local", action="store_true", help="Update the local .gemini/settings.json file.")
-    group.add_argument("--global", action="store_true", dest="global_config", help="Update the global ~/.gemini/settings.json file.")
 
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--local", action="store_true", help="Update the local config file (workspace-scoped).")
+    group.add_argument("--global", action="store_true", dest="global_config", help="Update the global config file (user-scoped).")
+
+    parser.add_argument(
+        "--harness",
+        choices=[h.value for h in HarnessName],
+        default=None,
+        help="Target CLI harness to configure (gemini, antigravity, copilot). Defaults to gemini+antigravity.",
+    )
     parser.add_argument("--all", action="store_true", help="Enable all supported OneMCP servers, including databases and Vertex AI.")
     parser.add_argument("--google-maps-key", dest="google_maps_key", help="The Google Maps API Key to enable mapstools MCP.")
 
     args = parser.parse_args()
     project_id = args.project_id
+    scope = "local" if args.local else "global"
 
-    if args.local:
-        settings_file = os.path.join(os.getcwd(), ".gemini", "settings.json")
+    # Resolve target harnesses: explicit selection or default to gemini+antigravity.
+    if args.harness:
+        selected_harnesses = [args.harness]
     else:
-        settings_file = os.path.expanduser("~/.gemini/settings.json")
+        selected_harnesses = [HarnessName.GEMINI, HarnessName.ANTIGRAVITY]
+
+    # Resolve target config files from the registry.
+    target_files = []
+    for harness in selected_harnesses:
+        harness_config = HARNESS_REGISTRY[harness]
+        for path in harness_config.paths(scope):
+            resolved = os.path.expanduser(path) if path.startswith("~") else os.path.join(os.getcwd(), path)
+            target_files.append((resolved, harness_config.builder))
 
     # Core SRE Services (Default)
     base_services = [
@@ -113,9 +142,6 @@ def main():
     ])
     dev_key = result.stdout.strip()
 
-    print(f"Updating {settings_file}...")
-    os.makedirs(os.path.dirname(settings_file), exist_ok=True)
-
     # Map service names to MCP config keys and URLs
     mcp_config_map = {
         'logging.googleapis.com': ('google-logging', 'https://logging.googleapis.com/mcp'),
@@ -133,48 +159,46 @@ def main():
         'bigquery.googleapis.com': ('google-bigquery', 'https://bigquery.googleapis.com/mcp'),
     }
 
-    new_mcp_servers = {}
-    for service in base_services:
-        if service == 'developerknowledge.googleapis.com':
-            new_mcp_servers['google-developer-knowledge'] = {
-                'httpUrl': 'https://developerknowledge.googleapis.com/mcp',
-                'headers': {'X-Goog-Api-Key': dev_key}
-            }
-        elif service == 'mapstools.googleapis.com':
-            new_mcp_servers['google-maps'] = {
-                'httpUrl': 'https://mapstools.googleapis.com/mcp',
-                'headers': {'X-Goog-Api-Key': args.google_maps_key}
-            }
-        elif service in mcp_config_map:
-            key, url = mcp_config_map[service]
-            new_mcp_servers[key] = {
-                'httpUrl': url,
-                'authProviderType': 'google_credentials',
-                'oauth': {'scopes': ['https://www.googleapis.com/auth/cloud-platform']},
-                'headers': {'X-goog-user-project': project_id}
-            }
+    def build_mcp_servers(builder):
+        servers = {}
+        for service in base_services:
+            if service == 'developerknowledge.googleapis.com':
+                servers['google-developer-knowledge'] = builder(
+                    'https://developerknowledge.googleapis.com/mcp', api_key=dev_key
+                )
+            elif service == 'mapstools.googleapis.com':
+                servers['google-maps'] = builder(
+                    'https://mapstools.googleapis.com/mcp', api_key=args.google_maps_key
+                )
+            elif service in mcp_config_map:
+                key, url = mcp_config_map[service]
+                servers[key] = builder(url, project_id=project_id)
+        return servers
 
-    data = {}
-    if os.path.exists(settings_file):
-        try:
-            with open(settings_file, 'r') as f:
-                data = json.load(f)
-        except json.JSONDecodeError:
-            print(f"Warning: {settings_file} contains invalid JSON. Overwriting.")
+    for config_file, builder in target_files:
+        print(f"Updating {config_file}...")
+        os.makedirs(os.path.dirname(config_file), exist_ok=True)
 
-    if 'mcpServers' not in data:
-        data['mcpServers'] = {}
+        data = {}
+        if os.path.exists(config_file):
+            try:
+                with open(config_file, 'r') as f:
+                    data = json.load(f)
+            except json.JSONDecodeError:
+                print(f"Warning: {config_file} contains invalid JSON. Overwriting.")
 
-    # Merge or overwrite? The user likely wants to update their MCP servers.
-    data['mcpServers'].update(new_mcp_servers)
+        if 'mcpServers' not in data:
+            data['mcpServers'] = {}
 
-    with open(settings_file, 'w') as f:
-        json.dump(data, f, indent=2)
+        data['mcpServers'].update(build_mcp_servers(builder))
 
-    print(f"Successfully updated {settings_file} with OneMCP servers.")
+        with open(config_file, 'w') as f:
+            json.dump(data, f, indent=2)
+
+        print(f"Successfully updated {config_file} with OneMCP servers.")
     print("\n======================================================")
     print(f"OneMCP Setup Complete for project: {project_id}")
-    print(f"Services Enabled: {', '.join(new_mcp_servers.keys())}")
+    print(f"Services Enabled: {', '.join(base_services)}")
     print("======================================================")
 
 if __name__ == "__main__":
