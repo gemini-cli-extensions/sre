@@ -109,6 +109,45 @@ class TestCheckSkillsFrontmatter(unittest.TestCase):
                 f"Expected error for list in metadata.author, got: {errors}",
             )
 
+    def test_quoted_sre_in_name_fails_format(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            skill_md = self._write_skill(
+                tmpdir,
+                "postmortem-aggregator",
+                "---\n"
+                'name: "[SRE] postmortem-aggregator"\n'
+                "description: 🐉 To be used when you have a folder containing N Post Mortem files.\n"
+                "metadata:\n"
+                "  author: Riccardo Carlesso\n"
+                "  version: 0.0.1\n"
+                "---\n# Body\n",
+            )
+            errors, _ = check_skill_frontmatter(skill_md)
+            self.assertTrue(
+                any("Invalid name format" in e for e in errors),
+                f"Expected Invalid name format error, got: {errors}",
+            )
+
+    def test_redundant_sre_bracket_in_description_fails(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            skill_md = self._write_skill(
+                tmpdir,
+                "postmortem-aggregator",
+                "---\n"
+                "name: postmortem-aggregator\n"
+                'description: "🐉 [SRE] To be used when you have a folder containing N Post Mortem files."\n'
+                "metadata:\n"
+                "  author: Riccardo Carlesso\n"
+                "  version: 0.0.1\n"
+                "---\n# Body\n",
+            )
+            errors, _ = check_skill_frontmatter(skill_md)
+            self.assertTrue(
+                any("[SRE]" in e for e in errors),
+                f"Expected error for redundant [SRE] tag in description, got: {errors}",
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
+

@@ -1,6 +1,6 @@
 ---
 name: gcp-mcp-setup
-description: 🐉 [SRE] Use when the user wants to set up Google Managed MCP (OneMCP) servers for their CLI environment. Automates enabling services, MCP servers, generating API keys, and configuring the MCP settings file for the active harness (Gemini, Antigravity, or Copilot CLI).
+description: 🐉 Use when the user wants to set up Google Managed MCP (OneMCP) servers for their CLI environment. Automates enabling services, MCP servers, generating API keys, and configuring the MCP settings file for the active harness (Gemini, Antigravity, or Copilot CLI).
 metadata:
   author: Riccardo
   version: 0.0.10

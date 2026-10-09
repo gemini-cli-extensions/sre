@@ -1,6 +1,6 @@
 ---
 name: gcp-playbooks
-description: 🐉 [SRE] Use when you need to follow established SRE playbooks for GCP/GKE investigations, including infrastructure discovery and common mitigation steps.
+description: 🐉 Use when you need to follow established SRE playbooks for GCP/GKE investigations, including infrastructure discovery and common mitigation steps.
 metadata:
   author: Riccardo
   version: 0.0.3

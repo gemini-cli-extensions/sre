@@ -105,11 +105,13 @@ def check_skill_frontmatter(file_path, verbose=False):
             if is_copy:
                 errors.append(f"Folder name '{folder_name}' ends with 'copy'. Please ASK OWNER to reconcile with original and rename folder.")
 
-        # Validate 'description' starts with dragon
+        # Validate 'description' starts with dragon and does not use redundant [SRE] tag
         if 'description' in data:
             description = str(data['description']).strip()
             if not description.startswith('🐉'):
                 errors.append("Description must start with the dragon emoji '🐉'")
+            if '[sre]' in description.lower():
+                errors.append("Description must not contain redundant '[SRE]' tag; use only the dragon emoji '🐉 ' prefix")
 
         # Validate Anthropic tool name limits: length <= 64, no reserved words
         if 'name' in data:

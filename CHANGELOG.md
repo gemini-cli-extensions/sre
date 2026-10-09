@@ -8,8 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
-- **Frontmatter Validation (`test/check_skills_frontmatter.py`)**: Hardened YAML frontmatter validation to explicitly verify that `name`, `description`, and `metadata.author` are scalar strings rather than YAML sequences caused by unquoted leading brackets (`[...]`).
-- **Testing**: Added unit test suite `test/test_check_skills_frontmatter.py` covering YAML frontmatter edge cases (unquoted brackets in `name`, unquoted Markdown links or lists in `metadata.author`, and unquoted colons in `description`) and wired it into `test/run_tests.sh`.
+- **Uniform Skill Frontmatters (`skills/*/SKILL.md`)**: Standardized all 16 skills on a single uniform convention: `name: <kebab-case-slug>` matching the folder name and `description: 🐉 <Text>` starting with the dragon emoji without redundant `[SRE]` tags (`gcp-architecture-discovery`, `gcp-mcp-setup`, `gcp-playbooks`, `gcp-slo-management`, `monitoring-graphs`, `postmortem-aggregator`, `postmortem-generator`).
+- **Frontmatter Validation (`test/check_skills_frontmatter.py`)**: Hardened YAML frontmatter validation to explicitly verify that `name`, `description`, and `metadata.author` are scalar strings rather than YAML sequences caused by unquoted leading brackets (`[...]`), and enforced that `description` starts with `🐉 ` without redundant `[SRE]` tags.
+- **Testing**: Added unit test suite `test/test_check_skills_frontmatter.py` (7 unit tests covering YAML frontmatter scalar checks, `name` format rules, and `description` prefix uniformity) and wired it into `test/run_tests.sh`.
 
 ## [0.1.21] - 2026-07-31
 

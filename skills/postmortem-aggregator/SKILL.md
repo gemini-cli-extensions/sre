@@ -1,7 +1,6 @@
 ---
-
-name: "postmortem-aggregator"
-description: "🐉 [SRE] To be used when you have a folder containing N Post Mortem files. This will help crunch data and maintain/update a POMO_AGGREGATED.md file"
+name: postmortem-aggregator
+description: 🐉 To be used when you have a folder containing N Post Mortem files. This will help crunch data and maintain/update a POMO_AGGREGATED.md file.
 metadata:
   author: Riccardo Carlesso
   version: 0.0.1
