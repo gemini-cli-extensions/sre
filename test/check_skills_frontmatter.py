@@ -51,6 +51,8 @@ def check_skill_frontmatter(file_path, verbose=False):
         for field in mandatory_fields:
             if field not in data:
                 errors.append(f"Missing mandatory field: '{field}'")
+            elif not isinstance(data[field], str):
+                errors.append(f"Field '{field}' must be a string, got {type(data[field]).__name__} (quote values starting with '[')")
         
         # SHOULD (Warning)
         if 'metadata' not in data:
@@ -62,10 +64,12 @@ def check_skill_frontmatter(file_path, verbose=False):
             else:
                 if 'author' not in metadata:
                     warnings.append("Missing field in metadata: 'author' (SHOULD have it)")
+                elif not isinstance(metadata['author'], str):
+                    errors.append(f"Field 'metadata.author' must be a string, got {type(metadata['author']).__name__} (quote values starting with '[')")
                 if 'version' not in metadata:
                     warnings.append("Missing field in metadata: 'version' (SHOULD have it)")
                 else:
-                    if not validate_semantic_version(metadata['version']):
+                    if isinstance(metadata['version'], (list, dict)) or not validate_semantic_version(metadata['version']):
                         errors.append(f"Invalid version format: '{metadata['version']}'. Use semantic versioning (e.g., 0.0.1)")
 
                 # OPTIONAL (Warning if --verbose)
@@ -79,7 +83,7 @@ def check_skill_frontmatter(file_path, verbose=False):
                         errors.append(f"Invalid status: '{status}'. Allowed: {', '.join(allowed_statuses)}")
 
         # Validate 'name' format and consistency
-        if 'name' in data:
+        if 'name' in data and isinstance(data['name'], str):
             name = data['name']
             if not validate_name_format(name):
                 errors.append(f"Invalid name format: '{name}'. Use dashes, no spaces, lowercase.")
