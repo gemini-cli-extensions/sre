@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.23] - 2026-10-09
+
+### Removed
+
+- **GitHub Actions Boilerplate Workflows (`b/570606328`)**: Removed all 6 legacy `run-gemini-cli` GitHub Actions workflows (`.github/workflows/gemini-*.yml`) and their 5 associated prompt definitions (`.github/commands/gemini-*.toml`). This permanently remediates the unrestricted shell tool vulnerability in scheduled issue triage (`b/570606328`), stops 24/day no-op cron runs, and eliminates failing bot comments on issues and pull requests.
+
 ## [0.1.22] - 2026-10-09
 
 ### Changed
