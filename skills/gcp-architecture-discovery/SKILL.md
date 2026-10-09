@@ -1,6 +1,6 @@
 ---
 name: gcp-architecture-discovery
-description: 🐉 [SRE] Discover and map GCP infrastructure architecture including compute, networking, storage, and service dependencies.
+description: 🐉 Discover and map GCP infrastructure architecture including compute, networking, storage, and service dependencies.
 metadata:
   author: sstawski
   version: 0.1.2
