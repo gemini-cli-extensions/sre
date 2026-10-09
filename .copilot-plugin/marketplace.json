@@ -10,7 +10,7 @@
     {
       "name": "sre-extension",
       "source": "./",
-      "version": "0.1.20",
+      "version": "0.1.23",
       "description": "🐉 Specialised SRE skills for outage investigations, monitoring graphs, and post-mortems on Google Cloud Platform."
     }
   ]
